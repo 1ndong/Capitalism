@@ -7,9 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.indong.capitalism.DayProcessor.DayProcessor;
+import com.indong.capitalism.Processor.ProcessorDay;
+import com.indong.capitalism.Processor.ProcessorMain;
 
-public class MainFrame extends JFrame {
+public class FrameMain extends JFrame {
 
 	/**
 	 * 
@@ -20,7 +21,7 @@ public class MainFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MainFrame() 
+	public FrameMain() 
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1300, 900);
@@ -28,6 +29,9 @@ public class MainFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		new ProcessorMain();
+		
 		this.addKeyListener(new KeyListener() {
 			
 			@Override
@@ -41,7 +45,7 @@ public class MainFrame extends JFrame {
 				// TODO Auto-generated method stub
 				if(e.getKeyCode() == KeyEvent.VK_SPACE) 
 				{
-					DayProcessor.GetInstance().Process();
+					ProcessorDay.GetInstance().Process();
 				}
 			}
 			

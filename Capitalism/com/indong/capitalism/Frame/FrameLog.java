@@ -12,7 +12,7 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-public class LogFrame extends JFrame {
+public class FrameLog extends JFrame {
 	/**
 	 * 
 	 */
@@ -21,9 +21,9 @@ public class LogFrame extends JFrame {
 	private static JTable table;
 	private static DefaultTableModel model;
 	private static JScrollPane scrollPane;
-	private static LogFrame instance = new LogFrame();
+	private static FrameLog instance = new FrameLog();
 
-	public static LogFrame GetInstance()
+	public static FrameLog GetInstance()
 	{
 		return instance;
 	}
@@ -42,7 +42,7 @@ public class LogFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	private LogFrame() 
+	private FrameLog() 
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(1400,100,700,700);

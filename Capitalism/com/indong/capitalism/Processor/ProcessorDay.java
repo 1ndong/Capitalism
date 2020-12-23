@@ -1,8 +1,8 @@
-package com.indong.capitalism.DayProcessor;
+package com.indong.capitalism.Processor;
 
-import com.indong.capitalism.Frame.LogFrame;
+import com.indong.capitalism.Frame.FrameLog;
 
-public class DayProcessor {
+public class ProcessorDay {
 	private int[] LASTDAY= {31,29,31,30,31,30,31,31,30,31,30,31};
 	private int INIT_DAY = 23;
 	private int INIT_MONTH = 12;
@@ -12,14 +12,14 @@ public class DayProcessor {
 	private int m_Month = 0;
 	private int m_Year = 0;
 	
-	private static DayProcessor instance = new DayProcessor();
+	private static ProcessorDay instance = new ProcessorDay();
 
-	public static DayProcessor GetInstance()
+	public static ProcessorDay GetInstance()
 	{
 		return instance;
 	}
 	
-	private DayProcessor()
+	private ProcessorDay()
 	{
 		m_Day = INIT_DAY;
 		m_Month = INIT_MONTH;
@@ -28,7 +28,7 @@ public class DayProcessor {
 	
 	public void Process()
 	{
-		LogFrame.GetInstance().addLog("DayProcessor,Process", "today is " + m_Year + "/" + m_Month +"/" + m_Day);
+		FrameLog.GetInstance().addLog("DayProcessor,Process", "today is " + m_Year + "/" + m_Month +"/" + m_Day);
 		
 		m_Day++;
 		if(m_Day > LASTDAY[m_Month-1])
@@ -49,5 +49,10 @@ public class DayProcessor {
 				}
 			}
 		}
+	}
+	
+	public String getDate()
+	{
+		return ""+m_Year+m_Month+m_Day;
 	}
 }

@@ -28,7 +28,7 @@ public class LogFrame extends JFrame {
 		return instance;
 	}
 	
-	public synchronized static void addLog(String tag , String log)
+	public synchronized void addLog(String tag , String log)
 	{
 		SimpleDateFormat format = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");
 		String format_time = format.format (System.currentTimeMillis());

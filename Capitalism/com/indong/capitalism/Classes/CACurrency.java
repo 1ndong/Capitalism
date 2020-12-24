@@ -1,5 +1,5 @@
 package com.indong.capitalism.Classes;
 
-public class CCurrency {
+public class CACurrency {
 
 }

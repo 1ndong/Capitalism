@@ -2,28 +2,40 @@ package com.indong.capitalism.Classes;
 
 import java.util.HashMap;
 
-import com.indong.capitalism.Frame.FrameLog;
-
 public class CGovernmentHumanResource extends CGovernment 
 {
-	HashMap<Integer, CPeople> m_PeopleList;
+	HashMap<Integer, CPeople> m_PeopleMap = new HashMap<Integer,CPeople>();
 	
 	public CGovernmentHumanResource()
 	{
-		m_PeopleList = new HashMap<Integer,CPeople>();
+		
 	}
 	
-	public void RegisterPeople(int ID , CPeople name)
+	public void registerPeople(CPeople people)
 	{
-		CPeople isExist = m_PeopleList.get(ID);
-		if(isExist == null)
+		int ID = makeUniqueID();
+		people.getInfoPersonalData().setID(ID);
+		m_PeopleMap.put(ID,people);
+	}
+	
+	private int makeUniqueID()
+	{
+		int result = -1;
+		
+		int tempKey = 0;
+		while(result == -1)
 		{
-			m_PeopleList.put(ID, name);	
-			FrameLog.GetInstance().addLog("성공", "ID추가성공");
+			CPeople isExist = m_PeopleMap.get(tempKey);
+			if(isExist == null)
+			{
+				result = tempKey;
+			}
+			else
+			{
+				tempKey++;
+			}
 		}
-		else
-		{
-			FrameLog.GetInstance().addLog("실패", "존재하는ID입니다");
-		}
+		
+		return result;
 	}
 }

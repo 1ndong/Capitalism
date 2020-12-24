@@ -23,12 +23,12 @@ public class ItemAccount {
 	{
 		if(balance < cash)
 		{
-			FrameLog.GetInstance().addLog("account", "ÀÜ¾×ºÎÁ·");
+			FrameLog.GetInstance().addLog("account", "ï¿½Ü¾×ºï¿½ï¿½ï¿½");
 			return 0;
 		}
 		
 		balance -= cash;
-		return cash;//ÀÎÃâÇÑ ±Ý¾×
+		return cash;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¾ï¿½
 	}
 	
 	public int getBalance()

@@ -6,10 +6,10 @@ public class CACCash {
 	{
 		
 	}
-	int getBalance() {
+	public int getBalance() {
 		return balance;
 	}
-	void setBalance(int balance) {
+	public void setBalance(int balance) {
 		this.balance = balance;
 	}
 }

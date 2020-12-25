@@ -4,7 +4,7 @@ import com.indong.capitalism.Frame.FrameLog;
 
 public class ProcessorDay {
 	private int[] LASTDAY= {31,29,31,30,31,30,31,31,30,31,30,31};
-	private String[] DAYOFTHEWEEK = {"월","ȭ","��","��","��","��","��"};
+	private String[] DAYOFTHEWEEK = {"월","화","수","목","금","토","일"};
 	
 	private int INIT_DAY = 23;
 	private int INIT_MONTH = 12;

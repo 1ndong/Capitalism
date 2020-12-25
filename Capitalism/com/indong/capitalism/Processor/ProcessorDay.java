@@ -4,7 +4,7 @@ import com.indong.capitalism.Frame.FrameLog;
 
 public class ProcessorDay {
 	private int[] LASTDAY= {31,29,31,30,31,30,31,31,30,31,30,31};
-	private String[] DAYOFTHEWEEK = {"¿ù","È­","¼ö","¸ñ","±Ý","Åä","ÀÏ"};
+	private String[] DAYOFTHEWEEK = {"ï¿½ï¿½","È­","ï¿½ï¿½","ï¿½ï¿½","ï¿½ï¿½","ï¿½ï¿½","ï¿½ï¿½"};
 	
 	private int INIT_DAY = 23;
 	private int INIT_MONTH = 12;
@@ -37,7 +37,7 @@ public class ProcessorDay {
 	public void Process()
 	{
 		FrameLog.GetInstance().addLog("DayProcessor,Process"
-				, "today is " + m_Year + "/" + m_Month +"/" + m_Day + " , " + m_Dayoftheweek + "¿äÀÏ");
+				, "today is " + m_Year + "/" + m_Month +"/" + m_Day + " , " + m_Dayoftheweek + "ï¿½ï¿½ï¿½ï¿½");
 		
 		m_Day++;
 		if(m_Day > LASTDAY[m_Month-1])
@@ -64,6 +64,6 @@ public class ProcessorDay {
 	
 	public String getDate()
 	{
-		return ""+m_Year+m_Month+m_Day;
+		return ""+m_Year+m_Month+m_Day+m_Dayoftheweek;
 	}
 }

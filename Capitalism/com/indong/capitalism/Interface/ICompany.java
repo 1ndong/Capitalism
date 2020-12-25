@@ -6,10 +6,10 @@ public interface ICompany {
 	
 	void paySalary();
 	
-	final int SalaryClerk = 300;
-	final int SalarySeniorClerk = 350;
-	final int SalaryAssistantManager = 400;
-	final int SalaryManager = 450;
-	final int SalaryDeputyGeneralManager = 500;
-	final int SalaryGeneralManager = 550;
+	final int SalaryClerk = 4000;
+	final int SalarySeniorClerk = 4500;
+	final int SalaryAssistantManager = 5000;
+	final int SalaryManager = 5500;
+	final int SalaryDeputyGeneralManager = 6000;
+	final int SalaryGeneralManager = 6500;
 }

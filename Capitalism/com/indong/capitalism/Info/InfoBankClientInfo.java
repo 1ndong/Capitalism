@@ -1,4 +1,4 @@
-package com.indong.capitalism.info;
+package com.indong.capitalism.Info;
 
 import java.util.LinkedList;
 

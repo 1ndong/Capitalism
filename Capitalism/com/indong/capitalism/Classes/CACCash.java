@@ -9,7 +9,7 @@ public class CACCash {
 	public int getBalance() {
 		return balance;
 	}
-	public void setBalance(int balance) {
-		this.balance = balance;
+	public void addBalance(int balance) {
+		this.balance += balance;
 	}
 }

@@ -1,39 +1,22 @@
 package com.indong.capitalism.Item;
 
+import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Enum.EBank;
+import com.indong.capitalism.Enum.EBeingType;
 import com.indong.capitalism.Frame.FrameLog;
 
 public class ItemAccount {
-	private int balance = 0;
-	private EBank bank;
+	//계좌는 은행으로 들어가는 통로이지 돈이 보관되는곳이 아님 캐쉬 현물이 보관되는곳은 내주머니 아니면 은행임
 	private int accountNumber = 0;
+	private EAccountType accountType;
+	private EBeingType type;
+	private EBank bank;
+	
 	
 	public ItemAccount(EBank bank , int accountNumber)
 	{
 		this.bank = bank;
 		this.accountNumber = accountNumber;
-	}
-	
-	public void depositCash(int cash)
-	{
-		balance += cash;
-	}
-	
-	public int withdrawCash(int cash)
-	{
-		if(balance < cash)
-		{
-			FrameLog.GetInstance().addLog("account", "잔액부족");
-			return 0;
-		}
-		
-		balance -= cash;
-		return cash;
-	}
-	
-	public int getBalance()
-	{
-		return balance;
 	}
 	
 	public EBank getBankType()

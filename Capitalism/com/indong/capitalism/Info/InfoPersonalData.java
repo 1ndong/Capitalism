@@ -1,10 +1,12 @@
-package com.indong.capitalism.info;
+package com.indong.capitalism.Info;
+
+import com.indong.capitalism.DataStructure.DTime;
 
 public class InfoPersonalData {
 	private int mAge = 0;
 	private String mName = "";
 	private int mID = 0;
-	private String mCompany = "";
+	private DTime birth = new DTime(0,0,0,"");
 	
 	public InfoPersonalData(int age , String name)
 	{
@@ -18,14 +20,6 @@ public class InfoPersonalData {
 
 	public String getName() {
 		return mName;
-	}
-
-	public String getCompany() {
-		return mCompany;
-	}
-
-	public void setCompany(String company) {
-		this.mCompany = company;
 	}
 
 	public int getID() {

@@ -14,7 +14,7 @@ public class CGovernmentHumanResource extends CGovernment
 	public void registerPeople(CPeople people)
 	{
 		int ID = makeUniqueID();
-		people.getInfoPersonalData().setID(ID);
+		people.getPersonaldata().setID(ID);
 		m_PeopleMap.put(ID,people);
 	}
 	

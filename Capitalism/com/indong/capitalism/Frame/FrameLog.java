@@ -13,16 +13,24 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 public class FrameLog extends JFrame {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1988465590986325069L;
 	private static JPanel contentPane;
 	private static JTable table;
 	private static DefaultTableModel model;
 	private static JScrollPane scrollPane;
-	private static FrameLog instance = new FrameLog();
+	private static FrameLog instance;
 
+	private static boolean isInitialize = false;
+	
+	public static void MakeLogFrame(double x , double width , double height)
+	{
+		if(isInitialize)
+			return;
+		
+		isInitialize = true;
+		instance = new FrameLog(x,width,height);
+	}
+	
 	public static FrameLog GetInstance()
 	{
 		return instance;
@@ -35,24 +43,24 @@ public class FrameLog extends JFrame {
 		
 		String[] row = new String[]{format_time,tag,log,""};
 
-		model.addRow(row); //Å×ÀÌºí¿¡ ³Ö±â
+		model.addRow(row);
 		
 		table.scrollRectToVisible(table.getCellRect(table.getRowCount()-1, 0, true));
 	}
 	/**
 	 * Create the frame.
 	 */
-	private FrameLog() 
+	private FrameLog(double x, double width , double height) 
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(1400,100,700,700);
+		setBounds((int)x,0,(int)width,(int)height);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout());
 		
 		String[] colName = new String[] {"time","tag","log","reserved"};
-		model = new DefaultTableModel(colName,0); //Å×ÀÌºí µ¥ÀÌÅÍ
+		model = new DefaultTableModel(colName,0); //ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		
 		table = new JTable(model);
 		table.getColumnModel().getColumn(0).setPreferredWidth(150);

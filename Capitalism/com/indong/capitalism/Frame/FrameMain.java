@@ -21,10 +21,10 @@ public class FrameMain extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrameMain() 
+	public FrameMain(double width , double height) 
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1300, 900);
+		setBounds(0, 0, (int)width, (int)height);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

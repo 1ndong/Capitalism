@@ -5,7 +5,7 @@ import com.indong.capitalism.Frame.FrameLog;
 public class ProcessorMain {
 	public ProcessorMain()
 	{
-		FrameLog.GetInstance().addLog("tag", "½ÃÀÛ");
+		FrameLog.GetInstance().addLog("tag", "ì‹œìž‘");
 		
 		start();
 	}

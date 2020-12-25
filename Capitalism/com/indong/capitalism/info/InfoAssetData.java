@@ -3,7 +3,7 @@ package com.indong.capitalism.info;
 import java.util.HashMap;
 
 import com.indong.capitalism.Classes.CACCash;
-import com.indong.capitalism.Interface.EAccount;
+import com.indong.capitalism.Enum.EAccount;
 import com.indong.capitalism.Item.ItemAccount;
 
 public class InfoAssetData {

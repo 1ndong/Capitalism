@@ -1,7 +1,7 @@
 package com.indong.capitalism.Item;
 
+import com.indong.capitalism.Enum.EBank;
 import com.indong.capitalism.Frame.FrameLog;
-import com.indong.capitalism.Interface.EBank;
 
 public class ItemAccount {
 	private int balance = 0;
@@ -23,12 +23,12 @@ public class ItemAccount {
 	{
 		if(balance < cash)
 		{
-			FrameLog.GetInstance().addLog("account", "�ܾ׺���");
+			FrameLog.GetInstance().addLog("account", "잔액부족");
 			return 0;
 		}
 		
 		balance -= cash;
-		return cash;//������ �ݾ�
+		return cash;
 	}
 	
 	public int getBalance()

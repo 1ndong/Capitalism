@@ -1,4 +1,4 @@
-package com.indong.capitalism.Interface;
+package com.indong.capitalism.Enum;
 
 public enum EAccount {
 	Salary , Loan

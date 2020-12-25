@@ -1,6 +1,6 @@
 package com.indong.capitalism.Classes;
 
-import com.indong.capitalism.Interface.EAccount;
+import com.indong.capitalism.Enum.EAccount;
 import com.indong.capitalism.Interface.ICompanyMember;
 import com.indong.capitalism.Item.ItemAccount;
 import com.indong.capitalism.info.InfoAssetData;

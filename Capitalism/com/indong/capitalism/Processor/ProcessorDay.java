@@ -37,7 +37,7 @@ public class ProcessorDay {
 	public void Process()
 	{
 		FrameLog.GetInstance().addLog("DayProcessor,Process"
-				, "today is " + m_Year + "/" + m_Month +"/" + m_Day + " , " + m_Dayoftheweek + "����");
+				, "today is " + m_Year + "/" + m_Month +"/" + m_Day + " , " + m_Dayoftheweek + "요일");
 		
 		m_Day++;
 		if(m_Day > LASTDAY[m_Month-1])

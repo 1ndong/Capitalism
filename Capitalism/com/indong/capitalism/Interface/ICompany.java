@@ -1,8 +1,8 @@
 package com.indong.capitalism.Interface;
 
 public interface ICompany {
-	void joinCompany();
-	void leaveCompany();
+	void joinCompany(ICompanyMember member);
+	void leaveCompany(ICompanyMember member);
 	
 	void paySalary();
 	

@@ -17,7 +17,7 @@ public class Main {
 				try {
 					Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 					double width = screenSize.getWidth();
-					double height = screenSize.getHeight();
+					double height = screenSize.getHeight()-50/*작업표시줄*/;
 					
 					final float RATIO_MAIN = 0.6f;
 					
@@ -26,8 +26,8 @@ public class Main {
 					
 					FrameLog.MakeLogFrame(mainWidth, logWidth, height);
 					FrameLog.GetInstance().setVisible(true);
-					FrameMain frame = new FrameMain(mainWidth,height);
-					frame.setVisible(true);
+					FrameMain.MakeMainFrame(mainWidth, height);
+					FrameMain.getInstance().setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

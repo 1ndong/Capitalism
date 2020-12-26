@@ -45,4 +45,9 @@ public class DTime {
 	public void setDayoftheweek(String dayoftheweek) {
 		this.dayoftheweek = dayoftheweek;
 	}
+	
+	public String toString()
+	{
+		return ""+year+"/"+month+"/"+day+"/"+dayoftheweek+"요일";
+	}
 }

@@ -14,20 +14,14 @@ import javax.swing.table.DefaultTableModel;
 
 public class FrameLog extends JFrame {
 	private static final long serialVersionUID = -1988465590986325069L;
-	private static JPanel contentPane;
-	private static JTable table;
-	private static DefaultTableModel model;
-	private static JScrollPane scrollPane;
+	private JPanel contentPane;
+	private JTable table;
+	private DefaultTableModel model;
+	private JScrollPane scrollPane;
 	private static FrameLog instance;
 
-	private static boolean isInitialize = false;
-	
 	public static void MakeLogFrame(double x , double width , double height)
 	{
-		if(isInitialize)
-			return;
-		
-		isInitialize = true;
 		instance = new FrameLog(x,width,height);
 	}
 	

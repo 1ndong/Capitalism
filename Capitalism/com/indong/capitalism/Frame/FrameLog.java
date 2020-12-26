@@ -60,7 +60,7 @@ public class FrameLog extends JFrame {
 		contentPane.setLayout(new BorderLayout());
 		
 		String[] colName = new String[] {"time","tag","log","reserved"};
-		model = new DefaultTableModel(colName,0); //���̺� ������
+		model = new DefaultTableModel(colName,0);
 		
 		table = new JTable(model);
 		table.getColumnModel().getColumn(0).setPreferredWidth(150);
@@ -72,6 +72,7 @@ public class FrameLog extends JFrame {
 		table.setFillsViewportHeight(true);
 		scrollPane.setBounds(12, 10, 960, 641);
 		table.setBounds(scrollPane.getBounds());
+		table.setRowHeight(50);
 		contentPane.add(scrollPane,BorderLayout.CENTER);
 		
 		table.addComponentListener(new ComponentAdapter() {

@@ -18,6 +18,7 @@ public class CCompany extends CBeing implements ITime{
 
 	public CCompany(DTime birth , String name)
 	{
+		super();
 		type = EBeingType.Company;
 		companyData = new InfoCompanyData(birth , name);
 	}

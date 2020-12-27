@@ -25,7 +25,7 @@ public class Main {
 					double logWidth = width - mainWidth;
 					
 					FrameLog.MakeLogFrame(mainWidth, logWidth, height);
-					FrameLog.GetInstance().setVisible(true);
+					FrameLog.getInstance().setVisible(true);
 					FrameMain.MakeMainFrame(mainWidth, height);
 					FrameMain.getInstance().setVisible(true);
 				} catch (Exception e) {

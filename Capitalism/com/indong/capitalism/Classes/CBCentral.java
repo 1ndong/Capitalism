@@ -22,7 +22,7 @@ public class CBCentral extends CBank{
 	{
 		if(amount > balance.getBalance())
 		{
-			FrameLog.GetInstance().addLog("centralbank", "잔액 부족");
+			FrameLog.getInstance().addLog("centralbank", "잔액 부족");
 			return;
 		}
 		bank.addBalance(amount);

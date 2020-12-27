@@ -25,7 +25,7 @@ public class FrameLog extends JFrame {
 		instance = new FrameLog(x,width,height);
 	}
 	
-	public static FrameLog GetInstance()
+	public static FrameLog getInstance()
 	{
 		return instance;
 	}

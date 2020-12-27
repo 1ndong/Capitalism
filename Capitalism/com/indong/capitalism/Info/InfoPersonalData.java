@@ -1,7 +1,6 @@
 package com.indong.capitalism.Info;
 
 import com.indong.capitalism.DataStructure.DTime;
-import com.indong.capitalism.Enum.EBeingType;
 
 public class InfoPersonalData extends InfoBasicData{
 

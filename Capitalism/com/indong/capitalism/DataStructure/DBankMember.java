@@ -3,7 +3,6 @@ package com.indong.capitalism.DataStructure;
 import java.util.LinkedList;
 
 import com.indong.capitalism.Classes.CBeing;
-import com.indong.capitalism.Classes.CPeople;
 import com.indong.capitalism.Item.ItemAccount;
 
 public class DBankMember {

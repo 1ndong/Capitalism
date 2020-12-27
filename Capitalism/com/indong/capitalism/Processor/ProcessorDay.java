@@ -43,7 +43,7 @@ public class ProcessorDay implements ITimeKeeper{
 	
 	public void Process()
 	{
-		FrameLog.GetInstance().addLog("DayProcessor,Process"
+		FrameLog.getInstance().addLog("DayProcessor,Process"
 				, "today is " + m_Year + "/" + m_Month +"/" + m_Day + " , " + m_Dayoftheweek + "요일");
 		
 		m_Day++;
@@ -67,6 +67,8 @@ public class ProcessorDay implements ITimeKeeper{
 		}
 		m_Index++;
 		m_Dayoftheweek = DAYOFTHEWEEK[m_Index%7];
+		
+		updateTime();
 	}
 	
 	public String getDate()

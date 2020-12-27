@@ -6,5 +6,9 @@ import com.indong.capitalism.Item.ItemAccount;
 
 public class CBCommercial extends CBank {
 	private LinkedList<ItemAccount> accountList = new LinkedList<ItemAccount>();
+
+	public LinkedList<ItemAccount> getAccountList() {
+		return accountList;
+	}
 	
 }

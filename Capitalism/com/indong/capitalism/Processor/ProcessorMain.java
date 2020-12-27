@@ -14,6 +14,6 @@ public class ProcessorMain {
 	
 	private void start()
 	{
-		CPeople aa = new CPeople(new DTime(0,0,0,""),"name");
+		
 	}
 }

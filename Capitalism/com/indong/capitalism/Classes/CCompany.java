@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import com.indong.capitalism.DataStructure.DCompanyMember;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EBeingType;
+import com.indong.capitalism.Enum.ECompanyPosition;
 import com.indong.capitalism.Info.InfoBasicData;
 import com.indong.capitalism.Info.InfoCompanyData;
 import com.indong.capitalism.Interface.ITime;
@@ -34,13 +35,15 @@ public class CCompany extends CBeing implements ITime{
 			{
 				DCompanyMember temp = staffList.get(i);
 				//move money company account -> temp account
+				//기업 급여계좌의 뱅크 찾아서 ibankservice로 캐스팅 해서 sendmoney 기업계좌 to 멤버들 계좌
+				//보낼때 직급에 맞춰서 돈 보내야 됨
 			}
 		}
 	}
 	
-	public void joinCompany(CPeople newpeople , ItemAccount salaryaccount)
+	public void joinCompany(CPeople newpeople , ItemAccount salaryaccount , ECompanyPosition position)
 	{
-		DCompanyMember newmember = new DCompanyMember(newpeople,salaryaccount);
+		DCompanyMember newmember = new DCompanyMember(newpeople,salaryaccount , position);
 		staffList.add(newmember);
 	}
 	

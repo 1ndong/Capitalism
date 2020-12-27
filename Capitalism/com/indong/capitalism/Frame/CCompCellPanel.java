@@ -8,29 +8,30 @@ import javax.swing.JPanel;
 
 public class CCompCellPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
+	private JLabel namelabel = new JLabel("name = ");
 	private JLabel name = new JLabel();
+	private JLabel balancelabel = new JLabel("balance = ");
 	private JLabel balance = new JLabel();
 	private JButton detailButton = new JButton("detail");
 
 	public CCompCellPanel(String name, int balance) {
 		setLayout(new GridLayout(1,3));
-		this.name.setText("name = "+name);
-		this.balance.setText("balance = "+balance);
+		this.name.setText(name);
+		this.balance.setText(String.valueOf(balance));
 		detailButton.addActionListener(new CDetailButtonClickListener());
+		add(this.namelabel);
 		add(this.name);
+		add(this.balancelabel);
 		add(this.balance);
 		add(detailButton);
 	}
 
 	public void setComp(CTableComp comp) {
-		name.setText("name = "+comp.name);
-		balance.setText("balance = "+comp.balance);
+		name.setText(comp.name);
+		balance.setText(""+comp.balance);
 	}
 
 	public CTableComp getComp() {
-		String balancetext = balance.getText();
-		int lastspace = balancetext.lastIndexOf(" ");
-		int onlybalance = Integer.parseInt(balancetext.substring(lastspace+1));
-		return new CTableComp(name.getText(), onlybalance);
+		return new CTableComp(name.getText(), Integer.parseInt(balance.getText()));
 	}
 }

@@ -1,7 +1,6 @@
 package com.indong.capitalism.Item;
 
 import com.indong.capitalism.Classes.CBCommercial;
-import com.indong.capitalism.Classes.CBank;
 import com.indong.capitalism.Enum.EAccountType;
 
 public class ItemAccount {
@@ -10,10 +9,11 @@ public class ItemAccount {
 	private EAccountType accountType;
 	private CBCommercial bank;
 	
-	public ItemAccount(CBCommercial bank , int accountNumber)
+	public ItemAccount(CBCommercial bank , int accountNumber , EAccountType type)
 	{
 		this.bank = bank;
 		this.accountNumber = accountNumber;
+		this.accountType = type;
 	}
 	
 	public CBCommercial getBank()
@@ -24,5 +24,10 @@ public class ItemAccount {
 	public int getAccountNumber()
 	{
 		return accountNumber;
+	}
+	
+	public EAccountType getAccountType()
+	{
+		return accountType;
 	}
 }

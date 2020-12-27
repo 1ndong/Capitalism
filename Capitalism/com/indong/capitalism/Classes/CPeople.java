@@ -9,7 +9,6 @@ public class CPeople
 {
 	private InfoBasicData personaldata;
 	private CACCash cash;
-	private final EBeingType type = EBeingType.Personal;
 	
 	public CPeople(DTime birth , String name)
 	{

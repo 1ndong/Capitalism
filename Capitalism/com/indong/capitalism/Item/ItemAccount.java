@@ -4,10 +4,10 @@ import com.indong.capitalism.Classes.CBCommercial;
 import com.indong.capitalism.Enum.EAccountType;
 
 public class ItemAccount {
-	//계좌는 은행으로 들어가는 통로이지 돈이 보관되는곳이 아님 캐쉬 현물이 보관되는곳은 내주머니 아니면 은행임
 	private int accountNumber = 0;
 	private EAccountType accountType;
 	private CBCommercial bank;
+	private int rightsOfCash = 0;
 	
 	public ItemAccount(CBCommercial bank , int accountNumber , EAccountType type)
 	{
@@ -29,5 +29,13 @@ public class ItemAccount {
 	public EAccountType getAccountType()
 	{
 		return accountType;
+	}
+
+	public int getRightsOfCash() {
+		return rightsOfCash;
+	}
+
+	public void addRightsOfCash(int rightsOfCash) {
+		this.rightsOfCash += rightsOfCash;
 	}
 }

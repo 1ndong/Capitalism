@@ -4,9 +4,11 @@ import java.util.LinkedList;
 
 import com.indong.capitalism.DataStructure.DBankMember;
 import com.indong.capitalism.Enum.EAccountType;
+import com.indong.capitalism.Frame.FrameLog;
+import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Item.ItemAccount;
 
-public class CBCommercial extends CBank {
+public class CBCommercial extends CBank implements IBankService{
 	private LinkedList<DBankMember> bankmemberList = new LinkedList<DBankMember>();
 	private int lastAccountNumber = 0;
 	
@@ -19,6 +21,7 @@ public class CBCommercial extends CBank {
 		return bankmemberList;
 	}
 	
+	@Override
 	public void makeNewAccount(CBeing newclient , EAccountType type)
 	{//은행에 계좌만들기전에 회사처럼 따로 가입할 필요없이 계좌만드는순간 멤버가 됨
 		ItemAccount na = new ItemAccount(this, makeUniqueAccountNumber(), type);
@@ -42,5 +45,28 @@ public class CBCommercial extends CBank {
 	private int makeUniqueAccountNumber()
 	{
 		return lastAccountNumber++;
+	}
+
+	@Override
+	public boolean sendMoney(ItemAccount sender, ItemAccount receiver , int amount) {
+		// TODO Auto-generated method stub
+		if(sender.getRightsOfCash() < amount)
+		{
+			FrameLog.getInstance().addLog("sendmoney", "잔액부족");
+			return false;
+		}
+		else
+		{
+			//계좌의 현금권리를 넘겨주고
+			sender.addRightsOfCash(-amount);
+			receiver.addRightsOfCash(amount);
+			
+			if(sender.getBank() != receiver.getBank())
+			{//실제 현금 현물도 옮겨준다 다른은행이면
+				sender.getBank().getBalance().addBalance(-amount);
+				receiver.getBank().getBalance().addBalance(amount);
+			}
+		}
+		return true;
 	}
 }

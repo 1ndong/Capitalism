@@ -19,14 +19,14 @@ public class CBCommercial extends CBank {
 		return bankmemberList;
 	}
 	
-	public void makeNewAccount(CPeople people , EAccountType type)
+	public void makeNewAccount(CBeing newclient , EAccountType type)
 	{//은행에 계좌만들기전에 회사처럼 따로 가입할 필요없이 계좌만드는순간 멤버가 됨
 		ItemAccount na = new ItemAccount(this, makeUniqueAccountNumber(), type);
 		
 		for(int i = 0 ; i < bankmemberList.size() ; i++)
 		{
 			DBankMember bm = bankmemberList.get(i);
-			if(bm.getPeople() == people)
+			if(bm.getClient() == newclient)
 			{
 				//people이 잇으면 있는거에 리스트에다가 넣고
 				bm.getAccountList().add(na);
@@ -35,7 +35,7 @@ public class CBCommercial extends CBank {
 		}
 		
 		//없으면 새로 만들어서 리스트에다가 새로 넣고
-		DBankMember newmember = new DBankMember(people);
+		DBankMember newmember = new DBankMember(newclient);
 		newmember.getAccountList().add(na);
 	}
 	

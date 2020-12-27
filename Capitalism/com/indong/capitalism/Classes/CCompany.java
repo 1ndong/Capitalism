@@ -4,12 +4,13 @@ import java.util.LinkedList;
 
 import com.indong.capitalism.DataStructure.DCompanyMember;
 import com.indong.capitalism.DataStructure.DTime;
+import com.indong.capitalism.Enum.EBeingType;
 import com.indong.capitalism.Info.InfoBasicData;
 import com.indong.capitalism.Info.InfoCompanyData;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Item.ItemAccount;
 
-public class CCompany implements ITime{
+public class CCompany extends CBeing implements ITime{
 	protected int salaryDay = 0;
 	protected LinkedList<DCompanyMember> staffList = new LinkedList<DCompanyMember>();
 	protected InfoBasicData companyData;
@@ -17,6 +18,7 @@ public class CCompany implements ITime{
 
 	public CCompany(DTime birth , String name)
 	{
+		type = EBeingType.Company;
 		companyData = new InfoCompanyData(birth , name);
 	}
 	

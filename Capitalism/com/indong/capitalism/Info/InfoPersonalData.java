@@ -7,7 +7,7 @@ public class InfoPersonalData extends InfoBasicData{
 
 	public InfoPersonalData(DTime birth, String name) {
 		// TODO Auto-generated constructor stub
-		super(EBeingType.Personal, birth, name);
+		super(birth, name);
 	}
 	
 }

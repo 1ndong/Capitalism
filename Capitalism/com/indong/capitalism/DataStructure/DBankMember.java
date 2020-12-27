@@ -2,20 +2,21 @@ package com.indong.capitalism.DataStructure;
 
 import java.util.LinkedList;
 
+import com.indong.capitalism.Classes.CBeing;
 import com.indong.capitalism.Classes.CPeople;
 import com.indong.capitalism.Item.ItemAccount;
 
 public class DBankMember {
-	private CPeople people;
+	private CBeing client;
 	private LinkedList<ItemAccount> accountList = new LinkedList<ItemAccount>();
 	
-	public DBankMember(CPeople people)
+	public DBankMember(CBeing client)
 	{
-		this.people = people;
+		this.client = client;
 	}
 
-	public CPeople getPeople() {
-		return people;
+	public CBeing getClient() {
+		return client;
 	}
 
 	public LinkedList<ItemAccount> getAccountList() {

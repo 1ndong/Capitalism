@@ -1,17 +1,21 @@
 package com.indong.capitalism.Frame;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import com.indong.capitalism.Processor.ProcessorCommand;
 
@@ -21,6 +25,8 @@ public class FrameControl extends JFrame{
 	 */
 	private static final long serialVersionUID = 1L;
 	private static FrameControl instance;
+	private DefaultTableModel model;
+	private JTextField textfield;
 	
 	public static FrameControl getInstance()
 	{
@@ -41,9 +47,8 @@ public class FrameControl extends JFrame{
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JTextField textfield = new JTextField();
+		textfield = new JTextField();
 		JButton processBtn = new JButton();
-		JLabel resultLabel = new JLabel();
 		
 		Rectangle rect = getBounds();
 		
@@ -53,6 +58,25 @@ public class FrameControl extends JFrame{
 		int tfh = (int)(rect.height * 0.1f);
 		
 		textfield.setBounds(tfx, tfy, tfw, tfh);
+		
+		textfield.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				updateHelpString();
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+			}
+		});
 		
 		int pbx = tfw;
 		int pby = 0;
@@ -85,7 +109,38 @@ public class FrameControl extends JFrame{
 			}
 		});
 		
+		String[] colName = new String[] {"[help]"};
+		model = new DefaultTableModel(colName,0);
+		
+		JTable table = new JTable(model);
+		
+		JScrollPane scrollPane = new JScrollPane(table);
+		table.setFillsViewportHeight(true);
+		
+		int spx = 0;
+		int spy = tfh;
+		int spw = rect.width / 2;
+		int sph = (int)(rect.height * 0.5f);
+		scrollPane.setBounds(spx, spy, spw, sph);
+		table.setBounds(scrollPane.getBounds());
+		
+		updateHelpString();
+		
 		contentPane.add(textfield);
 		contentPane.add(processBtn);
+		contentPane.add(scrollPane);
+	}
+	
+	private void updateHelpString()
+	{
+		String[] helpstring = ProcessorCommand.getInstance().getHelpString(textfield.getText());
+		if(helpstring == null)
+			return;
+		model.setNumRows(0);
+		for(int i = 0 ; i < helpstring.length ; i++)
+		{
+			String[] temp = new String[] {helpstring[i]};
+			model.addRow(temp);
+		}
 	}
 }

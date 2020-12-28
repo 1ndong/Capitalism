@@ -3,15 +3,50 @@ package com.indong.capitalism.Processor;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
+import com.indong.capitalism.Frame.FrameLog;
+
 public class ProcessorCommand {
 	private static ProcessorCommand instance = new ProcessorCommand();
-	private boolean lastResult = false;
 	public static ProcessorCommand getInstance()
 	{
 		return instance;
 	}
 	
-	public boolean compile(String command)
+	public String[] getHelpString(String command)
+	{
+		int level = 0;
+		for(int i = 0 ; i < command.length(); i++)
+		{
+			char temp = command.charAt(i);
+			if(temp == ' ')
+				level++;
+		}
+		
+		if(level == 0)
+		{
+			String[] result = new String[] {"'mk' - make" , "'rm' - remove"};
+			return result;
+		}
+		else if(level == 1)
+		{
+			String[] result = new String[] {"'p' - people","'c' - company"};
+			return result;
+		}
+		else if(level == 2)
+		{
+			String[] result = new String[] {"'yyyymmdd' - birth"};
+			return result;
+		}
+		else if(level == 3)
+		{
+			String[] result = new String[] {"'name' - name"};
+			return result;
+		}
+		
+		return null;
+	}
+	
+	private LinkedList<String> parsingCommand(String command)
 	{
 		// command type args1 args2 args3....
 		StringTokenizer st = new StringTokenizer(command, " ");
@@ -21,26 +56,52 @@ public class ProcessorCommand {
 		{
 			commandList.add(st.nextToken());
 		}
-		
-		compileFirstAction(commandList.removeFirst());
-		compileSecondTarget(commandList.removeFirst());
-		compileArgs(commandList);
-		
-		return lastResult;
+		return commandList;
 	}
 	
-	private void compileFirstAction(String action)
+	public boolean compile(String command)
 	{
+		LinkedList<String> commandList = parsingCommand(command);
 		
-	}
-	
-	private void compileSecondTarget(String target)
-	{
+		if(commandList.size() < 2)
+		{
+			FrameLog.getInstance().addLog("compile", "fail");
+			return false;
+		}
 		
-	}
-	
-	private void compileArgs(LinkedList<String> commandList)
-	{
+		String action = commandList.removeFirst();
+		String target = commandList.removeFirst();
 		
+		boolean result = false;
+		
+		if(action.equalsIgnoreCase("mk"))
+		{
+			if(target.equalsIgnoreCase("people"))
+			{
+				
+			}
+			else if(target.equalsIgnoreCase("company"))
+			{
+				
+			}
+		}
+		else if(action.equalsIgnoreCase("rm"))
+		{
+			if(target.equalsIgnoreCase("people"))
+			{
+				
+			}
+			else if(target.equalsIgnoreCase("company"))
+			{
+				
+			}
+		}
+				
+		if(result)
+			FrameLog.getInstance().addLog("compile", "success compile");
+		else
+			FrameLog.getInstance().addLog("compile", "fail compile");
+		
+		return result;
 	}
 }

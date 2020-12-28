@@ -14,10 +14,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class FrameLog extends JFrame {
 	private static final long serialVersionUID = -1988465590986325069L;
-	private JPanel contentPane;
 	private JTable table;
 	private DefaultTableModel model;
-	private JScrollPane scrollPane;
 	private static FrameLog instance;
 
 	public static void MakeLogFrame(double x , double width , double height)
@@ -48,7 +46,7 @@ public class FrameLog extends JFrame {
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds((int)x,0,(int)width,(int)height);
-		contentPane = new JPanel();
+		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout());
@@ -62,7 +60,7 @@ public class FrameLog extends JFrame {
 		table.getColumnModel().getColumn(2).setPreferredWidth(490);
 		table.getColumnModel().getColumn(3).setPreferredWidth(10);
 			
-		scrollPane = new JScrollPane(table);
+		JScrollPane scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true);
 		scrollPane.setBounds(12, 10, 960, 641);
 		table.setBounds(scrollPane.getBounds());

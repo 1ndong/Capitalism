@@ -1,4 +1,4 @@
-package com.indong.capitalism.Frame;
+package com.indong.capitalism.Frame.CustomTable;
 
 import java.awt.Component;
 import java.util.EventObject;
@@ -8,22 +8,22 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
-public class CPanelCellEditorRenderer extends AbstractCellEditor implements TableCellRenderer, TableCellEditor {
+public class CControlPanelCellEditorRenderer extends AbstractCellEditor implements TableCellRenderer, TableCellEditor {
 
 	private static final long serialVersionUID = 1L;
-	private CCompCellPanel renderer = new CCompCellPanel("",0);
-	private CCompCellPanel editor = new CCompCellPanel("",0);
+	private CMainCompCellPanel renderer = new CMainCompCellPanel("",0);
+	private CMainCompCellPanel editor = new CMainCompCellPanel("",0);
 
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
-		renderer.setComp((CTableComp) value);
+		renderer.setComp((CMainTableComp) value);
 		return renderer;
 	}
 
 	@Override
 	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-		editor.setComp((CTableComp) value);
+		editor.setComp((CMainTableComp) value);
 		return editor;
 	}
 

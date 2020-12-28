@@ -1,7 +1,5 @@
 package com.indong.capitalism.Processor;
 
-import com.indong.capitalism.Classes.CPeople;
-import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Frame.FrameLog;
 
 public class ProcessorMain {

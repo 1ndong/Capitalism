@@ -1,11 +1,11 @@
-package com.indong.capitalism.Frame;
+package com.indong.capitalism.Frame.CustomTable;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-public class CDetailButtonClickListener implements ActionListener{
+public class CMainDetailButtonClickListener implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

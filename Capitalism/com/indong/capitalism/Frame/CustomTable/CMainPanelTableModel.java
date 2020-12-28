@@ -1,8 +1,8 @@
-package com.indong.capitalism.Frame;
+package com.indong.capitalism.Frame.CustomTable;
 
 import javax.swing.table.DefaultTableModel;
 
-public class CPanelTableModel extends DefaultTableModel{
+public class CMainPanelTableModel extends DefaultTableModel{
     private static final long serialVersionUID = 1L;
 
     @Override
@@ -11,6 +11,6 @@ public class CPanelTableModel extends DefaultTableModel{
     }
 
     public void addRow(String name,int balance) {
-        super.addRow(new Object[]{new CTableComp(name,balance)});
+        super.addRow(new Object[]{new CMainTableComp(name,balance)});
     }
 }

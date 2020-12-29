@@ -11,9 +11,9 @@ public class CPeople extends CBeing implements ITime
 	private InfoBasicData personaldata;
 	private CACCash cash;
 	
-	public CPeople(DTime birth , String name)
+	public CPeople(CCountry country , DTime birth , String name)
 	{
-		super();
+		super(country);
 		type = EBeingType.Personal;
 		cash = new CACCash();
 		personaldata = new InfoPersonalData(birth , name);

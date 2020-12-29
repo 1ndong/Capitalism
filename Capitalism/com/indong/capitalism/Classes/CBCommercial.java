@@ -11,10 +11,11 @@ import com.indong.capitalism.Item.ItemAccount;
 public class CBCommercial extends CBank implements IBankService{
 	private LinkedList<DBankMember> bankmemberList = new LinkedList<DBankMember>();
 	private int lastAccountNumber = 0;
+	private float spreadInterestRate = 2.0f;
 	
-	public CBCommercial(String name)
+	public CBCommercial(CCountry country , String name)
 	{
-		super(name);
+		super(country ,name);
 	}
 	
 	public LinkedList<DBankMember> getBankMemberList() {
@@ -68,5 +69,13 @@ public class CBCommercial extends CBank implements IBankService{
 			}
 		}
 		return true;
+	}
+
+	public float getSpreadInterestRate() {
+		return spreadInterestRate;
+	}
+
+	public void setSpreadInterestRate(float spreadInterestRate) {
+		this.spreadInterestRate = spreadInterestRate;
 	}
 }

@@ -8,14 +8,15 @@ public class CBCentral extends CBank{
 	private LinkedList<CBank> bankList = new LinkedList<CBank>();
 	private float baseInterestRate = 0.5f;
 	
-	public CBCentral(String name)
+	public CBCentral(CCountry country , String name)
 	{
-		super(name);
+		super(country , name);
 	}
 	
 	public void makeMoney(int amount)
 	{
 		balance.addBalance(amount);
+		FrameLog.getInstance().addLog("makeMoney", "중앙은행 현금 발행 [" + amount + "]만원");
 	}
 	
 	public void releaseMoney(CBank bank , int amount)
@@ -33,9 +34,12 @@ public class CBCentral extends CBank{
 	{
 		bankList.add(newbank);
 	}
-	
-	public float getBaseInterestRate()
-	{
+
+	public float getBaseInterestRate() {
 		return baseInterestRate;
+	}
+
+	public void setBaseInterestRate(float baseInterestRate) {
+		this.baseInterestRate = baseInterestRate;
 	}
 }

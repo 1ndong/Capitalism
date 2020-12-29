@@ -5,7 +5,11 @@ import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
 import com.indong.capitalism.Classes.CCompany;
+import com.indong.capitalism.Classes.CCountry;
+import com.indong.capitalism.Classes.CGovernment;
+import com.indong.capitalism.Classes.CGovernmentHumanResource;
 import com.indong.capitalism.Classes.CPeople;
+import com.indong.capitalism.Classes.CWorld;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Frame.FrameLog;
 
@@ -38,10 +42,19 @@ public class ProcessorCommand {
 		}
 		else if(level == 2)
 		{
-			String[] result = new String[] {"'yyyymmdd' - birth"};
+			String[] result = new String[CWorld.getInstance().getCountryList().size()];
+			for(int i = 0 ;i < CWorld.getInstance().getCountryList().size() ; i++)
+			{
+				result[i] = "'"+CWorld.getInstance().getCountryList().get(i).getCountryName()+"'";
+			}
 			return result;
 		}
 		else if(level == 3)
+		{
+			String[] result = new String[] {"'yyyymmdd' - birth"};
+			return result;
+		}
+		else if(level == 4)
 		{
 			String[] result = new String[] {"'name' - name"};
 			return result;
@@ -80,38 +93,66 @@ public class ProcessorCommand {
 		
 		if(action.equalsIgnoreCase("mk"))
 		{
-			//yyyymmdd , name
-			String birthStr = commandList.removeFirst();
-			if(birthStr.length() == 8)
+			String countryName = commandList.removeFirst();
+			CCountry country = null;
+			for(int i = 0 ; i < CWorld.getInstance().getCountryList().size() ; i++)
 			{
-				try
+				CCountry tempcountry = CWorld.getInstance().getCountryList().get(i); 
+				String temp = tempcountry.getCountryName();
+				if(countryName.equalsIgnoreCase(temp))
 				{
-					String yearstr = birthStr.substring(0, 3);
-					String monthstr = birthStr.substring(4, 5);
-					String daystr = birthStr.substring(6, 7);
-					int year = Integer.parseInt(yearstr);
-					int month = Integer.parseInt(monthstr);
-					int day = Integer.parseInt(daystr);
-					
-					if(target.equalsIgnoreCase("people"))
-					{
-						CPeople newpeople = new CPeople(new DTime(year,month,day,""),commandList.removeFirst());
-						result = true;
-					}
-					else if(target.equalsIgnoreCase("company"));
-					{
-						CCompany newcompany = new CCompany(new DTime(year,month,day,""),commandList.removeFirst());
-						result = true;
-					}
-					
+					country = tempcountry;
+					break;
 				}
-				catch(NumberFormatException e)
+			}
+			if(country != null)
+			{
+				//yyyymmdd , name
+				String birthStr = commandList.removeFirst();
+				if(birthStr.length() == 8)
 				{
-					
-				}
-				catch(NoSuchElementException ee)
-				{
-					
+					try
+					{
+						String yearstr = birthStr.substring(0, 3);
+						String monthstr = birthStr.substring(4, 5);
+						String daystr = birthStr.substring(6, 7);
+						int year = Integer.parseInt(yearstr);
+						int month = Integer.parseInt(monthstr);
+						int day = Integer.parseInt(daystr);
+						
+						CGovernmentHumanResource ghr = null;
+						for(int i = 0 ; i < country.getGovernmentList().size() ; i++)
+						{
+							CGovernment temp = country.getGovernmentList().get(i); 
+							if(temp instanceof CGovernmentHumanResource)
+							{
+								ghr = (CGovernmentHumanResource)temp;
+							}
+						}
+						
+						if(ghr != null)
+						{
+							if(target.equalsIgnoreCase("people"))
+							{
+								CPeople newpeople = new CPeople(country,new DTime(year,month,day,""),commandList.removeFirst());
+								ghr.registerPeople(newpeople);
+								result = true;
+							}
+							else if(target.equalsIgnoreCase("company"));
+							{
+								CCompany newcompany = new CCompany(country,new DTime(year,month,day,""),commandList.removeFirst());
+								result = true;
+							}	
+						}
+					}
+					catch(NumberFormatException e)
+					{
+						
+					}
+					catch(NoSuchElementException ee)
+					{
+						
+					}
 				}
 			}
 		}

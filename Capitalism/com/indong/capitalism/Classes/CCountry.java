@@ -13,12 +13,13 @@ public class CCountry implements ITime{
 	private CBCentral centralBank;
 	private LinkedList<CBank> bankList = new LinkedList<CBank>();
 	private LinkedList<CCompany> companyList = new LinkedList<CCompany>();
+	private LinkedList<CGovernment> governmentList = new LinkedList<CGovernment>();
 	
 	public CCountry(String name)
 	{
 		this.name = name;
 		FrameLog.getInstance().addLog("CCountry", getCountryName() + " 생성");
-		centralBank = new CBCentral("한국은행");
+		centralBank = new CBCentral(this , "한국은행");
 		FrameLog.getInstance().addLog("CCountry", getCountryName() + " 중앙은행 생성");
 		
 		ITimeKeeper timeKeeper = (ITimeKeeper)ProcessorDay.GetInstance();
@@ -46,5 +47,9 @@ public class CCountry implements ITime{
 	public void dayChange(DTime newTime) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public LinkedList<CGovernment> getGovernmentList() {
+		return governmentList;
 	}
 }

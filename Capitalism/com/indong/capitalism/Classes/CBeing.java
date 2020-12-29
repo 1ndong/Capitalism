@@ -6,11 +6,12 @@ import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
 import com.indong.capitalism.Processor.ProcessorDay;
 
-public class CBeing implements ITime{
+public class CBeing extends CBelong implements ITime{
 	protected EBeingType type;
 
-	public CBeing()
+	public CBeing(CCountry country)
 	{
+		super(country);
 		ITimeKeeper timekeeper = (ITimeKeeper)ProcessorDay.GetInstance();
 		timekeeper.addTimeSlave(this);
 	}

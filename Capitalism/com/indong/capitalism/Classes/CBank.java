@@ -5,13 +5,13 @@ import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
 import com.indong.capitalism.Processor.ProcessorDay;
 
-public class CBank implements ITime{
+public class CBank extends CBelong implements ITime{
 	protected CACCash balance = new CACCash();
-	protected float interestRate = 2.0f;
 	protected String name;
 	
-	public CBank(String name)
+	public CBank(CCountry country , String name)
 	{
+		super(country);
 		this.name = name;
 		
 		ITimeKeeper timeKeeper = (ITimeKeeper)ProcessorDay.GetInstance();

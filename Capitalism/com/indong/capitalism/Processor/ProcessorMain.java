@@ -18,11 +18,13 @@ public class ProcessorMain {
 		CCountry rok = new CCountry("대한민국");
 		CWorld.getInstance().getCountryList().add(rok);
 		
-		CBCommercial shinhanbank = new CBCommercial("신한");
-		CBCommercial kookminbank = new CBCommercial("국민");
-		CBCommercial wooribank = new CBCommercial("우리");
+		CBCommercial shinhanbank = new CBCommercial(rok , "신한");
+		CBCommercial kookminbank = new CBCommercial(rok , "국민");
+		CBCommercial wooribank = new CBCommercial(rok , "우리");
 		rok.getBankList().add(shinhanbank);
 		rok.getBankList().add(kookminbank);
 		rok.getBankList().add(wooribank);
+		
+		rok.getCentralBank().makeMoney(100000000);
 	}
 }

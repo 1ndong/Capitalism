@@ -5,10 +5,11 @@ import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
 import com.indong.capitalism.Processor.ProcessorDay;
 
-public class CGovernment implements ITime{
+public class CGovernment extends CBelong implements ITime{
 
-	public CGovernment()
+	public CGovernment(CCountry country)
 	{
+		super(country);
 		ITimeKeeper timeKeeper = (ITimeKeeper)ProcessorDay.GetInstance();
 		timeKeeper.addTimeSlave(this);
 	}

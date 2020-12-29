@@ -2,7 +2,6 @@ package com.indong.capitalism;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Frame;
 import java.awt.Toolkit;
 
 import com.indong.capitalism.Frame.FrameControl;

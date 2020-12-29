@@ -32,4 +32,8 @@ public class InfoBasicData {
 	{
 		accountList.add(newaccount);
 	}
+
+	public String getName() {
+		return name;
+	}
 }

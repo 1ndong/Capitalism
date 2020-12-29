@@ -12,9 +12,9 @@ public class CBCommercial extends CBank implements IBankService{
 	private LinkedList<DBankMember> bankmemberList = new LinkedList<DBankMember>();
 	private int lastAccountNumber = 0;
 	
-	public CBCommercial()
+	public CBCommercial(String name)
 	{
-		
+		super(name);
 	}
 	
 	public LinkedList<DBankMember> getBankMemberList() {

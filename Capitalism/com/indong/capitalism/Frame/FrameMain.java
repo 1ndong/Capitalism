@@ -12,13 +12,16 @@ import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Frame.CustomTable.CMainCompCellPanel;
 import com.indong.capitalism.Frame.CustomTable.CMainPanelCellEditorRenderer;
 import com.indong.capitalism.Frame.CustomTable.CMainPanelTableModel;
+import com.indong.capitalism.Interface.ITime;
+import com.indong.capitalism.Interface.ITimeKeeper;
 import com.indong.capitalism.Processor.ProcessorDay;
 import com.indong.capitalism.Processor.ProcessorMain;
 
-public class FrameMain extends JFrame {
+public class FrameMain extends JFrame implements ITime{
 
 	/**
 	 * 
@@ -52,7 +55,7 @@ public class FrameMain extends JFrame {
 		//
 		Rectangle rect = this.getBounds();
 		
-		float RATIO_DASHBOARD = 0.3f;
+		float RATIO_DASHBOARD = 0.6f;
 		Rectangle dashboardRect = new Rectangle(rect);
 		dashboardRect.height *= RATIO_DASHBOARD;
 		
@@ -68,7 +71,7 @@ public class FrameMain extends JFrame {
 		JTable table = new JTable(compModel);
 		table.setRowHeight(new CMainCompCellPanel("",0).getPreferredSize().height);
         table.setTableHeader(null);
-        table.setRowHeight(100);
+        table.setRowHeight(40);
         CMainPanelCellEditorRenderer PanelCellEditorRenderer = new CMainPanelCellEditorRenderer();
         table.setDefaultRenderer(Object.class, PanelCellEditorRenderer);
         table.setDefaultEditor(Object.class, PanelCellEditorRenderer);
@@ -104,5 +107,14 @@ public class FrameMain extends JFrame {
 				
 			}
 		});
+		
+		ITimeKeeper timekeeper = (ITimeKeeper)ProcessorDay.GetInstance();
+		timekeeper.addTimeSlave(this);
+	}
+
+	@Override
+	public void dayChange(DTime newTime) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -8,9 +8,9 @@ public class CBCentral extends CBank{
 	private LinkedList<CBank> bankList = new LinkedList<CBank>();
 	private float baseInterestRate = 0.5f;
 	
-	public CBCentral()
+	public CBCentral(String name)
 	{
-		
+		super(name);
 	}
 	
 	public void makeMoney(int amount)

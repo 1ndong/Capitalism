@@ -2,15 +2,27 @@ package com.indong.capitalism.Classes;
 
 import java.util.LinkedList;
 
-public class CCountry {
+import com.indong.capitalism.DataStructure.DTime;
+import com.indong.capitalism.Frame.FrameLog;
+import com.indong.capitalism.Interface.ITime;
+import com.indong.capitalism.Interface.ITimeKeeper;
+import com.indong.capitalism.Processor.ProcessorDay;
+
+public class CCountry implements ITime{
 	private String name;
-	private CBCentral centralBank = new CBCentral();
+	private CBCentral centralBank;
 	private LinkedList<CBank> bankList = new LinkedList<CBank>();
 	private LinkedList<CCompany> companyList = new LinkedList<CCompany>();
 	
 	public CCountry(String name)
 	{
 		this.name = name;
+		FrameLog.getInstance().addLog("CCountry", getCountryName() + " 생성");
+		centralBank = new CBCentral("한국은행");
+		FrameLog.getInstance().addLog("CCountry", getCountryName() + " 중앙은행 생성");
+		
+		ITimeKeeper timeKeeper = (ITimeKeeper)ProcessorDay.GetInstance();
+		timeKeeper.addTimeSlave(this);
 	}
 	
 	public String getCountryName()
@@ -28,5 +40,11 @@ public class CCountry {
 
 	public LinkedList<CCompany> getCompanyList() {
 		return companyList;
+	}
+
+	@Override
+	public void dayChange(DTime newTime) {
+		// TODO Auto-generated method stub
+		
 	}
 }

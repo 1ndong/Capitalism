@@ -1,5 +1,6 @@
 package com.indong.capitalism.Processor;
 
+import com.indong.capitalism.Classes.CWorld;
 import com.indong.capitalism.Frame.FrameLog;
 
 public class ProcessorMain {
@@ -12,6 +13,7 @@ public class ProcessorMain {
 	
 	private void start()
 	{
+		CWorld world = new CWorld();
 		
 	}
 }

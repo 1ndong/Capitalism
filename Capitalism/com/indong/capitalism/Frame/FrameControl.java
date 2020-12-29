@@ -69,6 +69,11 @@ public class FrameControl extends JFrame{
 			@Override
 			public void keyReleased(KeyEvent e) {
 				// TODO Auto-generated method stub
+				if(e.getKeyCode() == KeyEvent.VK_ENTER)
+				{
+					processBtn.doClick();
+					return;
+				}
 				updateHelpString();
 			}
 			
@@ -106,6 +111,7 @@ public class FrameControl extends JFrame{
 					Color failColor = new Color(223,89,77);
 					processBtn.setBackground(failColor);
 				}
+				textfield.setText("");
 			}
 		});
 		

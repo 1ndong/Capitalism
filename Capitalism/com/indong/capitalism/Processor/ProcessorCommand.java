@@ -1,8 +1,12 @@
 package com.indong.capitalism.Processor;
 
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
+import com.indong.capitalism.Classes.CCompany;
+import com.indong.capitalism.Classes.CPeople;
+import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Frame.FrameLog;
 
 public class ProcessorCommand {
@@ -76,13 +80,39 @@ public class ProcessorCommand {
 		
 		if(action.equalsIgnoreCase("mk"))
 		{
-			if(target.equalsIgnoreCase("people"))
+			//yyyymmdd , name
+			String birthStr = commandList.removeFirst();
+			if(birthStr.length() == 8)
 			{
-				
-			}
-			else if(target.equalsIgnoreCase("company"))
-			{
-				
+				try
+				{
+					String yearstr = birthStr.substring(0, 3);
+					String monthstr = birthStr.substring(4, 5);
+					String daystr = birthStr.substring(6, 7);
+					int year = Integer.parseInt(yearstr);
+					int month = Integer.parseInt(monthstr);
+					int day = Integer.parseInt(daystr);
+					
+					if(target.equalsIgnoreCase("people"))
+					{
+						CPeople newpeople = new CPeople(new DTime(year,month,day,""),commandList.removeFirst());
+						result = true;
+					}
+					else if(target.equalsIgnoreCase("company"));
+					{
+						CCompany newcompany = new CCompany(new DTime(year,month,day,""),commandList.removeFirst());
+						result = true;
+					}
+					
+				}
+				catch(NumberFormatException e)
+				{
+					
+				}
+				catch(NoSuchElementException ee)
+				{
+					
+				}
 			}
 		}
 		else if(action.equalsIgnoreCase("rm"))

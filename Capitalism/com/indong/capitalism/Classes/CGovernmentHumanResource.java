@@ -6,7 +6,8 @@ import com.indong.capitalism.Frame.FrameLog;
 
 public class CGovernmentHumanResource extends CGovernment 
 {
-	HashMap<Integer, CPeople> m_PeopleMap = new HashMap<Integer,CPeople>();
+	private String name="보건복지부";
+	private HashMap<Integer, CPeople> m_PeopleMap = new HashMap<Integer,CPeople>();
 	
 	public CGovernmentHumanResource(CCountry country)
 	{

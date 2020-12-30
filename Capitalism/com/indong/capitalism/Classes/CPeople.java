@@ -9,13 +9,13 @@ import com.indong.capitalism.Interface.ITime;
 public class CPeople extends CBeing implements ITime
 {
 	private InfoBasicData personaldata;
-	private CACCash cash;
+	private CACCash wallet;
 	
 	public CPeople(CCountry country , DTime birth , String name)
 	{
 		super(country);
 		type = EBeingType.Personal;
-		cash = new CACCash();
+		wallet = new CACCash();
 		personaldata = new InfoPersonalData(birth , name);
 	}
 
@@ -24,11 +24,11 @@ public class CPeople extends CBeing implements ITime
 	}
 
 	public CACCash getCash() {
-		return cash;
+		return wallet;
 	}
 
 	public void addCash(int cash) {
-		this.cash.addBalance(cash);
+		this.wallet.addBalance(cash);
 	}
 
 	@Override

@@ -78,4 +78,42 @@ public class CBCommercial extends CBank implements IBankService{
 	public void setSpreadInterestRate(float spreadInterestRate) {
 		this.spreadInterestRate = spreadInterestRate;
 	}
+
+	@Override
+	public int withdrawCash(ItemAccount account, int amount) {
+		// TODO Auto-generated method stub
+		if(account.getRightsOfCash() < amount)
+		{
+			FrameLog.getInstance().addLog("withdrawcash","잔액부족");
+			return 0;
+		}
+		else 
+		{
+			account.addRightsOfCash(-amount);
+			if(account.getBank().getBalance().getBalance() < amount)
+			{
+				FrameLog.getInstance().addLog("withdrawcash", "은행 잔고 부족 bank run");
+				return 0;
+			}
+			else
+			{
+				account.getBank().getBalance().addBalance(-amount);
+				
+				return amount;	
+			}
+		}
+	}
+
+	@Override
+	public void depositCash(ItemAccount account, CACCash cash , int amount) {
+		// TODO Auto-generated method stub
+		if(cash.getBalance() < amount)
+		{
+			FrameLog.getInstance().addLog("depositcash", "맡길 금액 부족");
+			return;
+		}
+		account.addRightsOfCash(amount);
+		account.getBank().getBalance().addBalance(amount);
+		cash.addBalance(-amount);
+	}
 }

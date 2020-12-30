@@ -2,6 +2,8 @@ package com.indong.capitalism.Processor;
 
 import com.indong.capitalism.Classes.CBCommercial;
 import com.indong.capitalism.Classes.CCountry;
+import com.indong.capitalism.Classes.CGMinistryOfHealthAndWelfare;
+import com.indong.capitalism.Classes.CGMinistryOfTradeIndustryAndEnergy;
 import com.indong.capitalism.Classes.CWorld;
 import com.indong.capitalism.Frame.FrameLog;
 
@@ -17,6 +19,11 @@ public class ProcessorMain {
 	{
 		CCountry rok = new CCountry("대한민국");
 		CWorld.getInstance().getCountryList().add(rok);
+		
+		CGMinistryOfHealthAndWelfare gmohaw = new CGMinistryOfHealthAndWelfare(rok);
+		CGMinistryOfTradeIndustryAndEnergy gmotiae = new CGMinistryOfTradeIndustryAndEnergy(rok);
+		rok.getGovernmentList().add(gmohaw);
+		rok.getGovernmentList().add(gmotiae);
 		
 		CBCommercial shinhanbank = new CBCommercial(rok , "신한");
 		CBCommercial kookminbank = new CBCommercial(rok , "국민");

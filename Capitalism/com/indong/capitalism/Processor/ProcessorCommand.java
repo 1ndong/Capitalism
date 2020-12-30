@@ -122,7 +122,7 @@ public class ProcessorCommand {
 						int day = Integer.parseInt(daystr);
 						
 
-							if(target.equalsIgnoreCase("people"))
+							if(target.equalsIgnoreCase("p"))
 							{
 								CGMinistryOfHealthAndWelfare gmohaw = null;
 								for(int i = 0 ; i < country.getGovernmentList().size() ; i++)
@@ -131,6 +131,7 @@ public class ProcessorCommand {
 									if(temp instanceof CGMinistryOfHealthAndWelfare)
 									{
 										gmohaw = (CGMinistryOfHealthAndWelfare)temp;
+										break;
 									}
 								}
 								
@@ -141,7 +142,7 @@ public class ProcessorCommand {
 									result = true;
 								}
 							}
-							else if(target.equalsIgnoreCase("company"));
+							else if(target.equalsIgnoreCase("c"));
 							{
 								CGMinistryOfTradeIndustryAndEnergy gmotiae = null;
 								for(int i = 0 ; i < country.getGovernmentList().size() ; i++)
@@ -150,6 +151,7 @@ public class ProcessorCommand {
 									if(temp instanceof CGMinistryOfTradeIndustryAndEnergy)
 									{
 										gmotiae = (CGMinistryOfTradeIndustryAndEnergy)temp;
+										break;
 									}
 								}
 								

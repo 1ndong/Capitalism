@@ -6,7 +6,7 @@ import com.indong.capitalism.Interface.ITimeKeeper;
 import com.indong.capitalism.Processor.ProcessorDay;
 
 public class CGovernment extends CBelong implements ITime{
-	private String name;
+	protected String name;
 	
 	public CGovernment(CCountry country)
 	{
@@ -24,6 +24,5 @@ public class CGovernment extends CBelong implements ITime{
 	public String getName() {
 		return name;
 	}
-	ministry of health and welfare 보건복지부
-	ministry of trade industry and energy 산업통산자원부
+
 }

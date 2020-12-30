@@ -82,4 +82,8 @@ public class CCompany extends CBeing implements ITime{
 			}
 		}
 	}
+
+	public InfoBasicData getCompanyData() {
+		return companyData;
+	}
 }

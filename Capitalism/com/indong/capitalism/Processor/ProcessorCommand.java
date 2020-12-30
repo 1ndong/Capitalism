@@ -6,8 +6,9 @@ import java.util.StringTokenizer;
 
 import com.indong.capitalism.Classes.CCompany;
 import com.indong.capitalism.Classes.CCountry;
+import com.indong.capitalism.Classes.CGMinistryOfHealthAndWelfare;
+import com.indong.capitalism.Classes.CGMinistryOfTradeIndustryAndEnergy;
 import com.indong.capitalism.Classes.CGovernment;
-import com.indong.capitalism.Classes.CGovernmentHumanResource;
 import com.indong.capitalism.Classes.CPeople;
 import com.indong.capitalism.Classes.CWorld;
 import com.indong.capitalism.DataStructure.DTime;
@@ -120,30 +121,45 @@ public class ProcessorCommand {
 						int month = Integer.parseInt(monthstr);
 						int day = Integer.parseInt(daystr);
 						
-						CGovernmentHumanResource ghr = null;
-						for(int i = 0 ; i < country.getGovernmentList().size() ; i++)
-						{
-							CGovernment temp = country.getGovernmentList().get(i); 
-							if(temp instanceof CGovernmentHumanResource)
-							{
-								ghr = (CGovernmentHumanResource)temp;
-							}
-						}
-						
-						if(ghr != null)
-						{
+
 							if(target.equalsIgnoreCase("people"))
 							{
-								CPeople newpeople = new CPeople(country,new DTime(year,month,day,""),commandList.removeFirst());
-								ghr.registerPeople(newpeople);
-								result = true;
+								CGMinistryOfHealthAndWelfare gmohaw = null;
+								for(int i = 0 ; i < country.getGovernmentList().size() ; i++)
+								{
+									CGovernment temp = country.getGovernmentList().get(i); 
+									if(temp instanceof CGMinistryOfHealthAndWelfare)
+									{
+										gmohaw = (CGMinistryOfHealthAndWelfare)temp;
+									}
+								}
+								
+								if(gmohaw != null)
+								{
+									CPeople newpeople = new CPeople(country,new DTime(year,month,day,""),commandList.removeFirst());
+									gmohaw.registerPeople(newpeople);
+									result = true;
+								}
 							}
 							else if(target.equalsIgnoreCase("company"));
 							{
-								CCompany newcompany = new CCompany(country,new DTime(year,month,day,""),commandList.removeFirst());
-								result = true;
+								CGMinistryOfTradeIndustryAndEnergy gmotiae = null;
+								for(int i = 0 ; i < country.getGovernmentList().size() ; i++)
+								{
+									CGovernment temp = country.getGovernmentList().get(i); 
+									if(temp instanceof CGMinistryOfTradeIndustryAndEnergy)
+									{
+										gmotiae = (CGMinistryOfTradeIndustryAndEnergy)temp;
+									}
+								}
+								
+								if(gmotiae != null)
+								{
+									CCompany newcompany = new CCompany(country,new DTime(year,month,day,""),commandList.removeFirst());
+									gmotiae.registerCompany(newcompany);
+									result = true;
+								}
 							}	
-						}
 					}
 					catch(NumberFormatException e)
 					{

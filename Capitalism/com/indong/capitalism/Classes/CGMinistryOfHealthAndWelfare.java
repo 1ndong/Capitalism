@@ -4,21 +4,21 @@ import java.util.HashMap;
 
 import com.indong.capitalism.Frame.FrameLog;
 
-public class CGovernmentHumanResource extends CGovernment 
+public class CGMinistryOfHealthAndWelfare extends CGovernment 
 {
-	private String name="보건복지부";
-	private HashMap<Integer, CPeople> m_PeopleMap = new HashMap<Integer,CPeople>();
+	private HashMap<Integer, CPeople> peopleMap = new HashMap<Integer,CPeople>();
 	
-	public CGovernmentHumanResource(CCountry country)
+	public CGMinistryOfHealthAndWelfare(CCountry country)
 	{
 		super(country);
+		name = "보건복지부";
 	}
 	
 	public void registerPeople(CPeople people)
 	{
 		int ID = makeUniqueID();
 		people.getPersonaldata().setID(ID);
-		m_PeopleMap.put(ID,people);
+		peopleMap.put(ID,people);
 		FrameLog.getInstance().addLog("registerPeople", "신규등록 완료 이름 = "+people.getPersonaldata().getName());
 	}
 	
@@ -29,7 +29,7 @@ public class CGovernmentHumanResource extends CGovernment
 		int tempKey = 0;
 		while(result == -1)
 		{
-			CPeople isExist = m_PeopleMap.get(tempKey);
+			CPeople isExist = peopleMap.get(tempKey);
 			if(isExist == null)
 			{
 				result = tempKey;
@@ -41,5 +41,9 @@ public class CGovernmentHumanResource extends CGovernment
 		}
 		
 		return result;
+	}
+
+	public HashMap<Integer, CPeople> getPeopleMap() {
+		return peopleMap;
 	}
 }

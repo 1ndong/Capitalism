@@ -13,6 +13,10 @@ import com.indong.capitalism.Classes.CWorld;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EGovernmentType;
 import com.indong.capitalism.Frame.FrameLog;
+import com.indong.capitalism.Processor.Compiler.CCGrep;
+import com.indong.capitalism.Processor.Compiler.CCMake;
+import com.indong.capitalism.Processor.Compiler.CCRemove;
+import com.indong.capitalism.Processor.Compiler.CompilerCommand;
 
 public class ProcessorCommand {
 	private static ProcessorCommand instance = new ProcessorCommand();
@@ -176,5 +180,38 @@ public class ProcessorCommand {
 			FrameLog.getInstance().addLog("compile", "fail compile");
 		
 		return result;
+	}
+	
+	public boolean newcompile(String command)
+	{
+		boolean result = false;
+		LinkedList<String> commandList = parsingCommand(command);
+		
+		CompilerCommand cc = null;
+		
+		switch(commandList.get(0))
+		{
+		case "mk":
+			cc = new CCMake(commandList);
+			break;
+		case "rm":
+			cc = new CCRemove(commandList);
+			break;
+		case "grep":
+			cc = new CCGrep(commandList);
+			break;
+		}
+		
+		if(cc != null)
+		{
+			result = cc.compile();
+		}
+		
+		return result;
+	}
+	
+	public String[] newgetHelpString(String command)
+	{
+		return null;
 	}
 }

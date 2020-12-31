@@ -5,6 +5,7 @@ import com.indong.capitalism.Classes.CCountry;
 import com.indong.capitalism.Classes.CGMinistryOfHealthAndWelfare;
 import com.indong.capitalism.Classes.CGMinistryOfTradeIndustryAndEnergy;
 import com.indong.capitalism.Classes.CWorld;
+import com.indong.capitalism.Enum.EGovernmentType;
 import com.indong.capitalism.Frame.FrameLog;
 
 public class ProcessorMain {
@@ -22,8 +23,8 @@ public class ProcessorMain {
 		
 		CGMinistryOfHealthAndWelfare gmohaw = new CGMinistryOfHealthAndWelfare(rok);
 		CGMinistryOfTradeIndustryAndEnergy gmotiae = new CGMinistryOfTradeIndustryAndEnergy(rok);
-		rok.getGovernmentList().add(gmohaw);
-		rok.getGovernmentList().add(gmotiae);
+		rok.getGovernmentMap().put(EGovernmentType.EHealthAndWelfare , gmohaw);
+		rok.getGovernmentMap().put(EGovernmentType.ETradeIndustryAndEnergy, gmotiae);
 		
 		CBCommercial shinhanbank = new CBCommercial(rok , "신한");
 		CBCommercial kookminbank = new CBCommercial(rok , "국민");

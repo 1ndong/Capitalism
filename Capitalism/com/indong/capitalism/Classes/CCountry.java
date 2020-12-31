@@ -1,8 +1,10 @@
 package com.indong.capitalism.Classes;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import com.indong.capitalism.DataStructure.DTime;
+import com.indong.capitalism.Enum.EGovernmentType;
 import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
@@ -13,7 +15,7 @@ public class CCountry implements ITime{
 	private CBCentral centralBank;
 	private LinkedList<CBank> bankList = new LinkedList<CBank>();
 	private LinkedList<CCompany> companyList = new LinkedList<CCompany>();
-	private LinkedList<CGovernment> governmentList = new LinkedList<CGovernment>();
+	private HashMap<EGovernmentType , CGovernment> governmentMap = new HashMap<EGovernmentType,CGovernment>();
 	
 	public CCountry(String name)
 	{
@@ -49,7 +51,7 @@ public class CCountry implements ITime{
 		
 	}
 
-	public LinkedList<CGovernment> getGovernmentList() {
-		return governmentList;
+	public HashMap<EGovernmentType , CGovernment> getGovernmentMap() {
+		return governmentMap;
 	}
 }

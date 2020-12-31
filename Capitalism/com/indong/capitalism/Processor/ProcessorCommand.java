@@ -8,10 +8,10 @@ import com.indong.capitalism.Classes.CCompany;
 import com.indong.capitalism.Classes.CCountry;
 import com.indong.capitalism.Classes.CGMinistryOfHealthAndWelfare;
 import com.indong.capitalism.Classes.CGMinistryOfTradeIndustryAndEnergy;
-import com.indong.capitalism.Classes.CGovernment;
 import com.indong.capitalism.Classes.CPeople;
 import com.indong.capitalism.Classes.CWorld;
 import com.indong.capitalism.DataStructure.DTime;
+import com.indong.capitalism.Enum.EGovernmentType;
 import com.indong.capitalism.Frame.FrameLog;
 
 public class ProcessorCommand {
@@ -125,15 +125,7 @@ public class ProcessorCommand {
 							if(target.equalsIgnoreCase("p"))
 							{
 								CGMinistryOfHealthAndWelfare gmohaw = null;
-								for(int i = 0 ; i < country.getGovernmentList().size() ; i++)
-								{
-									CGovernment temp = country.getGovernmentList().get(i); 
-									if(temp instanceof CGMinistryOfHealthAndWelfare)
-									{
-										gmohaw = (CGMinistryOfHealthAndWelfare)temp;
-										break;
-									}
-								}
+								gmohaw = (CGMinistryOfHealthAndWelfare)country.getGovernmentMap().get(EGovernmentType.EHealthAndWelfare);
 								
 								if(gmohaw != null)
 								{
@@ -145,15 +137,7 @@ public class ProcessorCommand {
 							else if(target.equalsIgnoreCase("c"));
 							{
 								CGMinistryOfTradeIndustryAndEnergy gmotiae = null;
-								for(int i = 0 ; i < country.getGovernmentList().size() ; i++)
-								{
-									CGovernment temp = country.getGovernmentList().get(i); 
-									if(temp instanceof CGMinistryOfTradeIndustryAndEnergy)
-									{
-										gmotiae = (CGMinistryOfTradeIndustryAndEnergy)temp;
-										break;
-									}
-								}
+								gmotiae = (CGMinistryOfTradeIndustryAndEnergy)country.getGovernmentMap().get(EGovernmentType.ETradeIndustryAndEnergy);
 								
 								if(gmotiae != null)
 								{

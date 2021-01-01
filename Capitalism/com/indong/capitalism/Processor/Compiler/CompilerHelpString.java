@@ -30,7 +30,7 @@ public abstract class CompilerHelpString {
 		return result;
 	}
 	
-	protected String[] getPeopleList() 
+	protected CCountry getCountry()
 	{
 		String countryName = commandList.get(2);
 		CCountry country = null;
@@ -41,6 +41,13 @@ public abstract class CompilerHelpString {
 				country = CWorld.getInstance().getCountryList().get(i);
 			}
 		}
+		return country;
+	}
+	
+	protected String[] getPeopleList() 
+	{
+		CCountry country = getCountry();
+
 		String[] result = null;
 		if(country != null)
 		{
@@ -66,15 +73,8 @@ public abstract class CompilerHelpString {
 	
 	protected String[] getCompanyList()
 	{
-		String countryName = commandList.get(2);
-		CCountry country = null;
-		for(int i = 0 ; i < CWorld.getInstance().getCountryList().size() ; i++)
-		{
-			if(countryName.equalsIgnoreCase(CWorld.getInstance().getCountryList().get(i).getCountryName()))
-			{
-				country = CWorld.getInstance().getCountryList().get(i);
-			}
-		}
+		CCountry country = getCountry();
+
 		String[] result = null;
 		if(country != null)
 		{

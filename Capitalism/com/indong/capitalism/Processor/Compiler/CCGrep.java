@@ -2,6 +2,8 @@ package com.indong.capitalism.Processor.Compiler;
 
 import java.util.LinkedList;
 
+import com.indong.capitalism.Frame.FrameLog;
+
 public class CCGrep extends CompilerCommand {
 
 	public CCGrep(LinkedList<String> list) {
@@ -16,6 +18,13 @@ public class CCGrep extends CompilerCommand {
 	public boolean compile()
 	{
 		boolean result = false;
+		
+		if(commandList.size() < 2)
+		{
+			FrameLog.getInstance().addLog("compile", "fail");
+			return false;
+		}
+		
 		return result;
 	}
 }

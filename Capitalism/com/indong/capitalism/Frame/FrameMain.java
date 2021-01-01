@@ -13,6 +13,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.indong.capitalism.DataStructure.DTime;
+import com.indong.capitalism.Frame.CustomPanel.DashBoardPanel;
 import com.indong.capitalism.Frame.CustomTable.CMainCompCellPanel;
 import com.indong.capitalism.Frame.CustomTable.CMainPanelCellEditorRenderer;
 import com.indong.capitalism.Frame.CustomTable.CMainPanelTableModel;
@@ -30,6 +31,7 @@ public class FrameMain extends JFrame implements ITime{
 	private JPanel contentPane;
 	private CMainPanelTableModel compModel;
 	private static FrameMain instance;
+	private DashBoardPanel dashboard;
 	/**
 	 * Create the frame.
 	 */
@@ -59,9 +61,7 @@ public class FrameMain extends JFrame implements ITime{
 		Rectangle dashboardRect = new Rectangle(rect);
 		dashboardRect.height *= RATIO_DASHBOARD;
 		
-		JPanel dashboard = new JPanel();
-		dashboard.setBackground(Color.blue);
-		dashboard.setBounds(dashboardRect);
+		dashboard = new DashBoardPanel(dashboardRect);
 		
 		Rectangle scrollPaneRect = new Rectangle(rect);
 		scrollPaneRect.y = dashboardRect.height;
@@ -115,6 +115,6 @@ public class FrameMain extends JFrame implements ITime{
 	@Override
 	public void dayChange(DTime newTime) {
 		// TODO Auto-generated method stub
-		
+		dashboard.updateComponent();
 	}
 }

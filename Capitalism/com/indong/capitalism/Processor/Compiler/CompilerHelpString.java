@@ -7,6 +7,7 @@ import com.indong.capitalism.Classes.CCompany;
 import com.indong.capitalism.Classes.CCountry;
 import com.indong.capitalism.Classes.CGMinistryOfHealthAndWelfare;
 import com.indong.capitalism.Classes.CGMinistryOfTradeIndustryAndEnergy;
+import com.indong.capitalism.Classes.CGovernment;
 import com.indong.capitalism.Classes.CPeople;
 import com.indong.capitalism.Classes.CWorld;
 import com.indong.capitalism.Enum.EGovernmentType;
@@ -93,6 +94,45 @@ public abstract class CompilerHelpString {
 		            i++;
 		        }
 			}
+		}
+		return result;
+	}
+	
+	protected String[] getBankList()
+	{
+		CCountry country = getCountry();
+		
+		String[] result = null;
+		if(country != null)
+		{
+			result = new String[country.getBankList().size()];
+			for(int i = 0 ; i < country.getBankList().size() ; i++)
+			{
+				result[i] = "은행명 = " + country.getBankList().get(i).getName();
+			}
+		}
+		return result;
+	}
+	
+	protected String[] getGovernmentList()
+	{
+		CCountry country = getCountry();
+		
+		String[] result = null;
+		if(country != null)
+		{
+			result = new String[country.getGovernmentMap().size()];
+			Iterator<EGovernmentType> mapIter = country.getGovernmentMap().keySet().iterator();
+			result = new String[country.getGovernmentMap().size()];
+			int i = 0;
+	        while(mapIter.hasNext())
+	        {
+	            EGovernmentType key = mapIter.next();
+	            CGovernment value = country.getGovernmentMap().get(key);
+	            
+	            result[i] = "기관명 = " + value.getName();
+	            i++;
+	        }
 		}
 		return result;
 	}

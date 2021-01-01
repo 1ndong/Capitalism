@@ -230,7 +230,7 @@ public class ProcessorCommand {
 		LinkedList<String> commandlist = parsingCommand(command);
 		String firstCommand = commandlist.get(0);
 		
-		CompilerHelpString chs= null;
+		CompilerHelpString chs= null;//글자 칠때마다 새로만드는데 좀 더 효율적인 방법을 생각해봐야
 		
 		if(firstCommand.equalsIgnoreCase("mk"))
 		{

@@ -11,13 +11,50 @@ public class CHSGrep extends CompilerHelpString {
 
 	//grep
 	//p , c , b , g
+	//country
 	//plist , clist , blist , glist -> select name
 	//pfnlist , cfnlist , bfnlist , gfnlist -> select function name
 	
 	@Override
 	public String[] getHelpString(int level) {
 		// TODO Auto-generated method stub
-		return null;
+		String[] result = null;
+		if(level > 4)
+			level = 4;
+		
+		switch(level)
+		{
+		case 1:
+			result = new String[] {"'p' - people" , "'c' - company" , "'b' - bank" , "'g' - government"};
+			break;
+		case 2:
+			result = getCountryNameResult();
+			break;
+		case 3:
+			String type = commandList.get(1);
+			if(type.equalsIgnoreCase("p"))
+			{
+				result = getPeopleList();
+			}
+			else if(type.equalsIgnoreCase("c"))
+			{
+				result = getCompanyList();
+			}
+			else if(type.equalsIgnoreCase("b"))
+			{
+				result = getBankList();
+			}
+			else if(type.equalsIgnoreCase("g"))
+			{
+				result = getGovernmentList();
+			}
+			
+			break;
+		case 4://function type per each type
+			break;
+		}
+		
+		return result;
 	}
 
 }

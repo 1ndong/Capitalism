@@ -51,10 +51,34 @@ public class CHSGrep extends CompilerHelpString {
 			
 			break;
 		case 4://function type per each type
+			result = getFunctionList(commandList.get(1));
 			break;
 		}
 		
 		return result;
 	}
-
+	
+	private String[] getFunctionList(String type)
+	{
+		String[] result = null;
+		
+		if(type.equalsIgnoreCase("p"))
+		{
+			result = new String[] {"makeAccount","moveMoney","makeLoan"};
+		}
+		else if(type.equalsIgnoreCase("c"))
+		{
+			result = new String[] {"makeAccount","moveMoney","makeLoan"};
+		}
+		else if(type.equalsIgnoreCase("b"))
+		{
+			result = new String[] {"not yet"};
+		}
+		else if(type.equalsIgnoreCase("g"))
+		{
+			result = new String[] {"not yet"};
+		}
+		
+		return result;
+	}
 }

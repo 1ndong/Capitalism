@@ -2,8 +2,6 @@ package com.indong.capitalism.Processor.Compiler;
 
 import java.util.LinkedList;
 
-import com.indong.capitalism.Classes.CWorld;
-
 public class CHSMake extends CompilerHelpString {
 
 	public CHSMake(LinkedList<String> commandList) {

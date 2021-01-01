@@ -31,10 +31,15 @@ public class CHSRemove extends CompilerHelpString {
 			break;
 		case 3:
 			//2에서 선택한 country의 1에서선택한 type list
-			String countryName = command
-			
-			
-			
+			String type = commandList.get(1);
+			if(type.equalsIgnoreCase("p"))
+			{
+				result = getPeopleList();
+			}
+			else if(type.equalsIgnoreCase("c"))
+			{
+				result = getCompanyList();
+			}
 			break;
 		}
 		return result;

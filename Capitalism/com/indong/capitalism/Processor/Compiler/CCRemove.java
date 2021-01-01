@@ -9,9 +9,9 @@ public class CCRemove extends CompilerCommand {
 		// TODO Auto-generated constructor stub
 	}
 	//rm
-	//p,c
-	//plist with id,clist with id -> select name
-	//id -> select id
+	//p , c
+	//country
+	//plist , clist -> select name
 	
 	public boolean compile()
 	{

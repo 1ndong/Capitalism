@@ -2,7 +2,7 @@ package com.indong.capitalism.Processor.Compiler;
 
 import java.util.LinkedList;
 
-public class CompilerCommand {
+public abstract class CompilerCommand {
 	protected LinkedList<String> commandList;
 	
 	public CompilerCommand(LinkedList<String> list)
@@ -10,8 +10,5 @@ public class CompilerCommand {
 		commandList = list;
 	}
 	
-	public boolean compile()
-	{
-		return false;
-	}
+	abstract public boolean compile();
 }

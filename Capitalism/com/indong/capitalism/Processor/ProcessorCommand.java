@@ -16,7 +16,11 @@ import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Processor.Compiler.CCGrep;
 import com.indong.capitalism.Processor.Compiler.CCMake;
 import com.indong.capitalism.Processor.Compiler.CCRemove;
+import com.indong.capitalism.Processor.Compiler.CHSGrep;
+import com.indong.capitalism.Processor.Compiler.CHSMake;
+import com.indong.capitalism.Processor.Compiler.CHSRemove;
 import com.indong.capitalism.Processor.Compiler.CompilerCommand;
+import com.indong.capitalism.Processor.Compiler.CompilerHelpString;
 
 public class ProcessorCommand {
 	private static ProcessorCommand instance = new ProcessorCommand();
@@ -212,6 +216,47 @@ public class ProcessorCommand {
 	
 	public String[] newgetHelpString(String command)
 	{
-		return null;
+		int level = 0;
+		for(int i = 0 ; i < command.length(); i++)
+		{
+			char temp = command.charAt(i);
+			if(temp == ' ')
+				level++;
+		}
+		
+		if(level == 0)
+			return getFirstCommandHelpString();
+		
+		LinkedList<String> commandlist = parsingCommand(command);
+		String firstCommand = commandlist.get(0);
+		
+		CompilerHelpString chs= null;
+		
+		if(firstCommand.equalsIgnoreCase("mk"))
+		{
+			chs = new CHSMake(commandlist);
+		}
+		else if(firstCommand.equalsIgnoreCase("rm"))
+		{
+			chs = new CHSRemove(commandlist);
+		}
+		else if(firstCommand.contentEquals("grep"))
+		{
+			chs = new CHSGrep(commandlist);
+		}
+		else
+		{
+			String[] result = new String[] {"invalid first command"};
+			return result;
+		}	
+		
+		return chs.getHelpString(level);
+	}
+	
+	private String[] getFirstCommandHelpString()
+	{
+		//all command
+		String[] result = new String[] {"'mk' - make" , "'rm' - remove" , "'grep' - select object"};
+		return result;
 	}
 }

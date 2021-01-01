@@ -10,7 +10,8 @@ public class CCRemove extends CompilerCommand {
 	}
 	//rm
 	//p,c
-	//plist,clist
+	//plist with id,clist with id -> select name
+	//id -> select id
 	
 	public boolean compile()
 	{

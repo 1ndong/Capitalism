@@ -67,32 +67,31 @@ public class CCMake extends CompilerCommand{
 						int year = Integer.parseInt(yearstr);
 						int month = Integer.parseInt(monthstr);
 						int day = Integer.parseInt(daystr);
-						
 
-							if(target.equalsIgnoreCase("p"))
+						if(target.equalsIgnoreCase("p"))
+						{
+							CGMinistryOfHealthAndWelfare gmohaw = null;
+							gmohaw = (CGMinistryOfHealthAndWelfare)country.getGovernmentMap().get(EGovernmentType.EHealthAndWelfare);
+							
+							if(gmohaw != null)
 							{
-								CGMinistryOfHealthAndWelfare gmohaw = null;
-								gmohaw = (CGMinistryOfHealthAndWelfare)country.getGovernmentMap().get(EGovernmentType.EHealthAndWelfare);
-								
-								if(gmohaw != null)
-								{
-									CPeople newpeople = new CPeople(country,new DTime(year,month,day,""),commandList.removeFirst());
-									gmohaw.registerPeople(newpeople);
-									result = true;
-								}
+								CPeople newpeople = new CPeople(country,new DTime(year,month,day,""),commandList.removeFirst());
+								gmohaw.registerPeople(newpeople);
+								result = true;
 							}
-							else if(target.equalsIgnoreCase("c"));
+						}
+						else if(target.equalsIgnoreCase("c"));
+						{
+							CGMinistryOfTradeIndustryAndEnergy gmotiae = null;
+							gmotiae = (CGMinistryOfTradeIndustryAndEnergy)country.getGovernmentMap().get(EGovernmentType.ETradeIndustryAndEnergy);
+							
+							if(gmotiae != null)
 							{
-								CGMinistryOfTradeIndustryAndEnergy gmotiae = null;
-								gmotiae = (CGMinistryOfTradeIndustryAndEnergy)country.getGovernmentMap().get(EGovernmentType.ETradeIndustryAndEnergy);
-								
-								if(gmotiae != null)
-								{
-									CCompany newcompany = new CCompany(country,new DTime(year,month,day,""),commandList.removeFirst());
-									gmotiae.registerCompany(newcompany);
-									result = true;
-								}
-							}	
+								CCompany newcompany = new CCompany(country,new DTime(year,month,day,""),commandList.removeFirst());
+								gmotiae.registerCompany(newcompany);
+								result = true;
+							}
+						}	
 					}
 					catch(NumberFormatException e)
 					{

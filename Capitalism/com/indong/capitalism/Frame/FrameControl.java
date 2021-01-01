@@ -99,7 +99,8 @@ public class FrameControl extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				boolean result = false;
-				result = ProcessorCommand.getInstance().compile(textfield.getText());
+				//result = ProcessorCommand.getInstance().compile(textfield.getText());
+				result = ProcessorCommand.getInstance().newcompile(textfield.getText());
 				if(result)
 				{
 					Color passColor = new Color(39,167,104);
@@ -138,7 +139,8 @@ public class FrameControl extends JFrame{
 	
 	private void updateHelpString()
 	{
-		String[] helpstring = ProcessorCommand.getInstance().getHelpString(textfield.getText());
+		//String[] helpstring = ProcessorCommand.getInstance().getHelpString(textfield.getText());
+		String[] helpstring = ProcessorCommand.getInstance().newgetHelpString(textfield.getText());
 		if(helpstring == null)
 			return;
 		model.setNumRows(0);

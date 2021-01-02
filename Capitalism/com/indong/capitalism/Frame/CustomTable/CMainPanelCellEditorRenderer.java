@@ -11,8 +11,8 @@ import javax.swing.table.TableCellRenderer;
 public class CMainPanelCellEditorRenderer extends AbstractCellEditor implements TableCellRenderer, TableCellEditor {
 
 	private static final long serialVersionUID = 1L;
-	private CMainCompCellPanel renderer = new CMainCompCellPanel("",0);
-	private CMainCompCellPanel editor = new CMainCompCellPanel("",0);
+	private CMainCompCellPanel renderer = new CMainCompCellPanel("",0,0,0,0);
+	private CMainCompCellPanel editor = new CMainCompCellPanel("",0,0,0,0);
 
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,

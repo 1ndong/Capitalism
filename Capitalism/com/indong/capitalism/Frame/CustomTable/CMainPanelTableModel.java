@@ -10,7 +10,7 @@ public class CMainPanelTableModel extends DefaultTableModel{
         return 1;
     }
 
-    public void addRow(String name,int balance) {
-        super.addRow(new Object[]{new CMainTableComp(name,balance)});
+    public void addRow(String name,int allAsset , int deposit , int cash , int loan) {
+        super.addRow(new Object[]{new CMainTableComp(name,allAsset , deposit , cash , loan)});//이름 총자산 예금 현금 대출
     }
 }

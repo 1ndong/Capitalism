@@ -8,30 +8,50 @@ import javax.swing.JPanel;
 
 public class CMainCompCellPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private JLabel namelabel = new JLabel("name = ");
+	private JLabel namelabel = new JLabel("이름 = ");
 	private JLabel name = new JLabel();
-	private JLabel balancelabel = new JLabel("balance = ");
-	private JLabel balance = new JLabel();
+	private JLabel allAssetLabel = new JLabel("총자산 = ");
+	private JLabel allAsset = new JLabel();
+	private JLabel depositLabel = new JLabel("예금 = ");
+	private JLabel deposit = new JLabel();
+	private JLabel cashLabel = new JLabel("현금 = ");
+	private JLabel cash = new JLabel();
+	private JLabel loanLabel = new JLabel("대출 = ");
+	private JLabel loan = new JLabel();
+	
 	private JButton detailButton = new JButton("detail");
 
-	public CMainCompCellPanel(String name, int balance) {
-		setLayout(new GridLayout(1,3));
+	public CMainCompCellPanel(String name, int allAsset , int deposit , int cash , int loan) {
+		setLayout(new GridLayout(1,11));
 		this.name.setText(name);
-		this.balance.setText(String.valueOf(balance));
+		this.allAsset.setText(String.valueOf(allAsset));
+		this.deposit.setText(String.valueOf(deposit));
+		this.cash.setText(String.valueOf(cash));
+		this.loan.setText(String.valueOf(loan));
 		detailButton.addActionListener(new CMainDetailButtonClickListener());
 		add(this.namelabel);
 		add(this.name);
-		add(this.balancelabel);
-		add(this.balance);
+		add(this.allAssetLabel);
+		add(this.allAsset);
+		add(this.depositLabel);
+		add(this.deposit);
+		add(this.cashLabel);
+		add(this.cash);
+		add(this.loanLabel);
+		add(this.loan);
 		add(detailButton);
 	}
 
 	public void setComp(CMainTableComp comp) {
 		name.setText(comp.name);
-		balance.setText(""+comp.balance);
+		allAsset.setText(""+comp.allAsset);
+		deposit.setText(""+comp.deposit);
+		cash.setText(""+comp.cash);
+		loan.setText(""+comp.loan);
 	}
 
 	public CMainTableComp getComp() {
-		return new CMainTableComp(name.getText(), Integer.parseInt(balance.getText()));
+		return new CMainTableComp(name.getText(), Integer.parseInt(allAsset.getText()),Integer.parseInt(deposit.getText())
+				,Integer.parseInt(cash.getText()),Integer.parseInt(loan.getText()));
 	}
 }

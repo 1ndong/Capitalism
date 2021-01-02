@@ -12,6 +12,7 @@ import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.indong.capitalism.Classes.CPeople;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Frame.CustomPanel.DashBoardPanel;
 import com.indong.capitalism.Frame.CustomTable.CMainCompCellPanel;
@@ -70,7 +71,7 @@ public class FrameMain extends JFrame implements ITime{
 		
 		compModel = new CMainPanelTableModel();
 		JTable table = new JTable(compModel);
-		table.setRowHeight(new CMainCompCellPanel("",0).getPreferredSize().height);
+		table.setRowHeight(new CMainCompCellPanel("",0,0,0,0).getPreferredSize().height);
         table.setTableHeader(null);
         table.setRowHeight(40);
         CMainPanelCellEditorRenderer PanelCellEditorRenderer = new CMainPanelCellEditorRenderer();
@@ -124,5 +125,9 @@ public class FrameMain extends JFrame implements ITime{
 		dashboard.updateComponent();
 	}
 	
-	public void addPeople
+	public void addPeople(CPeople people)
+	{
+		String name = people.getPersonaldata().getName();
+		compModel.addRow(name,0,0,0,0);
+	}
 }

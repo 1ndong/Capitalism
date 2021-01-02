@@ -2,11 +2,15 @@ package com.indong.capitalism.Classes;
 
 import java.util.LinkedList;
 
+import com.indong.capitalism.DataStructure.DCareTaker;
+import com.indong.capitalism.DataStructure.DHCentralBank;
 import com.indong.capitalism.Frame.FrameLog;
+import com.indong.capitalism.Processor.ProcessorDay;
 
 public class CBCentral extends CBank{
 	private LinkedList<CBank> bankList = new LinkedList<CBank>();
 	private float baseInterestRate = 0.5f;
+	private DCareTaker careTaker = new DCareTaker();
 	
 	public CBCentral(CCountry country , String name)
 	{
@@ -17,6 +21,9 @@ public class CBCentral extends CBank{
 	{
 		balance.addBalance(amount);
 		FrameLog.getInstance().addLog("makeMoney", "중앙은행 현금 발행 [" + amount + "]만원");
+		
+		DHCentralBank date = new DHCentralBank(ProcessorDay.GetInstance().getDate(), amount);
+		careTaker.addMemento(date);
 	}
 	
 	public void releaseMoney(CBank bank , int amount)
@@ -41,5 +48,9 @@ public class CBCentral extends CBank{
 
 	public void setBaseInterestRate(float baseInterestRate) {
 		this.baseInterestRate = baseInterestRate;
+	}
+
+	public DCareTaker getCareTaker() {
+		return careTaker;
 	}
 }

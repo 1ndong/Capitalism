@@ -5,10 +5,19 @@ import java.awt.Font;
 import java.awt.Rectangle;
 
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
+import com.indong.capitalism.Classes.CBCommercial;
+import com.indong.capitalism.Classes.CCountry;
 import com.indong.capitalism.Classes.CWorld;
+import com.indong.capitalism.DataStructure.DCareTaker;
+import com.indong.capitalism.DataStructure.DHCentralBank;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
@@ -21,6 +30,8 @@ public class DashBoardPanel extends JPanel implements ITime{
 	private JComboBox<String> combobox;
 	private JTextField dayField;
 	private boolean bInit = false;
+	private DefaultTableModel model;
+	private JTable table;
 	
 	public DashBoardPanel(Rectangle dashboardRect) {
 		// TODO Auto-generated constructor stub
@@ -70,8 +81,23 @@ public class DashBoardPanel extends JPanel implements ITime{
 		centerPanel.setLayout(null);
 		/////////////report//////////
 		
+		String[] colName = new String[] {"[information]"};
+		model = new DefaultTableModel(colName,0);
 		
+		table = new JTable(model);
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+		table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
 		
+		JScrollPane scrollPane = new JScrollPane(table);
+		table.setFillsViewportHeight(true);
+		scrollPane.setBounds(0,0,centerPanel.getWidth() , centerPanel.getHeight());
+		table.setBounds(scrollPane.getBounds());
+		table.setRowHeight(40);
+		table.setBackground(new Color(44,34,85));
+		table.setForeground(Color.white);
+		
+		centerPanel.add(scrollPane);
 		
 		/////////////////////////////
 		this.add(upperPanel);
@@ -103,10 +129,49 @@ public class DashBoardPanel extends JPanel implements ITime{
 			initComponent();
 			bInit = true;
 		}
-		else
+		
+		model.setRowCount(0);
+		
+		if(combobox.getSelectedIndex() == -1)
+			return;
+		
+		String countryName = combobox.getSelectedItem().toString();
+		
+		CCountry country = null;
+		for(int i = 0 ; i < CWorld.getInstance().getCountryList().size() ; i++)
 		{
-			
+			if(CWorld.getInstance().getCountryList().get(i).getCountryName().equalsIgnoreCase(countryName))
+			{
+				country = CWorld.getInstance().getCountryList().get(i);
+				break;
+			}
 		}
+		
+		if(country != null)
+		{
+			DCareTaker careTaker = country.getCentralBank().getCareTaker();
+			int allMadeMoney = 0;
+			for(int i = 0 ; i < careTaker.getList().size() ; i++)
+			{
+				DHCentralBank history = (DHCentralBank)careTaker.getList().get(i);
+				allMadeMoney += history.getMakeMoneyAmount();
+			}
+			addRowInformationTable("중앙은행 총 통화 발행량 : " + allMadeMoney + "원");
+			addRowInformationTable("기준금리 : "+ country.getCentralBank().getBaseInterestRate() + "%");
+			
+			for(int i = 0 ; i < country.getBankList().size() ; i++)
+			{
+				CBCommercial bank = (CBCommercial)country.getBankList().get(i);
+				addRowInformationTable(bank.getName() + " , 가산금리 : " + bank.getSpreadInterestRate() + "%");
+				//총 자산 계산해서 추가
+			}
+		}
+	}
+	
+	private void addRowInformationTable(String content)
+	{
+		String[] s = new String[] {content};
+		model.addRow(s);
 	}
 
 	@Override

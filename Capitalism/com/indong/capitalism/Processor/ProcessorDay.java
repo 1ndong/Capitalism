@@ -3,7 +3,6 @@ package com.indong.capitalism.Processor;
 import java.util.LinkedList;
 
 import com.indong.capitalism.DataStructure.DTime;
-import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
 
@@ -43,9 +42,6 @@ public class ProcessorDay implements ITimeKeeper{
 	
 	public void Process()
 	{
-		FrameLog.getInstance().addLog("DayProcessor,Process"
-				, "today is " + m_Year + "/" + m_Month +"/" + m_Day + " , " + m_Dayoftheweek + "요일");
-		
 		m_Day++;
 		if(m_Day > LASTDAY[m_Month-1])
 		{
@@ -71,9 +67,9 @@ public class ProcessorDay implements ITimeKeeper{
 		updateTime();
 	}
 	
-	public String getDate()
+	public DTime getDate()
 	{
-		return ""+m_Year+m_Month+m_Day+m_Dayoftheweek;
+		return new DTime(m_Year , m_Month , m_Day , m_Dayoftheweek);
 	}
 
 	@Override

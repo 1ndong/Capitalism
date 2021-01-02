@@ -1,6 +1,7 @@
 package com.indong.capitalism.Frame;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,9 +17,13 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.indong.capitalism.DataStructure.DTime;
+import com.indong.capitalism.Interface.ITime;
+import com.indong.capitalism.Interface.ITimeKeeper;
 import com.indong.capitalism.Processor.ProcessorCommand;
+import com.indong.capitalism.Processor.ProcessorDay;
 
-public class FrameControl extends JFrame{
+public class FrameControl extends JFrame implements ITime{
 	/**
 	 * 
 	 */
@@ -26,6 +31,7 @@ public class FrameControl extends JFrame{
 	private static FrameControl instance;
 	private DefaultTableModel model;
 	private JTextField textfield;
+	private JTextField dayField;
 	
 	public static FrameControl getInstance()
 	{
@@ -115,6 +121,36 @@ public class FrameControl extends JFrame{
 			}
 		});
 		
+		int jbx = tfw;
+		int jby = (int)(rect.height * 0.1f);
+		int jbw = (int)(rect.width * 0.2f);
+		int jbh = (int)(rect.height * 0.1f);
+		
+		JButton dayBtn = new JButton("1day");
+		dayBtn.setBounds(jbx, jby, jbw, jbh);
+		dayBtn.setBackground(new Color(125,194,189));
+		dayBtn.setForeground(Color.white);
+		dayBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				ProcessorDay.GetInstance().Process();
+			}
+		});
+		dayField = new JTextField();
+		int dax = rect.width / 2;
+		int day = (int)(rect.height * 0.1f);
+		int daw = (rect.width / 2) - (int)(rect.width * 0.2f);
+		int dah = (int)(rect.height * 0.1f);
+		dayField.setBounds(dax , day , daw , dah);
+		dayField.setEditable(false);
+		dayField.setForeground(Color.white);
+		dayField.setHorizontalAlignment(JTextField.CENTER);
+		dayField.setBackground(new Color(119,25,170));
+		Font font = new Font("맑은 고딕",Font.BOLD,30);
+		dayField.setFont(font);
+		
 		String[] colName = new String[] {"[help]"};
 		model = new DefaultTableModel(colName,0);
 		
@@ -134,7 +170,12 @@ public class FrameControl extends JFrame{
 		
 		contentPane.add(textfield);
 		contentPane.add(processBtn);
+		contentPane.add(dayField);
+		contentPane.add(dayBtn);
 		contentPane.add(scrollPane);
+		
+		ITimeKeeper timekeeper = (ITimeKeeper)ProcessorDay.GetInstance();
+		timekeeper.addTimeSlave(this);
 	}
 	
 	private void updateHelpString()
@@ -149,5 +190,11 @@ public class FrameControl extends JFrame{
 			String[] temp = new String[] {helpstring[i]};
 			model.addRow(temp);
 		}
+	}
+
+	@Override
+	public void dayChange(DTime newTime) {
+		// TODO Auto-generated method stub
+		dayField.setText(newTime.getYear() + "/" + newTime.getMonth() + "/" + newTime.getDay() + "/" + newTime.getDayoftheweek() + "요일");
 	}
 }

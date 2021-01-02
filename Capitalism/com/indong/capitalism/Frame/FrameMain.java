@@ -38,6 +38,7 @@ public class FrameMain extends JFrame implements ITime{
 	public static void MakeMainFrame(double width , double height)
 	{
 		instance = new FrameMain(width , height);
+		instance.updateComponent();
 	}
 	
 	public static FrameMain getInstance()
@@ -115,6 +116,13 @@ public class FrameMain extends JFrame implements ITime{
 	@Override
 	public void dayChange(DTime newTime) {
 		// TODO Auto-generated method stub
+		updateComponent();
+	}
+	
+	public void updateComponent()
+	{
 		dashboard.updateComponent();
 	}
+	
+	public void addPeople
 }

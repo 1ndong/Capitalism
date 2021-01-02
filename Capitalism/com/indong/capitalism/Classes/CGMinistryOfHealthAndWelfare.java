@@ -3,6 +3,7 @@ package com.indong.capitalism.Classes;
 import java.util.HashMap;
 
 import com.indong.capitalism.Frame.FrameLog;
+import com.indong.capitalism.Frame.FrameMain;
 
 public class CGMinistryOfHealthAndWelfare extends CGovernment 
 {
@@ -20,6 +21,7 @@ public class CGMinistryOfHealthAndWelfare extends CGovernment
 		people.getPersonaldata().setID(ID);
 		peopleMap.put(ID,people);
 		FrameLog.getInstance().addLog("registerPeople", "신규등록 완료 이름 = "+people.getPersonaldata().getName());
+		FrameMain.getInstance().
 	}
 	
 	private int makeUniqueID()

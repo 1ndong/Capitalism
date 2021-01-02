@@ -24,5 +24,4 @@ public class CGovernment extends CBelong implements ITime{
 	public String getName() {
 		return name;
 	}
-
 }

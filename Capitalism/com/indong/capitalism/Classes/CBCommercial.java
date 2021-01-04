@@ -23,7 +23,7 @@ public class CBCommercial extends CBank implements IBankService{
 	}
 	
 	@Override
-	public void makeNewAccount(CBeing newclient , EAccountType type)
+	public ItemAccount makeNewAccount(CBeing newclient , EAccountType type)
 	{//은행에 계좌만들기전에 회사처럼 따로 가입할 필요없이 계좌만드는순간 멤버가 됨
 		ItemAccount na = new ItemAccount(this, makeUniqueAccountNumber(), type);
 		
@@ -34,18 +34,19 @@ public class CBCommercial extends CBank implements IBankService{
 			{
 				//people이 잇으면 있는거에 리스트에다가 넣고
 				bm.getAccountList().add(na);
-				return;
+				return na;
 			}
 		}
 		
 		//없으면 새로 만들어서 리스트에다가 새로 넣고
 		DBankMember newmember = new DBankMember(newclient);
 		newmember.getAccountList().add(na);
+		return na;
 	}
 	
 	private int makeUniqueAccountNumber()
 	{
-		return lastAccountNumber++;
+		return ++lastAccountNumber;
 	}
 
 	@Override
@@ -64,8 +65,8 @@ public class CBCommercial extends CBank implements IBankService{
 			
 			if(sender.getBank() != receiver.getBank())
 			{//실제 현금 현물도 옮겨준다 다른은행이면
-				sender.getBank().getBalance().addBalance(-amount);
-				receiver.getBank().getBalance().addBalance(amount);
+				sender.getBank().getBalance().addCash(-amount);
+				receiver.getBank().getBalance().addCash(amount);
 			}
 		}
 		return true;
@@ -90,14 +91,14 @@ public class CBCommercial extends CBank implements IBankService{
 		else 
 		{
 			account.addRightsOfCash(-amount);
-			if(account.getBank().getBalance().getBalance() < amount)
+			if(account.getBank().getBalance().getCash() < amount)
 			{
 				FrameLog.getInstance().addLog("withdrawcash", "은행 잔고 부족 bank run");
 				return 0;
 			}
 			else
 			{
-				account.getBank().getBalance().addBalance(-amount);
+				account.getBank().getBalance().addCash(-amount);
 				
 				return amount;	
 			}
@@ -107,14 +108,14 @@ public class CBCommercial extends CBank implements IBankService{
 	@Override
 	public void depositCash(ItemAccount account, CACCash cash , int amount) {
 		// TODO Auto-generated method stub
-		if(cash.getBalance() < amount)
+		if(cash.getCash() < amount)
 		{
 			FrameLog.getInstance().addLog("depositcash", "맡길 금액 부족");
 			return;
 		}
 		account.addRightsOfCash(amount);
-		account.getBank().getBalance().addBalance(amount);
-		cash.addBalance(-amount);
+		account.getBank().getBalance().addCash(amount);
+		cash.addCash(-amount);
 	}
 
 	@Override
@@ -140,5 +141,17 @@ public class CBCommercial extends CBank implements IBankService{
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public void raiseLoan(CBeing being, int amount) {
+		// TODO Auto-generated method stub
+		if(getBalance().getCash() < amount)
+		{
+			FrameLog.getInstance().addLog("raiseLoan", "은행 잔고 부족");
+			return;
+		}
+		ItemAccount account = makeNewAccount(being, EAccountType.Loan);
+		account.addRightsOfCash(amount);
 	}
 }

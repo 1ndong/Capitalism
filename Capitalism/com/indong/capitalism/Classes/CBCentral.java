@@ -19,7 +19,7 @@ public class CBCentral extends CBank{
 	
 	public void makeMoney(int amount)
 	{
-		balance.addBalance(amount);
+		balance.addCash(amount);
 		FrameLog.getInstance().addLog("makeMoney", "중앙은행 현금 발행 [" + amount + "]만원");
 		
 		DHCentralBank date = new DHCentralBank(ProcessorDay.GetInstance().getDate(), amount);
@@ -28,13 +28,13 @@ public class CBCentral extends CBank{
 	
 	public void releaseMoney(CBank bank , int amount)
 	{
-		if(amount > balance.getBalance())
+		if(amount > balance.getCash())
 		{
 			FrameLog.getInstance().addLog("centralbank", "잔액 부족");
 			return;
 		}
 		bank.addBalance(amount);
-		balance.addBalance(-amount);
+		balance.addCash(-amount);
 	}
 	
 	public void addNewBank(CBank newbank)

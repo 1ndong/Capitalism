@@ -1,15 +1,15 @@
 package com.indong.capitalism.Classes;
 
-public class CACCash extends CAsset{
-	private int balance = 0;
+public class CACCash extends CACurrency{
+	private int cash = 0;
 	public CACCash()
 	{
 		
 	}
-	public int getBalance() {
-		return balance;
+	public int getCash() {
+		return cash;
 	}
-	public void addBalance(int balance) {
-		this.balance += balance;
+	public void addCash(int cash) {
+		this.cash += cash;
 	}
 }

@@ -30,7 +30,7 @@ public class CBank extends CBelong implements ITime{
 	
 	protected void addBalance(int cash)
 	{
-		balance.addBalance(cash);
+		balance.addCash(cash);
 	}
 
 	@Override

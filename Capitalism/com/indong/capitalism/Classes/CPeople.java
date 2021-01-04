@@ -22,7 +22,7 @@ public class CPeople extends CBeing implements ITime
 	}
 
 	public void addCash(int cash) {
-		this.wallet.addBalance(cash);
+		this.wallet.addCash(cash);
 	}
 
 	@Override

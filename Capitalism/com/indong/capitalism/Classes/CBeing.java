@@ -20,4 +20,8 @@ public class CBeing extends CBelong implements ITime{
 	public void dayChange(DTime newTime) {
 		// TODO Auto-generated method stub
 	}
+
+	public EBeingType getType() {
+		return type;
+	}
 }

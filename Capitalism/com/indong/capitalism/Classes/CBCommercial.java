@@ -116,4 +116,29 @@ public class CBCommercial extends CBank implements IBankService{
 		account.getBank().getBalance().addBalance(amount);
 		cash.addBalance(-amount);
 	}
+
+	@Override
+	public ItemAccount findAccount(String name, int accountNumber) {
+		// TODO Auto-generated method stub
+		ItemAccount result = null;
+		
+		for(int i = 0 ; i < bankmemberList.size() ; i++)
+		{
+			DBankMember temp = bankmemberList.get(i);
+			CBeing being = temp.getClient();
+			String tempname = being.getBasicData().getName();
+			if(tempname.equalsIgnoreCase(name) == true)
+			{
+				for(int j = 0 ; j < temp.getAccountList().size() ; j++)
+				{
+					ItemAccount account = temp.getAccountList().get(i);
+					if(account.getAccountNumber() == accountNumber)
+					{
+						result = account;
+					}
+				}
+			}
+		}
+		return result;
+	}
 }

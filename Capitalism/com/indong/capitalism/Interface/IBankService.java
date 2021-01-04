@@ -10,4 +10,5 @@ public interface IBankService {
 	boolean sendMoney(ItemAccount sender , ItemAccount receiver , int amount);
 	int withdrawCash(ItemAccount account , int amount);
 	void depositCash(ItemAccount account , CACCash cash , int amount);
+	ItemAccount findAccount(String name,int accountNumber);
 }

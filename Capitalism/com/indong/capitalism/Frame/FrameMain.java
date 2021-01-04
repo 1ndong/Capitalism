@@ -127,7 +127,7 @@ public class FrameMain extends JFrame implements ITime{
 	
 	public void addPeople(CPeople people)
 	{
-		String name = people.getPersonaldata().getName();
+		String name = people.getBasicData().getName();
 		compModel.addRow(name,0,0,0,0);
 	}
 }

@@ -1,15 +1,12 @@
 package com.indong.capitalism.Info;
 
-import java.util.LinkedList;
-
 import com.indong.capitalism.DataStructure.DTime;
-import com.indong.capitalism.Item.ItemAccount;
 
 public class InfoBasicData {
 	protected DTime birth = new DTime(0,0,0,"");
 	protected String name = "";
 	protected int ID = 0;//사업자 등록번호 or 주민번호
-	protected LinkedList<ItemAccount> accountList = new LinkedList<ItemAccount>();
+	protected InfoAsset infoAsset = new InfoAsset();
 	
 	public InfoBasicData(DTime birth , String name)
 	{
@@ -24,16 +21,11 @@ public class InfoBasicData {
 		this.ID = ID;
 	}
 
-	public LinkedList<ItemAccount> getAccountList() {
-		return accountList;
-	}
-	
-	public void addNewAccount(ItemAccount newaccount)
-	{
-		accountList.add(newaccount);
-	}
-
 	public String getName() {
 		return name;
+	}
+
+	public InfoAsset getInfoAsset() {
+		return infoAsset;
 	}
 }

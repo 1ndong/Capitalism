@@ -8,7 +8,7 @@ import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Enum.EBeingType;
 import com.indong.capitalism.Enum.ECompanyPosition;
 import com.indong.capitalism.Frame.FrameLog;
-import com.indong.capitalism.Info.InfoBasicData;
+import com.indong.capitalism.Info.IAAccount;
 import com.indong.capitalism.Info.InfoCompanyData;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ICompanyService;
@@ -18,14 +18,14 @@ import com.indong.capitalism.Item.ItemAccount;
 public class CCompany extends CBeing implements ITime,ICompanyService{
 	protected int salaryDay = 0;
 	protected LinkedList<DCompanyMember> staffList = new LinkedList<DCompanyMember>();
-	protected InfoBasicData companyData;
+	
 	protected DTime today = new DTime(0,0,0,"");
 
 	public CCompany(CCountry country , DTime birth , String name)
 	{
 		super(country);
 		type = EBeingType.Company;
-		companyData = new InfoCompanyData(birth , name);
+		basicData = new InfoCompanyData(birth , name);
 	}
 	
 	@Override
@@ -35,15 +35,17 @@ public class CCompany extends CBeing implements ITime,ICompanyService{
 		if(today.getDay() == salaryDay)
 		{
 			ItemAccount accountForPaySalary = null;
-			for(int i = 0 ; i < companyData.getAccountList().size() ; i++)
+			for(int i = 0 ; i < basicData.getInfoAsset().getAccountList().size() ; i++)
 			{
-				ItemAccount temp = companyData.getAccountList().get(i);
-				if(temp.getAccountType() == EAccountType.Deposit)
+				IAAccount infoaccount = basicData.getInfoAsset().getAccountList().get(i);
+				if(infoaccount.getAccountType() == EAccountType.Deposit)
 				{
-					accountForPaySalary = temp;
+					IBankService bankservice = (IBankService)infoaccount.getBank();
+					accountForPaySalary = bankservice.findAccount(basicData.getName(), infoaccount.getAccountNumber());
 					break;
 				}
 			}
+			
 			if(accountForPaySalary != null)
 			{
 				IBankService bankservice = (IBankService)accountForPaySalary.getBank();
@@ -106,9 +108,5 @@ public class CCompany extends CBeing implements ITime,ICompanyService{
 				break;
 			}
 		}
-	}
-
-	public InfoBasicData getCompanyData() {
-		return companyData;
 	}
 }

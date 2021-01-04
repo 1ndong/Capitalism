@@ -63,7 +63,7 @@ public abstract class CompilerHelpString {
 		            int key = mapIter.next();
 		            CPeople value = gov.getPeopleMap().get(key);
 		            
-		            result[i] = "이름 = " + value.getPersonaldata().getName() + ",주민번호 : " + key;
+		            result[i] = "이름 = " + value.getBasicData().getName() + ",주민번호 : " + key;
 		            i++;
 		        }
 			}
@@ -90,7 +90,7 @@ public abstract class CompilerHelpString {
 		            int key = mapIter.next();
 		            CCompany value = gov.getCompanyMap().get(key);
 		            
-		            result[i] = "사명 = " + value.getCompanyData().getName() + ",사업자등록번호 : " + key;
+		            result[i] = "사명 = " + value.getBasicData().getName() + ",사업자등록번호 : " + key;
 		            i++;
 		        }
 			}

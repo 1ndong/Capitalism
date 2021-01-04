@@ -54,7 +54,7 @@ public class CCRemove extends CompilerCommand {
 				            int key = mapIter.next();
 				            CPeople value = gov.getPeopleMap().get(key);
 				            
-				            if(value.getPersonaldata().getName().equalsIgnoreCase(name))
+				            if(value.getBasicData().getName().equalsIgnoreCase(name))
 				            {
 				            	resultkey = key;
 				            	break;
@@ -81,7 +81,7 @@ public class CCRemove extends CompilerCommand {
 				            int key = mapIter.next();
 				            CCompany value = gov.getCompanyMap().get(key);
 				            
-				            if(value.getCompanyData().getName().equalsIgnoreCase(name))
+				            if(value.getBasicData().getName().equalsIgnoreCase(name))
 				            {
 				            	resultkey = key;
 				            	break;

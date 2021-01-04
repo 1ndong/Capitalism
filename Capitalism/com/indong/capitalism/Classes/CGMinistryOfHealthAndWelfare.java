@@ -18,9 +18,9 @@ public class CGMinistryOfHealthAndWelfare extends CGovernment
 	public void registerPeople(CPeople people)
 	{
 		int ID = makeUniqueID();
-		people.getPersonaldata().setID(ID);
+		people.getBasicData().setID(ID);
 		peopleMap.put(ID,people);
-		FrameLog.getInstance().addLog("registerPeople", "신규등록 완료 이름 = "+people.getPersonaldata().getName());
+		FrameLog.getInstance().addLog("registerPeople", "신규등록 완료 이름 = "+people.getBasicData().getName());
 		FrameMain.getInstance().addPeople(people);
 	}
 	

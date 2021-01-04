@@ -1,10 +1,7 @@
 package com.indong.capitalism.Classes;
 
-import com.indong.capitalism.Info.InfoBasicData;
-
 public class CBelong {
-	private CCountry myCountry;
-	protected InfoBasicData basicData;
+	protected CCountry myCountry;
 	
 	public CBelong(CCountry country)
 	{
@@ -13,9 +10,5 @@ public class CBelong {
 
 	public CCountry getMyCountry() {
 		return myCountry;
-	}
-
-	public InfoBasicData getBasicData() {
-		return basicData;
 	}
 }

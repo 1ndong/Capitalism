@@ -2,12 +2,14 @@ package com.indong.capitalism.Classes;
 
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EBeingType;
+import com.indong.capitalism.Info.InfoBasicData;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
 import com.indong.capitalism.Processor.ProcessorDay;
 
 public class CBeing extends CBelong implements ITime{
 	protected EBeingType type;
+	protected InfoBasicData basicData;
 
 	public CBeing(CCountry country)
 	{
@@ -23,5 +25,9 @@ public class CBeing extends CBelong implements ITime{
 
 	public EBeingType getType() {
 		return type;
+	}
+	
+	public InfoBasicData getBasicData() {
+		return basicData;
 	}
 }

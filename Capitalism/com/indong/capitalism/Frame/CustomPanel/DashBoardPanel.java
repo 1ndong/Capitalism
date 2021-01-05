@@ -3,6 +3,8 @@ package com.indong.capitalism.Frame.CustomPanel;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -14,13 +16,21 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import com.indong.capitalism.Classes.CBCommercial;
+import com.indong.capitalism.Classes.CCompany;
 import com.indong.capitalism.Classes.CCountry;
+import com.indong.capitalism.Classes.CGMinistryOfHealthAndWelfare;
+import com.indong.capitalism.Classes.CGMinistryOfTradeIndustryAndEnergy;
+import com.indong.capitalism.Classes.CPeople;
 import com.indong.capitalism.Classes.CWorld;
+import com.indong.capitalism.DataStructure.DBankMember;
 import com.indong.capitalism.DataStructure.DCareTaker;
 import com.indong.capitalism.DataStructure.DHCentralBank;
 import com.indong.capitalism.DataStructure.DTime;
+import com.indong.capitalism.Enum.EGovernmentType;
+import com.indong.capitalism.Frame.FrameMain;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
+import com.indong.capitalism.Item.ItemAccount;
 import com.indong.capitalism.Processor.ProcessorDay;
 
 public class DashBoardPanel extends JPanel implements ITime{
@@ -163,9 +173,44 @@ public class DashBoardPanel extends JPanel implements ITime{
 			{
 				CBCommercial bank = (CBCommercial)country.getBankList().get(i);
 				addRowInformationTable(bank.getName() + " , 가산금리 : " + bank.getSpreadInterestRate() + "%");
-				//총 자산 계산해서 추가
+
+				int creditCurrency = 0;
+				for(int j = 0 ; j < bank.getBankMemberList().size() ; j++)
+				{
+					DBankMember bankmember = bank.getBankMemberList().get(i);
+					for(int k = 0 ; k < bankmember.getAccountList().size() ; k++)
+					{
+						ItemAccount account = bankmember.getAccountList().get(i);
+						creditCurrency += account.getRightsOfCash();
+					}
+				}
+				addRowInformationTable(bank.getName() + " , 신용통화 : " + creditCurrency);
 			}
 		}
+		
+		CGMinistryOfHealthAndWelfare mohaw = (CGMinistryOfHealthAndWelfare) country.getGovernmentMap().get(EGovernmentType.EHealthAndWelfare);
+		
+		Iterator<Integer> mapIter = mohaw.getPeopleMap().keySet().iterator();
+		LinkedList<CPeople> peopleList = new LinkedList<CPeople>();
+        while(mapIter.hasNext())
+        {
+            int key = mapIter.next();
+            CPeople value = mohaw.getPeopleMap().get(key);
+            peopleList.add(value);
+        }
+        FrameMain.getInstance().addPeopleList(peopleList);
+        
+        CGMinistryOfTradeIndustryAndEnergy motia = (CGMinistryOfTradeIndustryAndEnergy) country.getGovernmentMap().get(EGovernmentType.ETradeIndustryAndEnergy);
+        
+        Iterator<Integer> mapIter2 = mohaw.getPeopleMap().keySet().iterator();
+		LinkedList<CCompany> companyList = new LinkedList<CCompany>();
+        while(mapIter2.hasNext())
+        {
+            int key = mapIter2.next();
+            CCompany value = motia.getCompanyMap().get(key);
+            companyList.add(value);
+        }
+        FrameMain.getInstance().addCompanyList(companyList);
 	}
 	
 	private void addRowInformationTable(String content)

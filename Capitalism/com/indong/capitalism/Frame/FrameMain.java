@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.LinkedList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,6 +13,7 @@ import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.indong.capitalism.Classes.CCompany;
 import com.indong.capitalism.Classes.CPeople;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Frame.CustomPanel.DashBoardPanel;
@@ -31,6 +33,7 @@ public class FrameMain extends JFrame implements ITime{
 	private static final long serialVersionUID = -109834300546271564L;
 	private JPanel contentPane;
 	private CMainPanelTableModel compModel;
+	private CMainPanelTableModel compModel2;
 	private static FrameMain instance;
 	private DashBoardPanel dashboard;
 	/**
@@ -65,9 +68,11 @@ public class FrameMain extends JFrame implements ITime{
 		
 		dashboard = new DashBoardPanel(dashboardRect);
 		
+		//peopleList
 		Rectangle scrollPaneRect = new Rectangle(rect);
 		scrollPaneRect.y = dashboardRect.height;
 		scrollPaneRect.height = rect.height - dashboardRect.height;
+		scrollPaneRect.width = rect.width / 2;
 		
 		compModel = new CMainPanelTableModel();
 		JTable table = new JTable(compModel);
@@ -84,8 +89,33 @@ public class FrameMain extends JFrame implements ITime{
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		table.setFillsViewportHeight(true);
 		table.setBounds(scrollPane.getBounds());
+		
+		//companyList
+		Rectangle scrollPaneRect2 = new Rectangle(rect);
+		scrollPaneRect2.y = dashboardRect.height;
+		scrollPaneRect2.height = rect.height - dashboardRect.height;
+		scrollPaneRect2.width = rect.width / 2;
+		scrollPaneRect2.x = scrollPaneRect.width;
+		
+		compModel2 = new CMainPanelTableModel();
+		JTable table2 = new JTable(compModel2);
+		table2.setRowHeight(new CMainCompCellPanel("",0,0,0,0).getPreferredSize().height);
+		table2.setTableHeader(null);
+		table2.setRowHeight(40);
+        CMainPanelCellEditorRenderer PanelCellEditorRenderer2 = new CMainPanelCellEditorRenderer();
+        table2.setDefaultRenderer(Object.class, PanelCellEditorRenderer2);
+        table2.setDefaultEditor(Object.class, PanelCellEditorRenderer2);
+		
+		JScrollPane scrollPane2 = new JScrollPane(table2);
+		scrollPane2.setBackground(Color.green);
+		scrollPane2.setBounds(scrollPaneRect2);
+		scrollPane2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		table2.setFillsViewportHeight(true);
+		table2.setBounds(scrollPane2.getBounds());
+		
 		contentPane.add(dashboard);
 		contentPane.add(scrollPane);
+		contentPane.add(scrollPane2);
 		//
 		new ProcessorMain();
 
@@ -125,9 +155,25 @@ public class FrameMain extends JFrame implements ITime{
 		dashboard.updateComponent();
 	}
 	
-	public void addPeople(CPeople people)
+	public void addPeopleList(LinkedList<CPeople> peopleList)
 	{
-		String name = people.getBasicData().getName();
-		compModel.addRow(name,0,0,0,0);
+		compModel.setNumRows(0);
+		for(int i = 0 ; i < peopleList.size() ; i++)
+		{
+			CPeople people = peopleList.get(i);
+			String name = people.getBasicData().getName();
+			compModel.addRow(name,0,0,0,0);	
+		}
+	}
+	
+	public void addCompanyList(LinkedList<CCompany> companyList)
+	{
+		compModel2.setNumRows(0);
+		for(int i = 0 ; i < companyList.size() ; i++)
+		{
+			CCompany company = companyList.get(i);
+			String name = company.getBasicData().getName();
+			compModel2.addRow(name,0,0,0,0);	
+		}
 	}
 }

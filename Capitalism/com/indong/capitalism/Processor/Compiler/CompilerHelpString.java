@@ -63,7 +63,7 @@ public abstract class CompilerHelpString {
 		            int key = mapIter.next();
 		            CPeople value = gov.getPeopleMap().get(key);
 		            
-		            result[i] = "이름 = " + value.getBasicData().getName() + ",주민번호 : " + key;
+		            result[i] = "'name' -> 이름 = " + value.getBasicData().getName() + ",주민번호 : " + key;
 		            i++;
 		        }
 			}
@@ -90,7 +90,7 @@ public abstract class CompilerHelpString {
 		            int key = mapIter.next();
 		            CCompany value = gov.getCompanyMap().get(key);
 		            
-		            result[i] = "사명 = " + value.getBasicData().getName() + ",사업자등록번호 : " + key;
+		            result[i] = "'name' -> 사명 = " + value.getBasicData().getName() + ",사업자등록번호 : " + key;
 		            i++;
 		        }
 			}
@@ -108,7 +108,7 @@ public abstract class CompilerHelpString {
 			result = new String[country.getBankList().size()];
 			for(int i = 0 ; i < country.getBankList().size() ; i++)
 			{
-				result[i] = "은행명 = " + country.getBankList().get(i).getName();
+				result[i] = "'name' -> 은행명 = " + country.getBankList().get(i).getName();
 			}
 		}
 		return result;
@@ -130,7 +130,7 @@ public abstract class CompilerHelpString {
 	            EGovernmentType key = mapIter.next();
 	            CGovernment value = country.getGovernmentMap().get(key);
 	            
-	            result[i] = "기관명 = " + value.getName();
+	            result[i] = "'name' -> 기관명 = " + value.getName();
 	            i++;
 	        }
 		}

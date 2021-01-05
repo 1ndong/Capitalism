@@ -77,7 +77,6 @@ public class FrameControl extends JFrame implements ITime{
 				if(e.getKeyCode() == KeyEvent.VK_ENTER)
 				{
 					processBtn.doClick();
-					return;
 				}
 				updateHelpString();
 			}

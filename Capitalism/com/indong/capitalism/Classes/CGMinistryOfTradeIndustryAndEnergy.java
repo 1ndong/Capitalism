@@ -19,7 +19,7 @@ public class CGMinistryOfTradeIndustryAndEnergy extends CGovernment{
 		int ID = makeUniqueID();
 		company.getBasicData().setID(ID);
 		companyMap.put(ID,company);
-		FrameLog.getInstance().addLog("registerPeople", "신규등록 완료 이름 = "+company.getBasicData().getName());
+		FrameLog.getInstance().addLog("registerCompany", "신규등록 완료 이름 = "+company.getBasicData().getName());
 	}
 	
 	private int makeUniqueID()

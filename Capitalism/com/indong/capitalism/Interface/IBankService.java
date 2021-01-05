@@ -11,5 +11,5 @@ public interface IBankService {
 	int withdrawCash(ItemAccount account , int amount);
 	void depositCash(ItemAccount account , CACCash cash , int amount);
 	ItemAccount findAccount(String name,int accountNumber);
-	void raiseLoan(CBeing name , int amount);
+	void raiseLoan(CBeing being , int amount);
 }

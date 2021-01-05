@@ -17,10 +17,10 @@ public class CBCentral extends CBank{
 		super(country , name);
 	}
 	
-	public void makeMoney(int amount)
+	public void makeMoney(long amount)
 	{
 		balance.addCash(amount);
-		FrameLog.getInstance().addLog("makeMoney", "중앙은행 현금 발행 [" + amount + "]만원");
+		FrameLog.getInstance().addLog("makeMoney", "중앙은행 현금 발행 [" + amount + "]원");
 		
 		DHCentralBank date = new DHCentralBank(ProcessorDay.GetInstance().getDate(), amount);
 		careTaker.addMemento(date);
@@ -35,6 +35,7 @@ public class CBCentral extends CBank{
 		}
 		bank.addBalance(amount);
 		balance.addCash(-amount);
+		FrameLog.getInstance().addLog("releaseMoney", "중앙은행에서 " + bank.getName() + "은행으로 " + amount + "원 지급");
 	}
 	
 	public void addNewBank(CBank newbank)

@@ -16,12 +16,16 @@ import javax.swing.border.EmptyBorder;
 import com.indong.capitalism.Classes.CCompany;
 import com.indong.capitalism.Classes.CPeople;
 import com.indong.capitalism.DataStructure.DTime;
+import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Frame.CustomPanel.DashBoardPanel;
 import com.indong.capitalism.Frame.CustomTable.CMainCompCellPanel;
 import com.indong.capitalism.Frame.CustomTable.CMainPanelCellEditorRenderer;
 import com.indong.capitalism.Frame.CustomTable.CMainPanelTableModel;
+import com.indong.capitalism.Info.IAAccount;
+import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
+import com.indong.capitalism.Item.ItemAccount;
 import com.indong.capitalism.Processor.ProcessorDay;
 import com.indong.capitalism.Processor.ProcessorMain;
 
@@ -52,6 +56,7 @@ public class FrameMain extends JFrame implements ITime{
 	
 	private FrameMain(double width , double height) 
 	{
+		setTitle("Capitalism");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, (int)width, (int)height);
 		contentPane = new JPanel();
@@ -162,7 +167,27 @@ public class FrameMain extends JFrame implements ITime{
 		{
 			CPeople people = peopleList.get(i);
 			String name = people.getBasicData().getName();
-			compModel.addRow(name,0,0,0,0);	
+			
+			long cash = people.getCash().getCash();
+			long deposit = 0;
+			long loan = 0;
+			for(int j = 0 ; j < people.getBasicData().getInfoAsset().getAccountList().size() ; j++)
+			{
+				IAAccount infoaccount = people.getBasicData().getInfoAsset().getAccountList().get(j);
+				IBankService bankservice = (IBankService)infoaccount.getBank();
+				ItemAccount account = bankservice.findAccount(people.getBasicData().getName(), infoaccount.getAccountNumber());
+				if(account.getAccountType() == EAccountType.Deposit)
+				{
+					deposit += account.getRightsOfCash();
+				}
+				else if(account.getAccountType() == EAccountType.Loan)
+				{
+					loan += account.getRightsOfCash();
+				}
+			}
+			
+			long allAsset = deposit + cash + loan;
+			compModel.addRow(name,allAsset,deposit,cash,loan);	
 		}
 	}
 	
@@ -173,7 +198,26 @@ public class FrameMain extends JFrame implements ITime{
 		{
 			CCompany company = companyList.get(i);
 			String name = company.getBasicData().getName();
-			compModel2.addRow(name,0,0,0,0);	
+
+			long cash = company.getCash().getCash();
+			long deposit = 0;
+			long loan = 0;
+			for(int j = 0 ; j < company.getBasicData().getInfoAsset().getAccountList().size() ; j++)
+			{
+				IAAccount infoaccount = company.getBasicData().getInfoAsset().getAccountList().get(j);
+				IBankService bankservice = (IBankService)infoaccount.getBank();
+				ItemAccount account = bankservice.findAccount(company.getBasicData().getName(), infoaccount.getAccountNumber());
+				if(account.getAccountType() == EAccountType.Deposit)
+				{
+					deposit += account.getRightsOfCash();
+				}
+				else if(account.getAccountType() == EAccountType.Loan)
+				{
+					loan += account.getRightsOfCash();
+				}
+			}
+			long allAsset = deposit + cash + loan;
+			compModel2.addRow(name,allAsset,deposit,cash,loan);	
 		}
 	}
 }

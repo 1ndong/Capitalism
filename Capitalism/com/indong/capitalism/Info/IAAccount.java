@@ -8,6 +8,13 @@ public class IAAccount {
 	private int accountNumber;
 	private EAccountType accountType;
 	
+	public IAAccount(CBank bank , int accountNumber , EAccountType type)
+	{
+		this.bank = bank;
+		this.accountNumber = accountNumber;
+		this.accountType = type;
+	}
+	
 	public CBank getBank() {
 		return bank;
 	}

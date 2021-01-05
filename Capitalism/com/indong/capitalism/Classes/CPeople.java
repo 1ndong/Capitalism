@@ -7,22 +7,11 @@ import com.indong.capitalism.Interface.ITime;
 
 public class CPeople extends CBeing implements ITime
 {
-	private CACCash wallet;
-	
 	public CPeople(CCountry country , DTime birth , String name)
 	{
 		super(country);
 		type = EBeingType.Personal;
-		wallet = new CACCash();
 		basicData = new InfoPersonalData(birth , name);
-	}
-
-	public CACCash getCash() {
-		return wallet;
-	}
-
-	public void addCash(int cash) {
-		this.wallet.addCash(cash);
 	}
 
 	@Override

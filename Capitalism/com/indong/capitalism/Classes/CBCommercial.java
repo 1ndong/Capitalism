@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import com.indong.capitalism.DataStructure.DBankMember;
 import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Frame.FrameLog;
+import com.indong.capitalism.Info.IAAccount;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Item.ItemAccount;
 
@@ -24,8 +25,11 @@ public class CBCommercial extends CBank implements IBankService{
 	
 	@Override
 	public ItemAccount makeNewAccount(CBeing newclient , EAccountType type)
-	{//은행에 계좌만들기전에 회사처럼 따로 가입할 필요없이 계좌만드는순간 멤버가 됨
+	{
 		ItemAccount na = new ItemAccount(this, makeUniqueAccountNumber(), type);
+		
+		IAAccount ia = new IAAccount(this,na.getAccountNumber(),type);
+		newclient.getBasicData().getInfoAsset().addNewBankInfo(ia);
 		
 		for(int i = 0 ; i < bankmemberList.size() ; i++)
 		{
@@ -41,6 +45,7 @@ public class CBCommercial extends CBank implements IBankService{
 		//없으면 새로 만들어서 리스트에다가 새로 넣고
 		DBankMember newmember = new DBankMember(newclient);
 		newmember.getAccountList().add(na);
+		bankmemberList.add(newmember);
 		return na;
 	}
 	

@@ -3,7 +3,6 @@ package com.indong.capitalism.Classes;
 import java.util.HashMap;
 
 import com.indong.capitalism.Frame.FrameLog;
-import com.indong.capitalism.Frame.FrameMain;
 
 public class CGMinistryOfHealthAndWelfare extends CGovernment 
 {

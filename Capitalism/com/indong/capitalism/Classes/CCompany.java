@@ -18,7 +18,6 @@ import com.indong.capitalism.Item.ItemAccount;
 public class CCompany extends CBeing implements ITime,ICompanyService{
 	protected int salaryDay = 0;
 	protected LinkedList<DCompanyMember> staffList = new LinkedList<DCompanyMember>();
-	
 	protected DTime today = new DTime(0,0,0,"");
 
 	public CCompany(CCountry country , DTime birth , String name)

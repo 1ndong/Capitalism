@@ -23,7 +23,7 @@ public class CBank extends CBelong implements ITime{
 		return name;
 	}
 	
-	protected CACCash getBalance()
+	public CACCash getBalance()
 	{
 		return balance;
 	}

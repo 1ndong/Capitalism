@@ -168,6 +168,7 @@ public class DashBoardPanel extends JPanel implements ITime{
 			}
 			addRowInformationTable("중앙은행 총 통화 발행량 : " + allMadeMoney + "원");
 			addRowInformationTable("기준금리 : "+ country.getCentralBank().getBaseInterestRate() + "%");
+			addRowInformationTable("중앙은행 현금보유량 : " + country.getCentralBank().getBalance().getCash() + "원");
 			
 			for(int i = 0 ; i < country.getBankList().size() ; i++)
 			{
@@ -184,7 +185,8 @@ public class DashBoardPanel extends JPanel implements ITime{
 						creditCurrency += account.getRightsOfCash();
 					}
 				}
-				addRowInformationTable(bank.getName() + " , 신용통화 : " + creditCurrency);
+				addRowInformationTable(bank.getName() + " , 신용통화 : " + creditCurrency + "원");
+				addRowInformationTable(bank.getName() + " , 현금보유량 : " + bank.getBalance().getCash() + "원");
 			}
 		}
 		
@@ -202,7 +204,7 @@ public class DashBoardPanel extends JPanel implements ITime{
         
         CGMinistryOfTradeIndustryAndEnergy motia = (CGMinistryOfTradeIndustryAndEnergy) country.getGovernmentMap().get(EGovernmentType.ETradeIndustryAndEnergy);
         
-        Iterator<Integer> mapIter2 = mohaw.getPeopleMap().keySet().iterator();
+        Iterator<Integer> mapIter2 = motia.getCompanyMap().keySet().iterator();
 		LinkedList<CCompany> companyList = new LinkedList<CCompany>();
         while(mapIter2.hasNext())
         {

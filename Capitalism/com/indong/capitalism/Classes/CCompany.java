@@ -13,10 +13,9 @@ import com.indong.capitalism.Info.InfoCompanyData;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ICompanyService;
 import com.indong.capitalism.Interface.ITime;
-import com.indong.capitalism.Item.ItemAccount;
 
 public class CCompany extends CBeing implements ITime,ICompanyService{
-	protected int salaryDay = 0;
+	private int salaryDay = 0;
 	protected LinkedList<DCompanyMember> staffList = new LinkedList<DCompanyMember>();
 	protected DTime today = new DTime(0,0,0,"");
 
@@ -33,14 +32,13 @@ public class CCompany extends CBeing implements ITime,ICompanyService{
 		today = newTime;
 		if(today.getDay() == salaryDay)
 		{
-			ItemAccount accountForPaySalary = null;
+			IAAccount accountForPaySalary = null;
 			for(int i = 0 ; i < basicData.getInfoAsset().getAccountList().size() ; i++)
 			{
 				IAAccount infoaccount = basicData.getInfoAsset().getAccountList().get(i);
 				if(infoaccount.getAccountType() == EAccountType.Deposit)
 				{
-					IBankService bankservice = (IBankService)infoaccount.getBank();
-					accountForPaySalary = bankservice.findAccount(basicData.getName(), infoaccount.getAccountNumber());
+					accountForPaySalary = infoaccount;
 					break;
 				}
 			}
@@ -90,7 +88,7 @@ public class CCompany extends CBeing implements ITime,ICompanyService{
 		}
 	}
 	
-	public void joinCompany(CPeople newpeople , ItemAccount salaryaccount , ECompanyPosition position)
+	public void joinCompany(CPeople newpeople , IAAccount salaryaccount , ECompanyPosition position)
 	{
 		DCompanyMember newmember = new DCompanyMember(newpeople,salaryaccount , position);
 		staffList.add(newmember);
@@ -107,5 +105,13 @@ public class CCompany extends CBeing implements ITime,ICompanyService{
 				break;
 			}
 		}
+	}
+
+	public int getSalaryDay() {
+		return salaryDay;
+	}
+
+	public void setSalaryDay(int salaryDay) {
+		this.salaryDay = salaryDay;
 	}
 }

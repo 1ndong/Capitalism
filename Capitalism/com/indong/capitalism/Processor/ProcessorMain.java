@@ -8,9 +8,11 @@ import com.indong.capitalism.Classes.CGMinistryOfTradeIndustryAndEnergy;
 import com.indong.capitalism.Classes.CPeople;
 import com.indong.capitalism.Classes.CWorld;
 import com.indong.capitalism.DataStructure.DTime;
+import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Enum.EGovernmentType;
 import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Interface.IBankService;
+import com.indong.capitalism.Interface.ICompanyService;
 
 public class ProcessorMain {
 	public ProcessorMain()
@@ -47,7 +49,9 @@ public class ProcessorMain {
 		CCompany lg = new CCompany(rok,new DTime(1958,3,21,""),"LG");
 		
 		gmotiae.registerCompany(samsung);
+		samsung.setSalaryDay(25);
 		gmotiae.registerCompany(lg);
+		lg.setSalaryDay(5);
 		
 		CPeople indong = new CPeople(rok, new DTime(1987,2,12,""), "김인동");
 		CPeople ronaldo = new CPeople(rok , new DTime(1985,6,20,"") , "호나우도");
@@ -60,5 +64,16 @@ public class ProcessorMain {
 		
 		IBankService shbankservice = (IBankService)shinhanbank;
 		shbankservice.raiseLoan(samsung, 50000000);
+		
+		IBankService kmbankservice = (IBankService)kookminbank;
+		kmbankservice.raiseLoan(lg, 40000000);
+		
+		IBankService wrbankservice = (IBankService)wooribank;
+		wrbankservice.raiseLoan(samsung, 10000000);
+		wrbankservice.raiseLoan(lg, 40000000);
+		
+		ICompanyService samsungservice = (ICompanyService)samsung;
+		shbankservice.makeNewAccount(indong, EAccountType.Deposit);
+		ICompanyService lgservice = (ICompanyService)lg;
 	}
 }

@@ -178,10 +178,10 @@ public class DashBoardPanel extends JPanel implements ITime{
 				int creditCurrency = 0;
 				for(int j = 0 ; j < bank.getBankMemberList().size() ; j++)
 				{
-					DBankMember bankmember = bank.getBankMemberList().get(i);
+					DBankMember bankmember = bank.getBankMemberList().get(j);
 					for(int k = 0 ; k < bankmember.getAccountList().size() ; k++)
 					{
-						ItemAccount account = bankmember.getAccountList().get(i);
+						ItemAccount account = bankmember.getAccountList().get(k);
 						creditCurrency += account.getRightsOfCash();
 					}
 				}

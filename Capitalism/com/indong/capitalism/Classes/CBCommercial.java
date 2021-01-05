@@ -28,7 +28,7 @@ public class CBCommercial extends CBank implements IBankService{
 	{
 		ItemAccount na = new ItemAccount(this, makeUniqueAccountNumber(), type);
 		
-		IAAccount ia = new IAAccount(this,na.getAccountNumber(),type);
+		IAAccount ia = new IAAccount(newclient.getBasicData().getName(),this,na.getAccountNumber(),type);
 		newclient.getBasicData().getInfoAsset().addNewBankInfo(ia);
 		
 		for(int i = 0 ; i < bankmemberList.size() ; i++)
@@ -55,9 +55,11 @@ public class CBCommercial extends CBank implements IBankService{
 	}
 
 	@Override
-	public boolean sendMoney(ItemAccount sender, ItemAccount receiver , int amount) {
+	public boolean sendMoney(IAAccount sender, IAAccount receiver , int amount) {
 		// TODO Auto-generated method stub
-		if(sender.getRightsOfCash() < amount)
+		ItemAccount senderAccount = ((IBankService)sender.getBank()).findAccount(sender.getOwnerName() , sender.getAccountNumber());
+		ItemAccount receiverAccount = ((IBankService)receiver.getBank()).findAccount(receiver.getOwnerName(), receiver.getAccountNumber());
+		if(senderAccount.getRightsOfCash() < amount)
 		{
 			FrameLog.getInstance().addLog("sendmoney", "잔액부족");
 			return false;
@@ -65,13 +67,13 @@ public class CBCommercial extends CBank implements IBankService{
 		else
 		{
 			//계좌의 현금권리를 넘겨주고
-			sender.addRightsOfCash(-amount);
-			receiver.addRightsOfCash(amount);
+			senderAccount.addRightsOfCash(-amount);
+			receiverAccount.addRightsOfCash(amount);
 			
 			if(sender.getBank() != receiver.getBank())
 			{//실제 현금 현물도 옮겨준다 다른은행이면
-				sender.getBank().getBalance().addCash(-amount);
-				receiver.getBank().getBalance().addCash(amount);
+				senderAccount.getBank().getBalance().addCash(-amount);
+				receiverAccount.getBank().getBalance().addCash(amount);
 			}
 		}
 		return true;
@@ -86,24 +88,25 @@ public class CBCommercial extends CBank implements IBankService{
 	}
 
 	@Override
-	public int withdrawCash(ItemAccount account, int amount) {
+	public int withdrawCash(IAAccount account, int amount) {
 		// TODO Auto-generated method stub
-		if(account.getRightsOfCash() < amount)
+		ItemAccount realaccount = ((IBankService)account.getBank()).findAccount(account.getOwnerName(), account.getAccountNumber());
+		if(realaccount.getRightsOfCash() < amount)
 		{
 			FrameLog.getInstance().addLog("withdrawcash","잔액부족");
 			return 0;
 		}
 		else 
 		{
-			account.addRightsOfCash(-amount);
-			if(account.getBank().getBalance().getCash() < amount)
+			realaccount.addRightsOfCash(-amount);
+			if(realaccount.getBank().getBalance().getCash() < amount)
 			{
 				FrameLog.getInstance().addLog("withdrawcash", "은행 잔고 부족 bank run");
 				return 0;
 			}
 			else
 			{
-				account.getBank().getBalance().addCash(-amount);
+				realaccount.getBank().getBalance().addCash(-amount);
 				
 				return amount;	
 			}
@@ -111,15 +114,16 @@ public class CBCommercial extends CBank implements IBankService{
 	}
 
 	@Override
-	public void depositCash(ItemAccount account, CACCash cash , int amount) {
+	public void depositCash(IAAccount account, CACCash cash , int amount) {
 		// TODO Auto-generated method stub
+		ItemAccount realAccount = ((IBankService)account.getBank()).findAccount(account.getOwnerName(), account.getAccountNumber());
 		if(cash.getCash() < amount)
 		{
 			FrameLog.getInstance().addLog("depositcash", "맡길 금액 부족");
 			return;
 		}
-		account.addRightsOfCash(amount);
-		account.getBank().getBalance().addCash(amount);
+		realAccount.addRightsOfCash(amount);
+		realAccount.getBank().getBalance().addCash(amount);
 		cash.addCash(-amount);
 	}
 
@@ -137,7 +141,7 @@ public class CBCommercial extends CBank implements IBankService{
 			{
 				for(int j = 0 ; j < temp.getAccountList().size() ; j++)
 				{
-					ItemAccount account = temp.getAccountList().get(i);
+					ItemAccount account = temp.getAccountList().get(j);
 					if(account.getAccountNumber() == accountNumber)
 					{
 						result = account;

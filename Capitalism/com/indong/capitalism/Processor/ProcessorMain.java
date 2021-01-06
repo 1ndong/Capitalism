@@ -9,8 +9,10 @@ import com.indong.capitalism.Classes.CPeople;
 import com.indong.capitalism.Classes.CWorld;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
+import com.indong.capitalism.Enum.ECompanyPosition;
 import com.indong.capitalism.Enum.EGovernmentType;
 import com.indong.capitalism.Frame.FrameLog;
+import com.indong.capitalism.Info.IAAccount;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ICompanyService;
 import com.indong.capitalism.Item.ItemAccount;
@@ -78,7 +80,13 @@ public class ProcessorMain {
 		wrbankservice.raiseLoan(lgwrloanaccount, 40000000);
 		
 		ICompanyService samsungservice = (ICompanyService)samsung;
-		shbankservice.makeNewAccount(indong, EAccountType.Deposit);
+		ItemAccount indongsalaryaccount = shbankservice.makeNewAccount(indong, EAccountType.Deposit);
+		IAAccount indongaccountinfo = indong.getBasicData().getInfoAsset().findAccountInfo(indongsalaryaccount);
+		samsungservice.joinCompany(indong, indongaccountinfo, ECompanyPosition.Clerk);
+		
 		ICompanyService lgservice = (ICompanyService)lg;
+		ItemAccount jasonkimsalaryaccount = kmbankservice.makeNewAccount(jasonkim, EAccountType.Deposit);
+		IAAccount jasonkimaccountinfo = jasonkim.getBasicData().getInfoAsset().findAccountInfo(jasonkimsalaryaccount);
+		lgservice.joinCompany(jasonkim, jasonkimaccountinfo, ECompanyPosition.Clerk);
 	}
 }

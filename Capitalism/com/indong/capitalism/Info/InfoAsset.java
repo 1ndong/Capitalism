@@ -2,6 +2,8 @@ package com.indong.capitalism.Info;
 
 import java.util.LinkedList;
 
+import com.indong.capitalism.Item.ItemAccount;
+
 public class InfoAsset {
 	private LinkedList<IAAccount> accountList = new LinkedList<IAAccount>();
 
@@ -11,5 +13,28 @@ public class InfoAsset {
 
 	public void addNewBankInfo(IAAccount newaccount) {
 		this.accountList.add(newaccount);
+	}
+	
+	public IAAccount findAccountInfo(ItemAccount account)
+	{
+		IAAccount result = null;
+		
+		for(int i = 0 ; i < accountList.size() ; i++)
+		{
+			IAAccount temp = accountList.get(i);
+			if(temp.getAccountNumber() == account.getAccountNumber())
+			{
+				if(temp.getBank() == account.getBank())
+				{
+					if(temp.getAccountType() == account.getAccountType())
+					{
+						result = temp;
+						break;
+					}
+				}
+			}
+		}
+		
+		return result;
 	}
 }

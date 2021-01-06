@@ -92,6 +92,7 @@ public class CCompany extends CBeing implements ITime,ICompanyService{
 	{
 		DCompanyMember newmember = new DCompanyMember(newpeople,salaryaccount , position);
 		staffList.add(newmember);
+		FrameLog.getInstance().addLog("joincompany", newpeople.getBasicData().getName() + " " + getBasicData().getName() + " 에 입사완료");
 	}
 	
 	public void leaveCompany(CPeople leavemember)
@@ -102,6 +103,7 @@ public class CCompany extends CBeing implements ITime,ICompanyService{
 			if(temp.getMember() == leavemember)
 			{
 				staffList.remove(i);
+				FrameLog.getInstance().addLog("leaveCompany", leavemember.getBasicData().getName() + " " + getBasicData().getName() + " 에서 퇴사완료");
 				break;
 			}
 		}

@@ -66,12 +66,18 @@ public class ProcessorMain {
 		//////////////////////////////
 		
 		IBankService shbankservice = (IBankService)shinhanbank;
+		ItemAccount samsungdepositaccount = shbankservice.makeNewAccount(samsung, EAccountType.Deposit);
 		ItemAccount samsungloanaccount = shbankservice.makeNewAccount(samsung, EAccountType.Loan);
 		shbankservice.raiseLoan(samsungloanaccount, 50000000);
+		shbankservice.sendMoney(samsung.getBasicData().getInfoAsset().findAccountInfo(samsungloanaccount)
+				, samsung.getBasicData().getInfoAsset().findAccountInfo(samsungdepositaccount), 30000000);
 		
 		IBankService kmbankservice = (IBankService)kookminbank;
+		ItemAccount lgdepositaccount = kmbankservice.makeNewAccount(lg, EAccountType.Deposit);
 		ItemAccount lgloanaccount = kmbankservice.makeNewAccount(lg, EAccountType.Loan);
 		kmbankservice.raiseLoan(lgloanaccount, 40000000);
+		kmbankservice.sendMoney(lg.getBasicData().getInfoAsset().findAccountInfo(lgloanaccount)
+				, lg.getBasicData().getInfoAsset().findAccountInfo(lgdepositaccount), 20000000);
 		
 		IBankService wrbankservice = (IBankService)wooribank;
 		ItemAccount samsungwrloanaccount = wrbankservice.makeNewAccount(samsung, EAccountType.Loan);

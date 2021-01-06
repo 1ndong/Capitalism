@@ -40,8 +40,11 @@ public class ProcessorMain {
 		CBCommercial kookminbank = new CBCommercial(rok , "국민");
 		CBCommercial wooribank = new CBCommercial(rok , "우리");
 		rok.getBankList().add(shinhanbank);
+		shinhanbank.setSpreadInterestRate(2.1f);
 		rok.getBankList().add(kookminbank);
+		kookminbank.setSpreadInterestRate(2.4f);
 		rok.getBankList().add(wooribank);
+		wooribank.setSpreadInterestRate(2.2f);
 		
 		rok.getCentralBank().makeMoney(1000000000);//10억
 		rok.getCentralBank().releaseMoney(shinhanbank, 100000000);

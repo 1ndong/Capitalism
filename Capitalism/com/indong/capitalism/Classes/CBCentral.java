@@ -5,12 +5,15 @@ import java.util.LinkedList;
 import com.indong.capitalism.DataStructure.DCareTaker;
 import com.indong.capitalism.DataStructure.DHCentralBank;
 import com.indong.capitalism.Frame.FrameLog;
+import com.indong.capitalism.Interface.IInterestChanger;
+import com.indong.capitalism.Interface.IInterestRate;
 import com.indong.capitalism.Processor.ProcessorDay;
 
-public class CBCentral extends CBank{
+public class CBCentral extends CBank implements IInterestChanger{
 	private LinkedList<CBank> bankList = new LinkedList<CBank>();
 	private float baseInterestRate = 0.5f;
 	private DCareTaker careTaker = new DCareTaker();
+	private LinkedList<IInterestRate> ibankList = new LinkedList<IInterestRate>();
 	
 	public CBCentral(CCountry country , String name)
 	{
@@ -49,9 +52,26 @@ public class CBCentral extends CBank{
 
 	public void setBaseInterestRate(float baseInterestRate) {
 		this.baseInterestRate = baseInterestRate;
+		FrameLog.getInstance().addLog("setbaseinterestrate", "기준금리 변동 : " + baseInterestRate + "%");
+		interestChange();
 	}
 
 	public DCareTaker getCareTaker() {
 		return careTaker;
+	}
+
+	@Override
+	public void addAccount(IInterestRate account) {
+		// TODO Auto-generated method stub
+		ibankList.add(account);//account is bank
+	}
+
+	@Override
+	public void interestChange() {
+		// TODO Auto-generated method stub
+		for(int i = 0 ; i < ibankList.size() ; i++)
+		{
+			ibankList.get(i).interestChange(getBaseInterestRate());
+		}
 	}
 }

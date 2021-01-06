@@ -7,16 +7,20 @@ import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Info.IAAccount;
 import com.indong.capitalism.Interface.IBankService;
+import com.indong.capitalism.Interface.IInterestChanger;
+import com.indong.capitalism.Interface.IInterestRate;
 import com.indong.capitalism.Item.ItemAccount;
 
-public class CBCommercial extends CBank implements IBankService{
+public class CBCommercial extends CBank implements IBankService , IInterestChanger , IInterestRate{
 	private LinkedList<DBankMember> bankmemberList = new LinkedList<DBankMember>();
 	private int lastAccountNumber = 0;
-	private float spreadInterestRate = 2.0f;
+	private float spreadInterestRate = 0.0f;
+	private LinkedList<IInterestRate> accountList = new LinkedList<IInterestRate>();
 	
 	public CBCommercial(CCountry country , String name)
 	{
 		super(country ,name);
+		((IInterestChanger)getMyCountry().getCentralBank()).addAccount(this);
 	}
 	
 	public LinkedList<DBankMember> getBankMemberList() {
@@ -26,7 +30,8 @@ public class CBCommercial extends CBank implements IBankService{
 	@Override
 	public ItemAccount makeNewAccount(CBeing newclient , EAccountType type)
 	{
-		ItemAccount na = new ItemAccount(this, makeUniqueAccountNumber(), type);
+		float confirmInterestRate = getMyCountry().getCentralBank().getBaseInterestRate() + getSpreadInterestRate();
+		ItemAccount na = new ItemAccount(this, makeUniqueAccountNumber(), type , confirmInterestRate);
 		
 		IAAccount ia = new IAAccount(newclient.getBasicData().getName(),this,na.getAccountNumber(),type);
 		newclient.getBasicData().getInfoAsset().addNewBankInfo(ia);
@@ -85,6 +90,8 @@ public class CBCommercial extends CBank implements IBankService{
 
 	public void setSpreadInterestRate(float spreadInterestRate) {
 		this.spreadInterestRate = spreadInterestRate;
+		FrameLog.getInstance().addLog("interestchange", getName() + "은행 가산금리 변동" + spreadInterestRate + "%");
+		interestChange();
 	}
 
 	@Override
@@ -167,5 +174,27 @@ public class CBCommercial extends CBank implements IBankService{
 		}
 		account.addRightsOfCash(amount);
 		FrameLog.getInstance().addLog("raiseLoan","대출 성공");
+	}
+
+	@Override
+	public void addAccount(IInterestRate account) {
+		// TODO Auto-generated method stub
+		accountList.add(account);
+	}
+
+	@Override
+	public void interestChange() {
+		// TODO Auto-generated method stub
+		float newinterestRate = getMyCountry().getCentralBank().getBaseInterestRate() + getSpreadInterestRate();
+		for(int i = 0 ; i < accountList.size() ; i++)
+		{
+			accountList.get(i).interestChange(newinterestRate);
+		}
+	}
+
+	@Override
+	public void interestChange(float newinterestrate) {
+		// TODO Auto-generated method stub
+		interestChange();
 	}
 }

@@ -153,14 +153,19 @@ public class CBCommercial extends CBank implements IBankService{
 	}
 
 	@Override
-	public void raiseLoan(CBeing being, int amount) {
+	public void raiseLoan(ItemAccount account, int amount) {
 		// TODO Auto-generated method stub
 		if(getBalance().getCash() < amount)
 		{
 			FrameLog.getInstance().addLog("raiseLoan", "은행 잔고 부족");
 			return;
 		}
-		ItemAccount account = makeNewAccount(being, EAccountType.Loan);
+		if(account.getAccountType() != EAccountType.Loan)
+		{
+			FrameLog.getInstance().addLog("raiseLoan", "대출통장 아님");
+			return;
+		}
 		account.addRightsOfCash(amount);
+		FrameLog.getInstance().addLog("raiseLoan","대출 성공");
 	}
 }

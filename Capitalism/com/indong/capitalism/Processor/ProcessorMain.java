@@ -13,6 +13,7 @@ import com.indong.capitalism.Enum.EGovernmentType;
 import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ICompanyService;
+import com.indong.capitalism.Item.ItemAccount;
 
 public class ProcessorMain {
 	public ProcessorMain()
@@ -63,14 +64,18 @@ public class ProcessorMain {
 		//////////////////////////////
 		
 		IBankService shbankservice = (IBankService)shinhanbank;
-		shbankservice.raiseLoan(samsung, 50000000);
+		ItemAccount samsungloanaccount = shbankservice.makeNewAccount(samsung, EAccountType.Loan);
+		shbankservice.raiseLoan(samsungloanaccount, 50000000);
 		
 		IBankService kmbankservice = (IBankService)kookminbank;
-		kmbankservice.raiseLoan(lg, 40000000);
+		ItemAccount lgloanaccount = kmbankservice.makeNewAccount(lg, EAccountType.Loan);
+		kmbankservice.raiseLoan(lgloanaccount, 40000000);
 		
 		IBankService wrbankservice = (IBankService)wooribank;
-		wrbankservice.raiseLoan(samsung, 10000000);
-		wrbankservice.raiseLoan(lg, 40000000);
+		ItemAccount samsungwrloanaccount = wrbankservice.makeNewAccount(samsung, EAccountType.Loan);
+		wrbankservice.raiseLoan(samsungwrloanaccount, 10000000);
+		ItemAccount lgwrloanaccount = wrbankservice.makeNewAccount(lg, EAccountType.Loan);
+		wrbankservice.raiseLoan(lgwrloanaccount, 40000000);
 		
 		ICompanyService samsungservice = (ICompanyService)samsung;
 		shbankservice.makeNewAccount(indong, EAccountType.Deposit);

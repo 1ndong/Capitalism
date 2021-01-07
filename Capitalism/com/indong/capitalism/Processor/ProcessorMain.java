@@ -68,33 +68,35 @@ public class ProcessorMain {
 		
 		//////////////////////////////
 		
+		DTime interestDay = new DTime(0,0,25,"");
+		
 		IBankService shbankservice = (IBankService)shinhanbank;
-		CBAccount samsungdepositaccount = shbankservice.makeNewAccount(samsung, EAccountType.Deposit);
-		CBAccount samsungloanaccount = shbankservice.makeNewAccount(samsung, EAccountType.Loan);
-		shbankservice.raiseLoan(samsungloanaccount, 50000000000L);//500억
+		CBAccount samsungdepositaccount = shbankservice.makeNewAccount(samsung, EAccountType.Deposit,interestDay);
+		CBAccount samsungloanaccount = shbankservice.makeNewAccount(samsung, EAccountType.Loan,interestDay);
+		shbankservice.raiseLoan(samsungloanaccount, 50000000000L , 120);//500억
 		shbankservice.sendMoney(samsung.getBasicData().getInfoAsset().findAccountInfo(samsungloanaccount)
 				, samsung.getBasicData().getInfoAsset().findAccountInfo(samsungdepositaccount), 30000000);
 		
 		IBankService kmbankservice = (IBankService)kookminbank;
-		CBAccount lgdepositaccount = kmbankservice.makeNewAccount(lg, EAccountType.Deposit);
-		CBAccount lgloanaccount = kmbankservice.makeNewAccount(lg, EAccountType.Loan);
-		kmbankservice.raiseLoan(lgloanaccount, 50000000000L);
+		CBAccount lgdepositaccount = kmbankservice.makeNewAccount(lg, EAccountType.Deposit,interestDay);
+		CBAccount lgloanaccount = kmbankservice.makeNewAccount(lg, EAccountType.Loan,interestDay);
+		kmbankservice.raiseLoan(lgloanaccount, 50000000000L, 120);
 		kmbankservice.sendMoney(lg.getBasicData().getInfoAsset().findAccountInfo(lgloanaccount)
 				, lg.getBasicData().getInfoAsset().findAccountInfo(lgdepositaccount), 20000000);
 		
 		IBankService wrbankservice = (IBankService)wooribank;
-		CBAccount samsungwrloanaccount = wrbankservice.makeNewAccount(samsung, EAccountType.Loan);
-		wrbankservice.raiseLoan(samsungwrloanaccount, 10000000000L);//100억
-		CBAccount lgwrloanaccount = wrbankservice.makeNewAccount(lg, EAccountType.Loan);
-		wrbankservice.raiseLoan(lgwrloanaccount, 40000000000L);//400억
+		CBAccount samsungwrloanaccount = wrbankservice.makeNewAccount(samsung, EAccountType.Loan,interestDay);
+		wrbankservice.raiseLoan(samsungwrloanaccount, 10000000000L, 120);//100억
+		CBAccount lgwrloanaccount = wrbankservice.makeNewAccount(lg, EAccountType.Loan,interestDay);
+		wrbankservice.raiseLoan(lgwrloanaccount, 40000000000L, 120);//400억
 		
 		ICompanyService samsungservice = (ICompanyService)samsung;
-		CBAccount indongsalaryaccount = shbankservice.makeNewAccount(indong, EAccountType.Deposit);
+		CBAccount indongsalaryaccount = shbankservice.makeNewAccount(indong, EAccountType.Deposit,interestDay);
 		IAAccount indongaccountinfo = indong.getBasicData().getInfoAsset().findAccountInfo(indongsalaryaccount);
 		samsungservice.joinCompany(indong, indongaccountinfo, ECompanyPosition.Clerk);
 		
 		ICompanyService lgservice = (ICompanyService)lg;
-		CBAccount jasonkimsalaryaccount = kmbankservice.makeNewAccount(jasonkim, EAccountType.Deposit);
+		CBAccount jasonkimsalaryaccount = kmbankservice.makeNewAccount(jasonkim, EAccountType.Deposit,interestDay);
 		IAAccount jasonkimaccountinfo = jasonkim.getBasicData().getInfoAsset().findAccountInfo(jasonkimsalaryaccount);
 		lgservice.joinCompany(jasonkim, jasonkimaccountinfo, ECompanyPosition.Clerk);
 	}

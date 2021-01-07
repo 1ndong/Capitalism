@@ -6,6 +6,7 @@ import com.indong.capitalism.Classes.CBeing;
 import com.indong.capitalism.Classes.CCountry;
 import com.indong.capitalism.Classes.Asset.CACCash;
 import com.indong.capitalism.DataStructure.DBankMember;
+import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Info.IAAccount;
@@ -30,13 +31,13 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 	}
 	
 	@Override
-	public CBAccount makeNewAccount(CBeing newclient , EAccountType type)
+	public CBAccount makeNewAccount(CBeing newclient , EAccountType type , DTime interestDay)
 	{
 		float confirmInterestRate = getMyCountry().getCentralBank().getBaseInterestRate() + getSpreadInterestRate();
-		CBAccount na = new CBAccount(this, makeUniqueAccountNumber(), type , confirmInterestRate);
+		CBAccount na = new CBAccount(this, makeUniqueAccountNumber(), type , confirmInterestRate , interestDay);
 		
 		IAAccount ia = new IAAccount(newclient.getBasicData().getName(),this,na.getAccountNumber(),type);
-		newclient.getBasicData().getInfoAsset().addNewBankInfo(ia);
+		newclient.getBasicData().getInfoAsset().addNewAccountInfo(ia);
 		
 		for(int i = 0 ; i < bankmemberList.size() ; i++)
 		{
@@ -162,8 +163,13 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 	}
 
 	@Override
-	public void raiseLoan(CBAccount account, long amount) {
+	public void raiseLoan(CBAccount account, long amount , int loanMonth) {
 		// TODO Auto-generated method stub
+		if(account.getBank() != this)
+		{
+			FrameLog.getInstance().addLog("raiseLoan", "해당은행 계좌가 아니므로 대출 불가");
+			return;
+		}
 		if(getBalance().getCash() < amount)
 		{
 			FrameLog.getInstance().addLog("raiseLoan", "은행 잔고 부족");
@@ -175,6 +181,8 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 			return;
 		}
 		account.addRightsOfCash(amount);
+		account.setLoanMonth(loanMonth);
+		account.setInitLoanMoneyAmount(amount);
 		FrameLog.getInstance().addLog("raiseLoan","대출 성공");
 	}
 
@@ -198,5 +206,33 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 	public void interestChange(float newinterestrate) {
 		// TODO Auto-generated method stub
 		interestChange();
+	}
+	
+	@Override
+	public void dayChange(DTime newTime) {
+		// TODO Auto-generated method stub
+		//이자 나눠주기
+		for(int i = 0 ; i < getBankMemberList().size() ; i++)
+		{
+			DBankMember member = getBankMemberList().get(i);
+			for(int j = 0 ; j < member.getAccountList().size() ; j++)
+			{
+				CBAccount account = member.getAccountList().get(j);
+				if(account.getInterestDay().getDay() == newTime.getDay())
+				{
+					if(account.getAccountType() == EAccountType.Deposit)
+					{
+						//+
+						//이자계산 어렵다
+					}
+//					else if(account.getAccountType() == EAccountType.Loan) 이건 사람이나 회사가 은행에게 줘야됨
+//					{
+//						//-
+//						//원금까주고
+//						//month1줄여주고
+//					}
+				}
+			}
+		}
 	}
 }

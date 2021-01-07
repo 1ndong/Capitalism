@@ -11,7 +11,7 @@ public class InfoAsset {
 		return accountList;
 	}
 
-	public void addNewBankInfo(IAAccount newaccount) {
+	public void addNewAccountInfo(IAAccount newaccount) {
 		this.accountList.add(newaccount);
 	}
 	

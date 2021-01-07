@@ -5,11 +5,11 @@ import java.util.LinkedList;
 
 import com.indong.capitalism.Classes.CCompany;
 import com.indong.capitalism.Classes.CCountry;
-import com.indong.capitalism.Classes.CGMinistryOfHealthAndWelfare;
-import com.indong.capitalism.Classes.CGMinistryOfTradeIndustryAndEnergy;
-import com.indong.capitalism.Classes.CGovernment;
 import com.indong.capitalism.Classes.CPeople;
 import com.indong.capitalism.Classes.CWorld;
+import com.indong.capitalism.Classes.Government.CGMinistryOfHealthAndWelfare;
+import com.indong.capitalism.Classes.Government.CGMinistryOfTradeIndustryAndEnergy;
+import com.indong.capitalism.Classes.Government.CGovernment;
 import com.indong.capitalism.Enum.EGovernmentType;
 
 public abstract class CompilerHelpString {

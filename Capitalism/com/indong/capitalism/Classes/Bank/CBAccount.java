@@ -1,19 +1,18 @@
-package com.indong.capitalism.Item;
+package com.indong.capitalism.Classes.Bank;
 
-import com.indong.capitalism.Classes.CBCommercial;
 import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Interface.IInterestChanger;
 import com.indong.capitalism.Interface.IInterestRate;
 
-public class ItemAccount implements IInterestRate{
+public class CBAccount implements IInterestRate{
 	private int accountNumber = 0;
 	private EAccountType accountType;
 	private CBCommercial bank;
-	private int rightsOfCash = 0;
+	private long rightsOfCash = 0;
 	private float interestRate = 0.0f;
 	
-	public ItemAccount(CBCommercial bank , int accountNumber , EAccountType type , float interestRate)
+	public CBAccount(CBCommercial bank , int accountNumber , EAccountType type , float interestRate)
 	{
 		this.bank = bank;
 		this.accountNumber = accountNumber;
@@ -38,11 +37,11 @@ public class ItemAccount implements IInterestRate{
 		return accountType;
 	}
 
-	public int getRightsOfCash() {
+	public long getRightsOfCash() {
 		return rightsOfCash;
 	}
 
-	public void addRightsOfCash(int rightsOfCash) {
+	public void addRightsOfCash(long rightsOfCash) {
 		this.rightsOfCash += rightsOfCash;
 	}
 

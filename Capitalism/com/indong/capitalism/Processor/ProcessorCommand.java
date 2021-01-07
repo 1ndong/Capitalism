@@ -6,10 +6,10 @@ import java.util.StringTokenizer;
 
 import com.indong.capitalism.Classes.CCompany;
 import com.indong.capitalism.Classes.CCountry;
-import com.indong.capitalism.Classes.CGMinistryOfHealthAndWelfare;
-import com.indong.capitalism.Classes.CGMinistryOfTradeIndustryAndEnergy;
 import com.indong.capitalism.Classes.CPeople;
 import com.indong.capitalism.Classes.CWorld;
+import com.indong.capitalism.Classes.Government.CGMinistryOfHealthAndWelfare;
+import com.indong.capitalism.Classes.Government.CGMinistryOfTradeIndustryAndEnergy;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EGovernmentType;
 import com.indong.capitalism.Frame.FrameLog;

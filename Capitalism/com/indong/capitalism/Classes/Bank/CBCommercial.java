@@ -1,7 +1,10 @@
-package com.indong.capitalism.Classes;
+package com.indong.capitalism.Classes.Bank;
 
 import java.util.LinkedList;
 
+import com.indong.capitalism.Classes.CBeing;
+import com.indong.capitalism.Classes.CCountry;
+import com.indong.capitalism.Classes.Asset.CACCash;
 import com.indong.capitalism.DataStructure.DBankMember;
 import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Frame.FrameLog;
@@ -9,7 +12,6 @@ import com.indong.capitalism.Info.IAAccount;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.IInterestChanger;
 import com.indong.capitalism.Interface.IInterestRate;
-import com.indong.capitalism.Item.ItemAccount;
 
 public class CBCommercial extends CBank implements IBankService , IInterestChanger , IInterestRate{
 	private LinkedList<DBankMember> bankmemberList = new LinkedList<DBankMember>();
@@ -28,10 +30,10 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 	}
 	
 	@Override
-	public ItemAccount makeNewAccount(CBeing newclient , EAccountType type)
+	public CBAccount makeNewAccount(CBeing newclient , EAccountType type)
 	{
 		float confirmInterestRate = getMyCountry().getCentralBank().getBaseInterestRate() + getSpreadInterestRate();
-		ItemAccount na = new ItemAccount(this, makeUniqueAccountNumber(), type , confirmInterestRate);
+		CBAccount na = new CBAccount(this, makeUniqueAccountNumber(), type , confirmInterestRate);
 		
 		IAAccount ia = new IAAccount(newclient.getBasicData().getName(),this,na.getAccountNumber(),type);
 		newclient.getBasicData().getInfoAsset().addNewBankInfo(ia);
@@ -60,10 +62,10 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 	}
 
 	@Override
-	public boolean sendMoney(IAAccount sender, IAAccount receiver , int amount) {
+	public boolean sendMoney(IAAccount sender, IAAccount receiver , long amount) {
 		// TODO Auto-generated method stub
-		ItemAccount senderAccount = ((IBankService)sender.getBank()).findAccount(sender.getOwnerName() , sender.getAccountNumber());
-		ItemAccount receiverAccount = ((IBankService)receiver.getBank()).findAccount(receiver.getOwnerName(), receiver.getAccountNumber());
+		CBAccount senderAccount = ((IBankService)sender.getBank()).findAccount(sender.getOwnerName() , sender.getAccountNumber());
+		CBAccount receiverAccount = ((IBankService)receiver.getBank()).findAccount(receiver.getOwnerName(), receiver.getAccountNumber());
 		if(senderAccount.getRightsOfCash() < amount)
 		{
 			FrameLog.getInstance().addLog("sendmoney", "잔액부족");
@@ -95,9 +97,9 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 	}
 
 	@Override
-	public int withdrawCash(IAAccount account, int amount) {
+	public long withdrawCash(IAAccount account, long amount) {
 		// TODO Auto-generated method stub
-		ItemAccount realaccount = ((IBankService)account.getBank()).findAccount(account.getOwnerName(), account.getAccountNumber());
+		CBAccount realaccount = ((IBankService)account.getBank()).findAccount(account.getOwnerName(), account.getAccountNumber());
 		if(realaccount.getRightsOfCash() < amount)
 		{
 			FrameLog.getInstance().addLog("withdrawcash","잔액부족");
@@ -121,9 +123,9 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 	}
 
 	@Override
-	public void depositCash(IAAccount account, CACCash cash , int amount) {
+	public void depositCash(IAAccount account, CACCash cash , long amount) {
 		// TODO Auto-generated method stub
-		ItemAccount realAccount = ((IBankService)account.getBank()).findAccount(account.getOwnerName(), account.getAccountNumber());
+		CBAccount realAccount = ((IBankService)account.getBank()).findAccount(account.getOwnerName(), account.getAccountNumber());
 		if(cash.getCash() < amount)
 		{
 			FrameLog.getInstance().addLog("depositcash", "맡길 금액 부족");
@@ -135,9 +137,9 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 	}
 
 	@Override
-	public ItemAccount findAccount(String name, int accountNumber) {
+	public CBAccount findAccount(String name, int accountNumber) {
 		// TODO Auto-generated method stub
-		ItemAccount result = null;
+		CBAccount result = null;
 		
 		for(int i = 0 ; i < bankmemberList.size() ; i++)
 		{
@@ -148,7 +150,7 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 			{
 				for(int j = 0 ; j < temp.getAccountList().size() ; j++)
 				{
-					ItemAccount account = temp.getAccountList().get(j);
+					CBAccount account = temp.getAccountList().get(j);
 					if(account.getAccountNumber() == accountNumber)
 					{
 						result = account;
@@ -160,7 +162,7 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 	}
 
 	@Override
-	public void raiseLoan(ItemAccount account, int amount) {
+	public void raiseLoan(CBAccount account, long amount) {
 		// TODO Auto-generated method stub
 		if(getBalance().getCash() < amount)
 		{

@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.indong.capitalism.Classes.CCompany;
 import com.indong.capitalism.Classes.CPeople;
+import com.indong.capitalism.Classes.Bank.CBAccount;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Frame.CustomPanel.DashBoardPanel;
@@ -25,7 +26,6 @@ import com.indong.capitalism.Info.IAAccount;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
-import com.indong.capitalism.Item.ItemAccount;
 import com.indong.capitalism.Processor.ProcessorDay;
 import com.indong.capitalism.Processor.ProcessorMain;
 
@@ -175,7 +175,7 @@ public class FrameMain extends JFrame implements ITime{
 			{
 				IAAccount infoaccount = people.getBasicData().getInfoAsset().getAccountList().get(j);
 				IBankService bankservice = (IBankService)infoaccount.getBank();
-				ItemAccount account = bankservice.findAccount(people.getBasicData().getName(), infoaccount.getAccountNumber());
+				CBAccount account = bankservice.findAccount(people.getBasicData().getName(), infoaccount.getAccountNumber());
 				if(account.getAccountType() == EAccountType.Deposit)
 				{
 					deposit += account.getRightsOfCash();
@@ -206,7 +206,7 @@ public class FrameMain extends JFrame implements ITime{
 			{
 				IAAccount infoaccount = company.getBasicData().getInfoAsset().getAccountList().get(j);
 				IBankService bankservice = (IBankService)infoaccount.getBank();
-				ItemAccount account = bankservice.findAccount(company.getBasicData().getName(), infoaccount.getAccountNumber());
+				CBAccount account = bankservice.findAccount(company.getBasicData().getName(), infoaccount.getAccountNumber());
 				if(account.getAccountType() == EAccountType.Deposit)
 				{
 					deposit += account.getRightsOfCash();

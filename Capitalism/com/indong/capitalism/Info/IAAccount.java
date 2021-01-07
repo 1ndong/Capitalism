@@ -1,6 +1,6 @@
 package com.indong.capitalism.Info;
 
-import com.indong.capitalism.Classes.CBank;
+import com.indong.capitalism.Classes.Bank.CBank;
 import com.indong.capitalism.Enum.EAccountType;
 
 public class IAAccount {

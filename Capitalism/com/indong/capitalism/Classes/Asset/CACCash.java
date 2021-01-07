@@ -1,4 +1,4 @@
-package com.indong.capitalism.Classes;
+package com.indong.capitalism.Classes.Asset;
 
 public class CACCash extends CACurrency{
 	private long cash = 0;

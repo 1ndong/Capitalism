@@ -15,13 +15,14 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import com.indong.capitalism.Classes.CBCommercial;
 import com.indong.capitalism.Classes.CCompany;
 import com.indong.capitalism.Classes.CCountry;
-import com.indong.capitalism.Classes.CGMinistryOfHealthAndWelfare;
-import com.indong.capitalism.Classes.CGMinistryOfTradeIndustryAndEnergy;
 import com.indong.capitalism.Classes.CPeople;
 import com.indong.capitalism.Classes.CWorld;
+import com.indong.capitalism.Classes.Bank.CBCommercial;
+import com.indong.capitalism.Classes.Bank.CBAccount;
+import com.indong.capitalism.Classes.Government.CGMinistryOfHealthAndWelfare;
+import com.indong.capitalism.Classes.Government.CGMinistryOfTradeIndustryAndEnergy;
 import com.indong.capitalism.DataStructure.DBankMember;
 import com.indong.capitalism.DataStructure.DCareTaker;
 import com.indong.capitalism.DataStructure.DHCentralBank;
@@ -30,7 +31,6 @@ import com.indong.capitalism.Enum.EGovernmentType;
 import com.indong.capitalism.Frame.FrameMain;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
-import com.indong.capitalism.Item.ItemAccount;
 import com.indong.capitalism.Processor.ProcessorDay;
 
 public class DashBoardPanel extends JPanel implements ITime{
@@ -181,7 +181,7 @@ public class DashBoardPanel extends JPanel implements ITime{
 					DBankMember bankmember = bank.getBankMemberList().get(j);
 					for(int k = 0 ; k < bankmember.getAccountList().size() ; k++)
 					{
-						ItemAccount account = bankmember.getAccountList().get(k);
+						CBAccount account = bankmember.getAccountList().get(k);
 						creditCurrency += account.getRightsOfCash();
 					}
 				}

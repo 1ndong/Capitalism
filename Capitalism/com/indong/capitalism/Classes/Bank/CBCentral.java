@@ -1,7 +1,8 @@
-package com.indong.capitalism.Classes;
+package com.indong.capitalism.Classes.Bank;
 
 import java.util.LinkedList;
 
+import com.indong.capitalism.Classes.CCountry;
 import com.indong.capitalism.DataStructure.DCareTaker;
 import com.indong.capitalism.DataStructure.DHCentralBank;
 import com.indong.capitalism.Frame.FrameLog;
@@ -29,7 +30,7 @@ public class CBCentral extends CBank implements IInterestChanger{
 		careTaker.addMemento(date);
 	}
 	
-	public void releaseMoney(CBank bank , int amount)
+	public void releaseMoney(CBank bank , long amount)
 	{
 		if(amount > balance.getCash())
 		{

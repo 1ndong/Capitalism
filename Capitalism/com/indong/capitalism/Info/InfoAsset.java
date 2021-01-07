@@ -2,7 +2,7 @@ package com.indong.capitalism.Info;
 
 import java.util.LinkedList;
 
-import com.indong.capitalism.Item.ItemAccount;
+import com.indong.capitalism.Classes.Bank.CBAccount;
 
 public class InfoAsset {
 	private LinkedList<IAAccount> accountList = new LinkedList<IAAccount>();
@@ -15,7 +15,7 @@ public class InfoAsset {
 		this.accountList.add(newaccount);
 	}
 	
-	public IAAccount findAccountInfo(ItemAccount account)
+	public IAAccount findAccountInfo(CBAccount account)
 	{
 		IAAccount result = null;
 		

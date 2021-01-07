@@ -1,7 +1,9 @@
-package com.indong.capitalism.Classes;
+package com.indong.capitalism.Classes.Government;
 
 import java.util.HashMap;
 
+import com.indong.capitalism.Classes.CCompany;
+import com.indong.capitalism.Classes.CCountry;
 import com.indong.capitalism.Frame.FrameLog;
 
 public class CGMinistryOfTradeIndustryAndEnergy extends CGovernment{

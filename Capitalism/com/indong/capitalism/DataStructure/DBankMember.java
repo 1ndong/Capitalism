@@ -3,11 +3,11 @@ package com.indong.capitalism.DataStructure;
 import java.util.LinkedList;
 
 import com.indong.capitalism.Classes.CBeing;
-import com.indong.capitalism.Item.ItemAccount;
+import com.indong.capitalism.Classes.Bank.CBAccount;
 
 public class DBankMember {
 	private CBeing client;
-	private LinkedList<ItemAccount> accountList = new LinkedList<ItemAccount>();
+	private LinkedList<CBAccount> accountList = new LinkedList<CBAccount>();
 	
 	public DBankMember(CBeing client)
 	{
@@ -18,7 +18,7 @@ public class DBankMember {
 		return client;
 	}
 
-	public LinkedList<ItemAccount> getAccountList() {
+	public LinkedList<CBAccount> getAccountList() {
 		return accountList;
 	}
 }

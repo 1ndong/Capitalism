@@ -12,11 +12,15 @@ public class CACCash extends CACurrency{
 		return cash;
 	}
 	public void addCash(long cash) {
-		if(this.cash - cash < 0)
+		if(cash < 0)
 		{
-			FrameLog.getInstance().addLog("addcash", "현금 부족");
-			return;
+			if(this.cash - cash < 0)
+			{
+				FrameLog.getInstance().addLog("addcash", "현금 부족");
+				return;
+			}	
 		}
+		
 		this.cash += cash;
 	}
 }

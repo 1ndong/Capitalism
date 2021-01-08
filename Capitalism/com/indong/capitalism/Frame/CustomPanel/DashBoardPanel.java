@@ -160,7 +160,7 @@ public class DashBoardPanel extends JPanel implements ITime{
 		if(country != null)
 		{
 			DCareTaker careTaker = country.getCentralBank().getCareTaker();
-			int allMadeMoney = 0;
+			long allMadeMoney = 0;
 			for(int i = 0 ; i < careTaker.getList().size() ; i++)
 			{
 				DHCentralBank history = (DHCentralBank)careTaker.getList().get(i);
@@ -175,7 +175,7 @@ public class DashBoardPanel extends JPanel implements ITime{
 				CBCommercial bank = (CBCommercial)country.getBankList().get(i);
 				addRowInformationTable(bank.getName() + " , 가산금리 : " + bank.getSpreadInterestRate() + "%");
 
-				int creditCurrency = 0;
+				long creditCurrency = 0;
 				for(int j = 0 ; j < bank.getBankMemberList().size() ; j++)
 				{
 					DBankMember bankmember = bank.getBankMemberList().get(j);

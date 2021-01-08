@@ -34,7 +34,7 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 	public CBAccount makeNewAccount(CBeing newclient , EAccountType type , DTime interestDay)
 	{
 		float confirmInterestRate = getMyCountry().getCentralBank().getBaseInterestRate() + getSpreadInterestRate();
-		CBAccount na = new CBAccount(this, makeUniqueAccountNumber(), type , confirmInterestRate , interestDay);
+		CBAccount na = new CBAccount(newclient.getBasicData().getName() , this, makeUniqueAccountNumber(), type , confirmInterestRate , interestDay);
 		
 		IAAccount ia = new IAAccount(newclient.getBasicData().getName(),this,na.getAccountNumber(),type);
 		newclient.getBasicData().getInfoAsset().addNewAccountInfo(ia);
@@ -180,9 +180,10 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 			FrameLog.getInstance().addLog("raiseLoan", "대출통장 아님");
 			return;
 		}
+		//todo 빌려주는 amount 를 은행 잔고의 지급준비율을 제외한 한도내에서 빌려줘야 한다
 		account.addRightsOfCash(amount);
 		account.setLoanMonth(loanMonth);
-		account.setInitLoanMoneyAmount(amount);
+		account.setRepaymentDuty(amount);
 		FrameLog.getInstance().addLog("raiseLoan","대출 성공");
 	}
 
@@ -224,13 +225,8 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 					{
 						//+
 						//이자계산 어렵다
+						
 					}
-//					else if(account.getAccountType() == EAccountType.Loan) 이건 사람이나 회사가 은행에게 줘야됨
-//					{
-//						//-
-//						//원금까주고
-//						//month1줄여주고
-//					}
 				}
 			}
 		}

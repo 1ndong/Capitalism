@@ -17,5 +17,6 @@ public class CPeople extends CBeing implements ITime
 	@Override
 	public void dayChange(DTime newTime) {
 		// TODO Auto-generated method stub
+		
 	}
 }

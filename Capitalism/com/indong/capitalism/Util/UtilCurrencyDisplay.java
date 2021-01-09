@@ -22,6 +22,16 @@ public class UtilCurrencyDisplay {
 	
 	public String toCurrencyString(long money , ECurrency currency)
 	{
+		return toCurrencyStringInternal(money, currency, false);
+	}
+	
+	public String toCurrencyStringAllKorean(long money , ECurrency currency)
+	{
+		return toCurrencyStringInternal(money, currency, true);
+	}
+	
+	private String toCurrencyStringInternal(long money , ECurrency currency , boolean isAllkorean)
+	{
 		String str = String.valueOf(money);
 		
 		String result = "";
@@ -32,7 +42,12 @@ public class UtilCurrencyDisplay {
 		if(len > billlimit)
 			bOverflow = true;
 		
-		String[] billStr = new String[4];//0won ,1man , 2uk ,3jo
+		String[] billStr = new String[]
+		{
+			"","","",""
+		};
+		//0won ,1man , 2uk ,3jo
+		
 		String[] resultBillStr = new String[]
 		{
 				"","","",""
@@ -47,43 +62,74 @@ public class UtilCurrencyDisplay {
 	        }
 	        else
 	        {
-	            billStr[i] = str.substring(len-4);
+	        	String temp = str.substring(len-4);
+	        	int removeZero = Integer.parseInt(temp);
+	            billStr[i] += removeZero;
 	            str = str.substring(0, len-4);
 	            len = str.length();
 	        }
 	    }
 
-	    for(int i = 0 ; i < 4 ; i ++)
-	    {
-	    	if(billStr[i] == null)
-	    		continue;
-	        int len2 = billStr[i].length();
-	        for(int j = len2-1 ; j >=0 ; j--)
-	        {
-	            char char1 = (billStr[i].charAt(len2 - j - 1));
-	            String character = String.valueOf(char1);
-	            String temp = han1[Integer.parseInt(character)];
-            	resultBillStr[i] += temp;
-	            if(bOverflow && i == 3)
-	            {
-	                if(Integer.parseInt(character) == 0)
-	                    resultBillStr[i] += "\uC601";
-	            }
-	            else
-	            {
-	                if(Integer.parseInt(character) > 0)
-	                    resultBillStr[i] += han2[j%4];
-	            }
-	        }
-	    }
+		if(isAllkorean == true)
+		{
+		    for(int i = 0 ; i < 4 ; i ++)
+		    {
+		    	if(billStr[i] == null)
+		    		continue;
+		        int len2 = billStr[i].length();
+		        for(int j = len2-1 ; j >=0 ; j--)
+		        {
+		            char char1 = (billStr[i].charAt(len2 - j - 1));
+		            String character = String.valueOf(char1);
+		            if(character.equalsIgnoreCase("0") == true)
+		            	continue;
+	            	
+		            if(isAllkorean == true)
+		            {
+			            String temp = han1[Integer.parseInt(character)];
+		            	resultBillStr[i] += temp;		            	
+		            }
+		            else
+		            {
+		            	resultBillStr[i] += char1;	
+		            }
+
+		            if(bOverflow && i == 3)
+		            {
+		                if(Integer.parseInt(character) == 0)
+		                    resultBillStr[i] += "\uC601";
+		            }
+		            else
+		            {
+		                if(Integer.parseInt(character) > 0)
+		                {
+		                	resultBillStr[i] += han2[j%4];
+		                }
+		            }
+		        }
+		    }	
+		}
 
 	    for(int i = 3 ; i >= 0 ; i--)
 	    {
-	        if(resultBillStr[i].length() > 0)
-	        {
-	            result += resultBillStr[i];
-	            result += han3[i];
-	        }
+	    	if(isAllkorean == true)
+	    	{
+		        if(resultBillStr[i].length() > 0)
+		        {
+		            result += resultBillStr[i];
+		            result += han3[i];
+		        }	    		
+	    	}
+	    	else
+	    	{
+		    	if(billStr[i] == null)
+		    		continue;
+		        if(billStr[i].length() > 0)
+		        {
+		            result += billStr[i];
+		            result += han3[i];
+		        }	    		
+	    	}
 	    }
 	    
 	    if(result.length() > 0)

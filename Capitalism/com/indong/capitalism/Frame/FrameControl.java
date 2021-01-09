@@ -148,7 +148,7 @@ public class FrameControl extends JFrame implements ITime{
 		dayField.setForeground(Color.white);
 		dayField.setHorizontalAlignment(JTextField.CENTER);
 		dayField.setBackground(new Color(119,25,170));
-		Font font = new Font("맑은 고딕",Font.BOLD,30);
+		Font font = new Font("맑은 고딕",Font.BOLD,20);
 		dayField.setFont(font);
 		
 		String[] colName = new String[] {"[help]"};

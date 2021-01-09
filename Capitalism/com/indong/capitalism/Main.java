@@ -20,7 +20,7 @@ public class Main {
 					double width = screenSize.getWidth();
 					double height = screenSize.getHeight()-50/*작업표시줄*/;
 					
-					final float RATIO_MAIN = 0.6f;
+					final float RATIO_MAIN = 0.7f;
 					final float RATIO_LOG_HEIGHT = 0.4f;
 					
 					double mainWidth = width * RATIO_MAIN;

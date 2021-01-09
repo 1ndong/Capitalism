@@ -122,9 +122,7 @@ public class UCurrency {
 	    	}
 	    	else
 	    	{
-		    	if(billStr[i] == null)
-		    		continue;
-		        if(billStr[i].length() > 0)
+		        if(billStr[i].length() > 0 && Integer.parseInt(billStr[i]) > 0)
 		        {
 		            result += billStr[i];
 		            result += han3[i];

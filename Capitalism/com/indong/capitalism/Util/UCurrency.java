@@ -2,8 +2,8 @@ package com.indong.capitalism.Util;
 
 import com.indong.capitalism.Enum.ECurrency;
 
-public class UtilCurrencyDisplay {
-	private static UtilCurrencyDisplay instance = new UtilCurrencyDisplay();
+public class UCurrency {
+	private static UCurrency instance = new UCurrency();
 	private String[] han1 = new String[] {
 			"","\uC77C","\uC774","\uC0BC","\uC0AC",
 		    "\uC624","\uC721","\uCE60","\uD314","\uAD6C"
@@ -15,17 +15,17 @@ public class UtilCurrencyDisplay {
 			"","\uB9CC","\uC5B5","\uC870"//han3[4]=_T("\uACBD");
 	};//ten thousand , one hundred million , trillion
 	
-	public static UtilCurrencyDisplay getInstance()
+	public static UCurrency getInstance()
 	{
 		return instance;
 	}
 	
-	public String toCurrencyString(long money , ECurrency currency)
+	public String toString(long money , ECurrency currency)
 	{
 		return toCurrencyStringInternal(money, currency, false);
 	}
 	
-	public String toCurrencyStringAllKorean(long money , ECurrency currency)
+	public String toStringAllKorean(long money , ECurrency currency)
 	{
 		return toCurrencyStringInternal(money, currency, true);
 	}

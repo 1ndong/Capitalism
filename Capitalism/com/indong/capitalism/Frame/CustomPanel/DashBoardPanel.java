@@ -27,11 +27,13 @@ import com.indong.capitalism.DataStructure.DBankMember;
 import com.indong.capitalism.DataStructure.DCareTaker;
 import com.indong.capitalism.DataStructure.DHCentralBank;
 import com.indong.capitalism.DataStructure.DTime;
+import com.indong.capitalism.Enum.ECurrency;
 import com.indong.capitalism.Enum.EGovernmentType;
 import com.indong.capitalism.Frame.FrameMain;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
 import com.indong.capitalism.Processor.ProcessorDay;
+import com.indong.capitalism.Util.UCurrency;
 
 public class DashBoardPanel extends JPanel implements ITime{
 	
@@ -80,8 +82,22 @@ public class DashBoardPanel extends JPanel implements ITime{
 		dayField.setBackground(new Color(119,25,170));
 		dayField.setFont(font);
 		
+		JTextField amicField = new JTextField();
+		int ax = dayField.getX() + dayField.getWidth();
+		int ay = 0;
+		int aw = upperRect.width / 2;
+		int ah = upperRect.height;
+		amicField.setBounds(ax, ay, aw, ah);
+		amicField.setEditable(false);
+		amicField.setForeground(Color.white);
+		amicField.setHorizontalAlignment(JTextField.CENTER);
+		amicField.setFont(font);
+		amicField.setBackground(new Color(45,194,216));
+		amicField.setText("All money is credit");
+		
 		upperPanel.add(combobox);
 		upperPanel.add(dayField);
+		upperPanel.add(amicField);
 		
 		/////////////////////////////
 		
@@ -166,9 +182,9 @@ public class DashBoardPanel extends JPanel implements ITime{
 				DHCentralBank history = (DHCentralBank)careTaker.getList().get(i);
 				allMadeMoney += history.getMakeMoneyAmount();
 			}
-			addRowInformationTable("중앙은행 총 통화 발행량 : " + allMadeMoney + "원");
+			addRowInformationTable("중앙은행 총 통화 발행량 : " + UCurrency.getInstance().toString(allMadeMoney,ECurrency.Won));
 			addRowInformationTable("기준금리 : "+ country.getCentralBank().getBaseInterestRate() + "%");
-			addRowInformationTable("중앙은행 현금보유량 : " + country.getCentralBank().getBalance().getCash() + "원");
+			addRowInformationTable("중앙은행 현금보유량 : " + UCurrency.getInstance().toString(country.getCentralBank().getBalance().getCash(),ECurrency.Won));
 			
 			for(int i = 0 ; i < country.getBankList().size() ; i++)
 			{
@@ -185,8 +201,8 @@ public class DashBoardPanel extends JPanel implements ITime{
 						creditCurrency += account.getRightsOfCash();
 					}
 				}
-				addRowInformationTable(bank.getName() + " , 신용통화 : " + creditCurrency + "원");
-				addRowInformationTable(bank.getName() + " , 현금보유량 : " + bank.getBalance().getCash() + "원");
+				addRowInformationTable(bank.getName() + " , 신용통화 : " + UCurrency.getInstance().toString(creditCurrency,ECurrency.Won));
+				addRowInformationTable(bank.getName() + " , 현금보유량 : " + UCurrency.getInstance().toString(bank.getBalance().getCash(),ECurrency.Won));
 			}
 		}
 		

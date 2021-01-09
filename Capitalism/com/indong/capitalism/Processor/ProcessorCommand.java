@@ -191,6 +191,9 @@ public class ProcessorCommand {
 		boolean result = false;
 		LinkedList<String> commandList = parsingCommand(command);
 		
+		if(commandList.size() == 0)
+			return false;
+		
 		CompilerCommand cc = null;
 		
 		switch(commandList.get(0))

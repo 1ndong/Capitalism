@@ -21,7 +21,7 @@ public class CMainCompCellPanel extends JPanel {
 	
 	private JButton detailButton = new JButton("detail");
 
-	public CMainCompCellPanel(String name, int allAsset , int deposit , int cash , int loan) {
+	public CMainCompCellPanel(String name, long allAsset , long deposit , long cash , long loan) {
 		setLayout(new GridLayout(1,11));
 		this.name.setText(name);
 		this.allAsset.setText(String.valueOf(allAsset));
@@ -51,7 +51,7 @@ public class CMainCompCellPanel extends JPanel {
 	}
 
 	public CMainTableComp getComp() {
-		return new CMainTableComp(name.getText(), Integer.parseInt(allAsset.getText()),Integer.parseInt(deposit.getText())
-				,Integer.parseInt(cash.getText()),Integer.parseInt(loan.getText()));
+		return new CMainTableComp(name.getText(), Long.parseLong(allAsset.getText()),Long.parseLong(deposit.getText())
+				,Long.parseLong(cash.getText()),Long.parseLong(loan.getText()));
 	}
 }

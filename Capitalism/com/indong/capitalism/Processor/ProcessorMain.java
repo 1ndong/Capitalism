@@ -11,13 +11,11 @@ import com.indong.capitalism.Classes.Government.CGMinistryOfTradeIndustryAndEner
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Enum.ECompanyPosition;
-import com.indong.capitalism.Enum.ECurrency;
 import com.indong.capitalism.Enum.EGovernmentType;
 import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Info.IAAccount;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ICompanyService;
-import com.indong.capitalism.Util.UtilCurrencyDisplay;
 
 public class ProcessorMain {
 	public ProcessorMain()
@@ -101,7 +99,5 @@ public class ProcessorMain {
 		CBAccount jasonkimsalaryaccount = kmbankservice.makeNewAccount(jasonkim, EAccountType.Deposit,interestDay);
 		IAAccount jasonkimaccountinfo = jasonkim.getBasicData().getInfoAsset().findAccountInfo(jasonkimsalaryaccount);
 		lgservice.joinCompany(jasonkim, jasonkimaccountinfo, ECompanyPosition.Clerk);
-		
-		//System.out.println(UtilCurrencyDisplay.getInstance().toCurrencyString(45430000523L, ECurrency.Won));
 	}
 }

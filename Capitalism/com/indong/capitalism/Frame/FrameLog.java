@@ -44,6 +44,7 @@ public class FrameLog extends JFrame {
 	 */
 	private FrameLog(double x, double width , double height) 
 	{
+		setTitle("Log");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds((int)x,0,(int)width,(int)height);
 		JPanel contentPane = new JPanel();

@@ -6,6 +6,7 @@ import com.indong.capitalism.Classes.CBeing;
 import com.indong.capitalism.Classes.CCountry;
 import com.indong.capitalism.Classes.Asset.CACCash;
 import com.indong.capitalism.DataStructure.DBankMember;
+import com.indong.capitalism.DataStructure.DLoan;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Frame.FrameLog;
@@ -163,7 +164,7 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 	}
 
 	@Override
-	public void raiseLoan(CBAccount account, long amount , int loanMonth) {
+	public void raiseLoan(CBAccount account, long amount , int loanMonth,int repaymentDay) {
 		// TODO Auto-generated method stub
 		if(account.getBank() != this)
 		{
@@ -182,8 +183,8 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 		}
 		//todo 빌려주는 amount 를 은행 잔고의 지급준비율을 제외한 한도내에서 빌려줘야 한다
 		account.addRightsOfCash(amount);
-		account.setLoanMonth(loanMonth);
-		account.setRepaymentDuty(amount);
+		account.setLoanData(new DLoan(loanMonth , amount));
+		account.setInterestDay(new DTime(0,0,repaymentDay,""));
 		FrameLog.getInstance().addLog("raiseLoan","대출 성공");
 	}
 

@@ -2,6 +2,7 @@ package com.indong.capitalism.Classes.Bank;
 
 import java.util.LinkedList;
 
+import com.indong.capitalism.DataStructure.DLoan;
 import com.indong.capitalism.DataStructure.DLoanRepayment;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
@@ -19,8 +20,7 @@ public class CBAccount implements IInterestRate{
 	private String ownerName;
 	
 	//loan only
-	private int loanMonth = 0;
-	private long repaymentDuty = 0L;
+	private DLoan loanData;
 	private LinkedList<DLoanRepayment> repaymentPlanList = new LinkedList<DLoanRepayment>();
 	
 	public CBAccount(String ownerName , CBCommercial bank , int accountNumber , EAccountType type , float interestRate , DTime interestDay)
@@ -82,19 +82,15 @@ public class CBAccount implements IInterestRate{
 		this.interestDay = interestDay;
 	}
 
-	public int getLoanMonth() {
-		return loanMonth;
-	}
-
-	public void setLoanMonth(int loanMonth) {
-		this.loanMonth = loanMonth;
-	}
-
 	public void repaymentDebt()
 	{
+		if(getAccountType() != EAccountType.Loan)
+		{
+			return;
+		}
+		
 		if(repaymentPlanList.size() == 0)
 		{
-			FrameLog.getInstance().addLog("repaymentDebt", "상환할 필요 없음");
 			return;
 		}
 		DLoanRepayment temp = repaymentPlanList.removeFirst();
@@ -120,23 +116,33 @@ public class CBAccount implements IInterestRate{
 	}
 	
 	public long getRepaymentDuty() {//total 원금
-		return repaymentDuty;
-	}
-
-	public void setRepaymentDuty(long repaymentDuty) {
-		this.repaymentDuty = repaymentDuty;
-		
-		//원금 균등상환
-		long onemonth = repaymentDuty / getLoanMonth();
-		for(int i = 0 ; i < getLoanMonth() ; i++)
+		if(loanData != null)
 		{
-			long interest = (long) ((repaymentDuty * getInterestRate()) / 12);
-			repaymentDuty -= onemonth;
-			repaymentPlanList.add(new DLoanRepayment(i+1 , onemonth, interest));
+			return loanData.getRepaymentDuty();
 		}
+		else
+			return 0L;
 	}
 
 	public String getOwnerName() {
 		return ownerName;
+	}
+
+	public DLoan getLoanData() {
+		return loanData;
+	}
+
+	public void setLoanData(DLoan loanData) {
+		this.loanData = loanData;
+		
+		long repaymentDuty = loanData.getRepaymentDuty();
+		//원금 균등상환
+		long onemonth = loanData.getRepaymentDuty() / loanData.getLoanMonth();
+		for(int i = 0 ; i < loanData.getLoanMonth() ; i++)
+		{
+			long interest = (long) ((repaymentDuty * (getInterestRate() / 100)) / 12);//interestrate는 %이므로 실제 곱할때는 /100해줘야됨
+			repaymentDuty -= onemonth;
+			repaymentPlanList.add(new DLoanRepayment(i+1 , onemonth, interest));
+		}	
 	}
 }

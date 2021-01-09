@@ -13,5 +13,5 @@ public interface IBankService {
 	long withdrawCash(IAAccount account , long amount);
 	void depositCash(IAAccount account , CACCash cash , long amount);
 	CBAccount findAccount(String name,int accountNumber);
-	void raiseLoan(CBAccount account , long amount , int loanMonth);
+	void raiseLoan(CBAccount account , long amount , int loanMonth , int repaymentDay);
 }

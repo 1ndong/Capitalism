@@ -3,9 +3,8 @@ package com.indong.capitalism.Classes;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EBeingType;
 import com.indong.capitalism.Info.InfoPersonalData;
-import com.indong.capitalism.Interface.ITime;
 
-public class CPeople extends CBeing implements ITime
+public class CPeople extends CBeing
 {
 	public CPeople(CCountry country , DTime birth , String name)
 	{
@@ -17,6 +16,6 @@ public class CPeople extends CBeing implements ITime
 	@Override
 	public void dayChange(DTime newTime) {
 		// TODO Auto-generated method stub
-		
+		repaymentDebt(newTime);
 	}
 }

@@ -68,27 +68,27 @@ public class ProcessorMain {
 		
 		//////////////////////////////
 		
-		DTime interestDay = new DTime(0,0,25,"");
+		DTime interestDay = new DTime(0,0,7,"");
 		
 		IBankService shbankservice = (IBankService)shinhanbank;
 		CBAccount samsungdepositaccount = shbankservice.makeNewAccount(samsung, EAccountType.Deposit,interestDay);
 		CBAccount samsungloanaccount = shbankservice.makeNewAccount(samsung, EAccountType.Loan,interestDay);
-		shbankservice.raiseLoan(samsungloanaccount, 50000000000L , 120);//500억
+		shbankservice.raiseLoan(samsungloanaccount, 50000000000L , 120 , 7);//500억
 		shbankservice.sendMoney(samsung.getBasicData().getInfoAsset().findAccountInfo(samsungloanaccount)
 				, samsung.getBasicData().getInfoAsset().findAccountInfo(samsungdepositaccount), 30000000);
 		
 		IBankService kmbankservice = (IBankService)kookminbank;
 		CBAccount lgdepositaccount = kmbankservice.makeNewAccount(lg, EAccountType.Deposit,interestDay);
 		CBAccount lgloanaccount = kmbankservice.makeNewAccount(lg, EAccountType.Loan,interestDay);
-		kmbankservice.raiseLoan(lgloanaccount, 50000000000L, 120);
+		kmbankservice.raiseLoan(lgloanaccount, 50000000000L, 120, 7);
 		kmbankservice.sendMoney(lg.getBasicData().getInfoAsset().findAccountInfo(lgloanaccount)
 				, lg.getBasicData().getInfoAsset().findAccountInfo(lgdepositaccount), 20000000);
 		
 		IBankService wrbankservice = (IBankService)wooribank;
 		CBAccount samsungwrloanaccount = wrbankservice.makeNewAccount(samsung, EAccountType.Loan,interestDay);
-		wrbankservice.raiseLoan(samsungwrloanaccount, 10000000000L, 120);//100억
+		wrbankservice.raiseLoan(samsungwrloanaccount, 10000000000L, 120, 7);//100억
 		CBAccount lgwrloanaccount = wrbankservice.makeNewAccount(lg, EAccountType.Loan,interestDay);
-		wrbankservice.raiseLoan(lgwrloanaccount, 40000000000L, 120);//400억
+		wrbankservice.raiseLoan(lgwrloanaccount, 40000000000L, 120, 7);//400억
 		
 		ICompanyService samsungservice = (ICompanyService)samsung;
 		CBAccount indongsalaryaccount = shbankservice.makeNewAccount(indong, EAccountType.Deposit,interestDay);

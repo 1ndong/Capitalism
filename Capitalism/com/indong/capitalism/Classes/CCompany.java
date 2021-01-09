@@ -12,9 +12,8 @@ import com.indong.capitalism.Info.IAAccount;
 import com.indong.capitalism.Info.InfoCompanyData;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ICompanyService;
-import com.indong.capitalism.Interface.ITime;
 
-public class CCompany extends CBeing implements ITime,ICompanyService{
+public class CCompany extends CBeing implements ICompanyService{
 	private int salaryDay = 0;
 	protected LinkedList<DCompanyMember> staffList = new LinkedList<DCompanyMember>();
 	protected DTime today = new DTime(0,0,0,"");
@@ -86,6 +85,8 @@ public class CCompany extends CBeing implements ITime,ICompanyService{
 				FrameLog.getInstance().addLog("daychange", "급여지급용 계좌 없음");
 			}
 		}
+		
+		repaymentDebt(newTime);
 	}
 	
 	public void joinCompany(CPeople newpeople , IAAccount salaryaccount , ECompanyPosition position)

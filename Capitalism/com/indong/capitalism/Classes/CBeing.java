@@ -30,7 +30,7 @@ public class CBeing extends CBelong implements ITime{
 		// TODO Auto-generated method stub
 	}
 	
-	protected void repaymentDebt()
+	protected void repaymentDebt(DTime today)
 	{
 		for(int i = 0 ; i < basicData.getInfoAsset().getAccountList().size() ; i++)
 		{
@@ -39,7 +39,10 @@ public class CBeing extends CBelong implements ITime{
 			{
 				IBankService bankservice = ((IBankService)account.getBank()); 
 				CBAccount realaccount = bankservice.findAccount(account.getOwnerName(), account.getAccountNumber());
-				realaccount.repaymentDebt();
+				if(realaccount.getInterestDay().getDay() == today.getDay())
+				{
+					realaccount.repaymentDebt();
+				}
 			}
 		}
 	}

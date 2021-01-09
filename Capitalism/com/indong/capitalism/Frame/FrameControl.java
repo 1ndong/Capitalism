@@ -45,6 +45,7 @@ public class FrameControl extends JFrame implements ITime{
 	
 	private FrameControl(double x , double y , double width ,double height)
 	{
+		setTitle("Control");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds((int)x,(int)y,(int)width,(int)height);
 		JPanel contentPane = new JPanel();

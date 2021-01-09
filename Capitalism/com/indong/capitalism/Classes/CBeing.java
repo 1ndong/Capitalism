@@ -15,13 +15,13 @@ import com.indong.capitalism.Processor.ProcessorDay;
 public class CBeing extends CBelong implements ITime{
 	protected EBeingType type;
 	protected InfoBasicData basicData;
-	private CACCash wallet;
+	private final CACCash wallet;
 	
 	public CBeing(CCountry country)
 	{
 		super(country);
 		wallet = new CACCash();
-		ITimeKeeper timekeeper = (ITimeKeeper)ProcessorDay.GetInstance();
+		ITimeKeeper timekeeper = ProcessorDay.GetInstance();
 		timekeeper.addTimeSlave(this);
 	}
 	
@@ -59,7 +59,7 @@ public class CBeing extends CBelong implements ITime{
 		return wallet;
 	}
 
-	public void addCash(int cash) {
+	public void addCash(long cash) {
 		this.wallet.addCash(cash);
 	}
 }

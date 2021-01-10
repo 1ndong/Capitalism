@@ -1,8 +1,5 @@
 package com.indong.capitalism.Processor.Compiler;
 
-import java.util.LinkedList;
-import java.util.NoSuchElementException;
-
 import com.indong.capitalism.Classes.CCompany;
 import com.indong.capitalism.Classes.CCountry;
 import com.indong.capitalism.Classes.CPeople;
@@ -12,6 +9,9 @@ import com.indong.capitalism.Classes.Government.CGMinistryOfTradeIndustryAndEner
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EGovernmentType;
 import com.indong.capitalism.Frame.FrameLog;
+
+import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
 public class CCMake extends CompilerCommand{
 
@@ -75,7 +75,7 @@ public class CCMake extends CompilerCommand{
 							
 							if(gmohaw != null)
 							{
-								CPeople newpeople = new CPeople(country,new DTime(year,month,day,""),commandList.removeFirst());
+								CPeople newpeople = new CPeople(country,new DTime(year,month,day),commandList.removeFirst());
 								gmohaw.registerPeople(newpeople);
 								result = true;
 							}
@@ -87,7 +87,7 @@ public class CCMake extends CompilerCommand{
 							
 							if(gmotiae != null)
 							{
-								CCompany newcompany = new CCompany(country,new DTime(year,month,day,""),commandList.removeFirst());
+								CCompany newcompany = new CCompany(country,new DTime(year,month,day),commandList.removeFirst());
 								gmotiae.registerCompany(newcompany);
 								result = true;
 							}

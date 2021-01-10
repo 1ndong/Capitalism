@@ -1,7 +1,5 @@
 package com.indong.capitalism.Classes.Bank;
 
-import java.util.LinkedList;
-
 import com.indong.capitalism.DataStructure.DLoan;
 import com.indong.capitalism.DataStructure.DLoanRepayment;
 import com.indong.capitalism.DataStructure.DTime;
@@ -10,13 +8,15 @@ import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Interface.IInterestChanger;
 import com.indong.capitalism.Interface.IInterestRate;
 
+import java.util.LinkedList;
+
 public class CBAccount implements IInterestRate{
 	private int accountNumber = 0;
 	private EAccountType accountType;
 	private CBCommercial bank;
 	private long rightsOfCash = 0;
 	private float interestRate = 0.0f;
-	private DTime interestDay = new DTime(0,0,0,"");
+	private DTime interestDay = new DTime(0,0,0);
 	private String ownerName;
 	
 	//loan only

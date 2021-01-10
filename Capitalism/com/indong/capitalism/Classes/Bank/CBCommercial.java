@@ -1,10 +1,8 @@
 package com.indong.capitalism.Classes.Bank;
 
-import java.util.LinkedList;
-
+import com.indong.capitalism.Classes.Asset.CACCash;
 import com.indong.capitalism.Classes.CBeing;
 import com.indong.capitalism.Classes.CCountry;
-import com.indong.capitalism.Classes.Asset.CACCash;
 import com.indong.capitalism.DataStructure.DBankMember;
 import com.indong.capitalism.DataStructure.DLoan;
 import com.indong.capitalism.DataStructure.DTime;
@@ -14,6 +12,8 @@ import com.indong.capitalism.Info.IAAccount;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.IInterestChanger;
 import com.indong.capitalism.Interface.IInterestRate;
+
+import java.util.LinkedList;
 
 public class CBCommercial extends CBank implements IBankService , IInterestChanger , IInterestRate{
 	private LinkedList<DBankMember> bankmemberList = new LinkedList<DBankMember>();
@@ -184,7 +184,7 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 		//todo 빌려주는 amount 를 은행 잔고의 지급준비율을 제외한 한도내에서 빌려줘야 한다
 		account.addRightsOfCash(amount);
 		account.setLoanData(new DLoan(loanMonth , amount));
-		account.setInterestDay(new DTime(0,0,repaymentDay,""));
+		account.setInterestDay(new DTime(0,0,repaymentDay));
 		FrameLog.getInstance().addLog("raiseLoan","대출 성공");
 	}
 

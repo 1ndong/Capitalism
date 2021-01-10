@@ -1,7 +1,5 @@
 package com.indong.capitalism.Classes;
 
-import java.util.LinkedList;
-
 import com.indong.capitalism.DataStructure.DCompanyMember;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
@@ -13,10 +11,12 @@ import com.indong.capitalism.Info.InfoCompanyData;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ICompanyService;
 
+import java.util.LinkedList;
+
 public class CCompany extends CBeing implements ICompanyService{
 	private int salaryDay = 0;
 	protected LinkedList<DCompanyMember> staffList = new LinkedList<DCompanyMember>();
-	protected DTime today = new DTime(0,0,0,"");
+	protected DTime today = new DTime(0,0,0);
 
 	public CCompany(CCountry country , DTime birth , String name)
 	{
@@ -95,7 +95,7 @@ public class CCompany extends CBeing implements ICompanyService{
 		staffList.add(newmember);
 		FrameLog.getInstance().addLog("joincompany", newpeople.getBasicData().getName() + " " + getBasicData().getName() + " 에 입사완료");
 	}
-	
+
 	public void leaveCompany(CPeople leavemember)
 	{
 		for(int i = 0 ; i < staffList.size() ; i++)

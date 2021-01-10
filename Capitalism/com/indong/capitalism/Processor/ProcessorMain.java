@@ -51,24 +51,24 @@ public class ProcessorMain {
 		rok.getCentralBank().releaseMoney(kookminbank, 100000000000L);
 		rok.getCentralBank().releaseMoney(wooribank, 100000000000L);
 		
-		CCompany samsung = new CCompany(rok,new DTime(1955,2,12,""),"삼성");
-		CCompany lg = new CCompany(rok,new DTime(1958,3,21,""),"LG");
+		CCompany samsung = new CCompany(rok,new DTime(1955,2,12),"삼성");
+		CCompany lg = new CCompany(rok,new DTime(1958,3,21),"LG");
 		
 		gmotiae.registerCompany(samsung);
 		samsung.setSalaryDay(25);
 		gmotiae.registerCompany(lg);
 		lg.setSalaryDay(5);
 		
-		CPeople indong = new CPeople(rok, new DTime(1987,2,12,""), "김인동");
-		CPeople ronaldo = new CPeople(rok , new DTime(1985,6,20,"") , "호나우도");
-		CPeople jasonkim = new CPeople(rok, new DTime(1985,10,20,""),"제이슨킴");
+		CPeople indong = new CPeople(rok, new DTime(1987,2,12), "김인동");
+		CPeople ronaldo = new CPeople(rok , new DTime(1985,6,20) , "호나우도");
+		CPeople jasonkim = new CPeople(rok, new DTime(1985,10,20),"제이슨킴");
 		gmohaw.registerPeople(indong);
 		gmohaw.registerPeople(ronaldo);
 		gmohaw.registerPeople(jasonkim);
 		
 		//////////////////////////////
 		
-		DTime interestDay = new DTime(0,0,7,"");
+		DTime interestDay = new DTime(0,0,7);
 		
 		IBankService shbankservice = (IBankService)shinhanbank;
 		CBAccount samsungdepositaccount = shbankservice.makeNewAccount(samsung, EAccountType.Deposit,interestDay);

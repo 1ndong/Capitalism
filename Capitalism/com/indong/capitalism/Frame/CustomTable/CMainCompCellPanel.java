@@ -1,34 +1,34 @@
 package com.indong.capitalism.Frame.CustomTable;
 
-import java.awt.GridLayout;
+import com.indong.capitalism.CustomLayout.WrapLayout;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class CMainCompCellPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private JLabel namelabel = new JLabel("이름 = ");
+	private JLabel namelabel = new JLabel("이름:");
 	private JLabel name = new JLabel();
-	private JLabel allAssetLabel = new JLabel("총자산 = ");
+	private JLabel allAssetLabel = new JLabel("총자산:");
 	private JLabel allAsset = new JLabel();
-	private JLabel depositLabel = new JLabel("예금 = ");
+	private JLabel depositLabel = new JLabel("예금:");
 	private JLabel deposit = new JLabel();
-	private JLabel cashLabel = new JLabel("현금 = ");
+	private JLabel cashLabel = new JLabel("현금:");
 	private JLabel cash = new JLabel();
-	private JLabel loanLabel = new JLabel("대출 = ");
+	private JLabel loanLabel = new JLabel("대출:");
 	private JLabel loan = new JLabel();
 	
-	private JButton detailButton = new JButton("detail");
+	private JButton detailButton = new JButton("...");
 
 	public CMainCompCellPanel(String name, long allAsset , long deposit , long cash , long loan) {
-		setLayout(new GridLayout(1,11));
+		//setLayout(new GridLayout(1,11));
+		setLayout(new WrapLayout());
 		this.name.setText(name);
 		this.allAsset.setText(String.valueOf(allAsset));
 		this.deposit.setText(String.valueOf(deposit));
 		this.cash.setText(String.valueOf(cash));
 		this.loan.setText(String.valueOf(loan));
 		detailButton.addActionListener(new CMainDetailButtonClickListener());
+
 		add(this.namelabel);
 		add(this.name);
 		add(this.allAssetLabel);

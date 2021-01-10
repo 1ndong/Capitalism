@@ -1,21 +1,8 @@
 package com.indong.capitalism.Frame;
 
-import java.awt.Color;
-import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.LinkedList;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.border.EmptyBorder;
-
+import com.indong.capitalism.Classes.Bank.CBAccount;
 import com.indong.capitalism.Classes.CCompany;
 import com.indong.capitalism.Classes.CPeople;
-import com.indong.capitalism.Classes.Bank.CBAccount;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Frame.CustomPanel.DashBoardPanel;
@@ -28,6 +15,13 @@ import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
 import com.indong.capitalism.Processor.ProcessorDay;
 import com.indong.capitalism.Processor.ProcessorMain;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.LinkedList;
 
 public class FrameMain extends JFrame implements ITime{
 
@@ -67,17 +61,25 @@ public class FrameMain extends JFrame implements ITime{
 		//
 		Rectangle rect = this.getBounds();
 		
-		float RATIO_DASHBOARD = 0.6f;
+//		float RATIO_DASHBOARD = 0.6f;
+//		Rectangle dashboardRect = new Rectangle(rect);
+//		dashboardRect.height *= RATIO_DASHBOARD;
+		float RATIO_DASHBOARD_WIDTH = 0.4f;
 		Rectangle dashboardRect = new Rectangle(rect);
-		dashboardRect.height *= RATIO_DASHBOARD;
+		dashboardRect.width *= RATIO_DASHBOARD_WIDTH;
 		
 		dashboard = new DashBoardPanel(dashboardRect);
 		
 		//peopleList
+//		Rectangle scrollPaneRect = new Rectangle(rect);
+//		scrollPaneRect.y = dashboardRect.height;
+//		scrollPaneRect.height = rect.height - dashboardRect.height;
+//		scrollPaneRect.width = rect.width / 2;
 		Rectangle scrollPaneRect = new Rectangle(rect);
-		scrollPaneRect.y = dashboardRect.height;
-		scrollPaneRect.height = rect.height - dashboardRect.height;
-		scrollPaneRect.width = rect.width / 2;
+		scrollPaneRect.x = dashboardRect.width;
+		scrollPaneRect.y = 0;
+		scrollPaneRect.width = rect.width - dashboardRect.width;
+		scrollPaneRect.height = rect.height / 2;
 		
 		compModel = new CMainPanelTableModel();
 		JTable table = new JTable(compModel);
@@ -96,11 +98,16 @@ public class FrameMain extends JFrame implements ITime{
 		table.setBounds(scrollPane.getBounds());
 		
 		//companyList
+//		Rectangle scrollPaneRect2 = new Rectangle(rect);
+//		scrollPaneRect2.y = dashboardRect.height;
+//		scrollPaneRect2.height = rect.height - dashboardRect.height;
+//		scrollPaneRect2.width = rect.width / 2;
+//		scrollPaneRect2.x = scrollPaneRect.width;
 		Rectangle scrollPaneRect2 = new Rectangle(rect);
-		scrollPaneRect2.y = dashboardRect.height;
-		scrollPaneRect2.height = rect.height - dashboardRect.height;
-		scrollPaneRect2.width = rect.width / 2;
-		scrollPaneRect2.x = scrollPaneRect.width;
+		scrollPaneRect2.x = dashboardRect.width;
+		scrollPaneRect2.y = scrollPaneRect.height;
+		scrollPaneRect2.width = rect.width - dashboardRect.width;
+		scrollPaneRect2.height = rect.height / 2;
 		
 		compModel2 = new CMainPanelTableModel();
 		JTable table2 = new JTable(compModel2);

@@ -75,15 +75,15 @@ public class ProcessorMain {
 		CBAccount samsungloanaccount = shbankservice.makeNewAccount(samsung, EAccountType.Loan,interestDay);
 		shbankservice.raiseLoan(samsungloanaccount, 50000000000L , 120 , 7);//500억
 		shbankservice.sendMoney(samsung.getBasicData().getInfoAsset().findAccountInfo(samsungloanaccount)
-				, samsung.getBasicData().getInfoAsset().findAccountInfo(samsungdepositaccount), 30000000);
+				, samsung.getBasicData().getInfoAsset().findAccountInfo(samsungdepositaccount), 3000000000L);
 		
 		IBankService kmbankservice = (IBankService)kookminbank;
 		CBAccount lgdepositaccount = kmbankservice.makeNewAccount(lg, EAccountType.Deposit,interestDay);
 		CBAccount lgloanaccount = kmbankservice.makeNewAccount(lg, EAccountType.Loan,interestDay);
 		kmbankservice.raiseLoan(lgloanaccount, 50000000000L, 120, 7);
 		kmbankservice.sendMoney(lg.getBasicData().getInfoAsset().findAccountInfo(lgloanaccount)
-				, lg.getBasicData().getInfoAsset().findAccountInfo(lgdepositaccount), 20000000);
-		
+				, lg.getBasicData().getInfoAsset().findAccountInfo(lgdepositaccount), 2000000000L);
+
 		IBankService wrbankservice = (IBankService)wooribank;
 		CBAccount samsungwrloanaccount = wrbankservice.makeNewAccount(samsung, EAccountType.Loan,interestDay);
 		wrbankservice.raiseLoan(samsungwrloanaccount, 10000000000L, 120, 7);//100억

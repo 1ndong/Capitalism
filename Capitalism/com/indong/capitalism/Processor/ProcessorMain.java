@@ -57,7 +57,7 @@ public class ProcessorMain {
 		gmotiae.registerCompany(samsung);
 		samsung.setSalaryDay(25);
 		gmotiae.registerCompany(lg);
-		lg.setSalaryDay(5);
+		lg.setSalaryDay(25);
 		
 		CPeople indong = new CPeople(rok, new DTime(1987,2,12), "김인동");
 		CPeople ronaldo = new CPeople(rok , new DTime(1985,6,20) , "호나우도");

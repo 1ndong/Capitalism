@@ -1,26 +1,11 @@
 package com.indong.capitalism.Frame.CustomPanel;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Rectangle;
-import java.util.Iterator;
-import java.util.LinkedList;
-
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-
+import com.indong.capitalism.Classes.Bank.CBAccount;
+import com.indong.capitalism.Classes.Bank.CBCommercial;
 import com.indong.capitalism.Classes.CCompany;
 import com.indong.capitalism.Classes.CCountry;
 import com.indong.capitalism.Classes.CPeople;
 import com.indong.capitalism.Classes.CWorld;
-import com.indong.capitalism.Classes.Bank.CBCommercial;
-import com.indong.capitalism.Classes.Bank.CBAccount;
 import com.indong.capitalism.Classes.Government.CGMinistryOfHealthAndWelfare;
 import com.indong.capitalism.Classes.Government.CGMinistryOfTradeIndustryAndEnergy;
 import com.indong.capitalism.DataStructure.DBankMember;
@@ -34,6 +19,13 @@ import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
 import com.indong.capitalism.Processor.ProcessorDay;
 import com.indong.capitalism.Util.UCurrency;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 public class DashBoardPanel extends JPanel implements ITime{
 	
@@ -50,11 +42,11 @@ public class DashBoardPanel extends JPanel implements ITime{
 		this.setBounds(dashboardRect);
 		this.setLayout(null);
 		
-		Font font = new Font("맑은 고딕",Font.BOLD,30);
+		Font font = new Font("맑은 고딕",Font.BOLD,20);
 		
 		Rectangle rect = getBounds();
 		final float upperRatio = 0.1f;
-		final float combowidthRatio = 0.1f;
+		final float combowidthRatio = 0.3f;
 		
 		upperPanel = new JPanel();
 		upperPanel.setBounds(0, 0, rect.width, (int)(rect.height * upperRatio));
@@ -73,7 +65,7 @@ public class DashBoardPanel extends JPanel implements ITime{
 		dayField = new JTextField();
 		int dax = comboboxRect.width;
 		int day = 0;
-		int daw = (upperRect.width / 2) - comboboxRect.width;
+		int daw = ((upperRect.width / 3)*2) - comboboxRect.width;
 		int dah = upperRect.height;
 		dayField.setBounds(dax , day , daw , dah);
 		dayField.setEditable(false);
@@ -85,7 +77,7 @@ public class DashBoardPanel extends JPanel implements ITime{
 		JTextField amicField = new JTextField();
 		int ax = dayField.getX() + dayField.getWidth();
 		int ay = 0;
-		int aw = upperRect.width / 2;
+		int aw = upperRect.width - comboboxRect.width - dayField.getWidth();
 		int ah = upperRect.height;
 		amicField.setBounds(ax, ay, aw, ah);
 		amicField.setEditable(false);

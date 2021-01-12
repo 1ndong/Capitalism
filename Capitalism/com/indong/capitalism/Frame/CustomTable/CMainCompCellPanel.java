@@ -1,6 +1,8 @@
 package com.indong.capitalism.Frame.CustomTable;
 
 import com.indong.capitalism.CustomLayout.WrapLayout;
+import com.indong.capitalism.Enum.ECurrency;
+import com.indong.capitalism.Util.UCurrency;
 
 import javax.swing.*;
 
@@ -44,14 +46,19 @@ public class CMainCompCellPanel extends JPanel {
 
 	public void setComp(CMainTableComp comp) {
 		name.setText(comp.name);
-		allAsset.setText(""+comp.allAsset);
-		deposit.setText(""+comp.deposit);
-		cash.setText(""+comp.cash);
-		loan.setText(""+comp.loan);
+		allAsset.setText(UCurrency.getInstance().toString(comp.allAsset,ECurrency.Won));
+		deposit.setText(UCurrency.getInstance().toString(comp.deposit,ECurrency.Won));
+		cash.setText(UCurrency.getInstance().toString(comp.cash,ECurrency.Won));
+		loan.setText(UCurrency.getInstance().toString(comp.loan,ECurrency.Won));
 	}
 
 	public CMainTableComp getComp() {
-		return new CMainTableComp(name.getText(), Long.parseLong(allAsset.getText()),Long.parseLong(deposit.getText())
-				,Long.parseLong(cash.getText()),Long.parseLong(loan.getText()));
+		return new CMainTableComp
+				(name.getText(),
+					UCurrency.getInstance().toOriginValue(allAsset.getText(),ECurrency.Won),
+					UCurrency.getInstance().toOriginValue(deposit.getText(),ECurrency.Won),
+					UCurrency.getInstance().toOriginValue(cash.getText(),ECurrency.Won),
+					UCurrency.getInstance().toOriginValue(loan.getText(),ECurrency.Won)
+				);
 	}
 }

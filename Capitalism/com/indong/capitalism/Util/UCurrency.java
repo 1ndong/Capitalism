@@ -11,15 +11,71 @@ public class UCurrency {
 	private String[] han2 = new String[] {
 			"","\uC2ED","\uBC31","\uCC9C"
 	};//ten , hundred , thousand
+	//sib , baek , chun
 	private String[] han3 = new String[] {
 			"","\uB9CC","\uC5B5","\uC870"//han3[4]=_T("\uACBD");
 	};//ten thousand , one hundred million , trillion
+	//man , uk , jo
 	
 	public static UCurrency getInstance()
 	{
 		return instance;
 	}
-	
+
+	public long toOriginValue(String strValue , ECurrency currency)
+	{
+		if(currency == ECurrency.Won)
+		{
+			strValue = strValue.replaceAll("\uC6D0","");
+		}
+		else if(currency == ECurrency.Dollar)
+		{
+			strValue = strValue.replaceAll("\uB2EC\uB7EC","");
+		}
+		else if(currency == ECurrency.Euro)
+		{
+			strValue = strValue.replaceAll("\uC720\uB85C","");
+		}
+
+		int joidx = strValue.indexOf(han3[3]);
+		int ukidx = strValue.indexOf(han3[2]);
+		int manidx = strValue.indexOf(han3[1]);
+
+		long jj = 0;
+		long uu = 0;
+		long mm = 0;
+
+		if(joidx != -1)
+		{
+			String temp = strValue.substring(0,joidx);
+			jj = Long.parseLong(temp);
+			jj *= 1000000000000L;
+			strValue = strValue.substring(joidx+1);
+		}
+		if(ukidx != -1)
+		{
+			ukidx = strValue.indexOf(han3[2]);
+			String temp = strValue.substring(0,ukidx);
+			uu = Long.parseLong(temp);
+			uu *= 100000000L;
+			strValue = strValue.substring(ukidx+1);
+		}
+		if(manidx != -1)
+		{
+			manidx = strValue.indexOf(han3[1]);
+			String temp = strValue.substring(0,manidx);
+			mm = Long.parseLong(temp);
+			mm *= 10000L;
+			strValue = strValue.substring(manidx+1);
+		}
+
+		long etc = 0;
+		if(strValue.isEmpty() == false)
+			etc = Long.parseLong(strValue);
+
+		return jj+uu+mm+etc;
+	}
+
 	public String toString(long money , ECurrency currency)
 	{
 		return toCurrencyStringInternal(money, currency, false);

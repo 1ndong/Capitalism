@@ -56,22 +56,22 @@ public class CCompany extends CBeing implements ICompanyService{
 					switch(temp.getCompanyPosition()) 
 					{
 					case Clerk:
-						amount = 300;
+						amount = 3000000;
 						break;
 					case SeniorClerk:
-						amount = 350;
+						amount = 3500000;
 						break;
 					case AssistantManager:
-						amount = 400;
+						amount = 4000000;
 						break;
 					case Manager:
-						amount = 450;
+						amount = 4500000;
 						break;
 					case DeputyGeneralManager:
-						amount = 500;
+						amount = 5000000;
 						break;
 					case GeneralManager:
-						amount = 550;
+						amount = 5500000;
 						break;
 					default:
 						amount = 0;

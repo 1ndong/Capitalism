@@ -53,18 +53,34 @@ public class ProcessorMain {
 		
 		CCompany samsung = new CCompany(rok,new DTime(1955,2,12),"삼성");
 		CCompany lg = new CCompany(rok,new DTime(1958,3,21),"LG");
-		
 		gmotiae.registerCompany(samsung);
 		samsung.setSalaryDay(25);
 		gmotiae.registerCompany(lg);
 		lg.setSalaryDay(25);
-		
+
+		CCompany skt = new CCompany(rok,new DTime(1970,5,4),"SK텔레콤");
+		CCompany cj = new CCompany(rok,new DTime(1984,2,3),"CJ");
+		CCompany giordano = new CCompany(rok, new DTime(1988 , 6,7),"지오다노");
+		gmotiae.registerCompany(skt);
+		gmotiae.registerCompany(cj);
+		gmotiae.registerCompany(giordano);
+		skt.setSalaryDay(25);
+		cj.setSalaryDay(25);
+		giordano.setSalaryDay(25);
+
 		CPeople indong = new CPeople(rok, new DTime(1987,2,12), "김인동");
-		CPeople ronaldo = new CPeople(rok , new DTime(1985,6,20) , "호나우도");
-		CPeople jasonkim = new CPeople(rok, new DTime(1985,10,20),"제이슨킴");
+		CPeople ronaldo = new CPeople(rok , new DTime(1985,6,20) , "효날도");
+		CPeople jasonkim = new CPeople(rok, new DTime(1985,10,20),"자손킴");
 		gmohaw.registerPeople(indong);
 		gmohaw.registerPeople(ronaldo);
 		gmohaw.registerPeople(jasonkim);
+
+		CPeople beknim = new CPeople(rok , new DTime(1986,2,28),"박상뱀");
+		CPeople scwind = new CPeople(rok , new DTime(1986,10,28),"최형택");
+		CPeople yds0903 = new CPeople(rok, new DTime(1986,9,3),"윤동식디스크");
+		gmohaw.registerPeople(beknim);
+		gmohaw.registerPeople(scwind);
+		gmohaw.registerPeople(yds0903);
 		
 		//////////////////////////////
 		
@@ -76,7 +92,8 @@ public class ProcessorMain {
 		shbankservice.raiseLoan(samsungloanaccount, 50000000000L , 120 , 7);//500억
 		shbankservice.sendMoney(samsung.getBasicData().getInfoAsset().findAccountInfo(samsungloanaccount)
 				, samsung.getBasicData().getInfoAsset().findAccountInfo(samsungdepositaccount), 3000000000L);
-		
+
+/////////////////////
 		IBankService kmbankservice = (IBankService)kookminbank;
 		CBAccount lgdepositaccount = kmbankservice.makeNewAccount(lg, EAccountType.Deposit,interestDay);
 		CBAccount lgloanaccount = kmbankservice.makeNewAccount(lg, EAccountType.Loan,interestDay);
@@ -84,20 +101,60 @@ public class ProcessorMain {
 		kmbankservice.sendMoney(lg.getBasicData().getInfoAsset().findAccountInfo(lgloanaccount)
 				, lg.getBasicData().getInfoAsset().findAccountInfo(lgdepositaccount), 2000000000L);
 
+		CBAccount giordanodepositaccount = kmbankservice.makeNewAccount(giordano, EAccountType.Deposit,interestDay);
+		CBAccount giordanoloanaccount = kmbankservice.makeNewAccount(giordano, EAccountType.Loan,interestDay);
+		kmbankservice.raiseLoan(giordanoloanaccount, 30000000000L, 120, 7);
+		kmbankservice.sendMoney(giordano.getBasicData().getInfoAsset().findAccountInfo(giordanoloanaccount)
+				, giordano.getBasicData().getInfoAsset().findAccountInfo(giordanodepositaccount), 2000000000L);
+/////////////////////
 		IBankService wrbankservice = (IBankService)wooribank;
 		CBAccount samsungwrloanaccount = wrbankservice.makeNewAccount(samsung, EAccountType.Loan,interestDay);
 		wrbankservice.raiseLoan(samsungwrloanaccount, 10000000000L, 120, 7);//100억
 		CBAccount lgwrloanaccount = wrbankservice.makeNewAccount(lg, EAccountType.Loan,interestDay);
-		wrbankservice.raiseLoan(lgwrloanaccount, 40000000000L, 120, 7);//400억
-		
+		wrbankservice.raiseLoan(lgwrloanaccount, 30000000000L, 120, 7);//400억
+
+		CBAccount sktdepositaccount = wrbankservice.makeNewAccount(skt, EAccountType.Deposit,interestDay);
+		CBAccount sktloanaccount = wrbankservice.makeNewAccount(skt, EAccountType.Loan,interestDay);
+		wrbankservice.raiseLoan(sktloanaccount, 30000000000L, 120, 7);
+		wrbankservice.sendMoney(skt.getBasicData().getInfoAsset().findAccountInfo(sktloanaccount)
+				, skt.getBasicData().getInfoAsset().findAccountInfo(sktdepositaccount), 2000000000L);
+
+		CBAccount cjdepositaccount = wrbankservice.makeNewAccount(cj, EAccountType.Deposit,interestDay);
+		CBAccount cjloanaccount = wrbankservice.makeNewAccount(cj, EAccountType.Loan,interestDay);
+		wrbankservice.raiseLoan(cjloanaccount, 20000000000L, 120, 7);
+		wrbankservice.sendMoney(cj.getBasicData().getInfoAsset().findAccountInfo(cjloanaccount)
+				, cj.getBasicData().getInfoAsset().findAccountInfo(cjdepositaccount), 2000000000L);
+
+
+	///////////////////
 		ICompanyService samsungservice = (ICompanyService)samsung;
+		ICompanyService lgservice = (ICompanyService)lg;
+		ICompanyService sktservice = (ICompanyService)skt;
+		ICompanyService cjservice = (ICompanyService)cj;
+		ICompanyService giordanoservice = (ICompanyService)giordano;
+
 		CBAccount indongsalaryaccount = shbankservice.makeNewAccount(indong, EAccountType.Deposit,interestDay);
 		IAAccount indongaccountinfo = indong.getBasicData().getInfoAsset().findAccountInfo(indongsalaryaccount);
 		samsungservice.joinCompany(indong, indongaccountinfo, ECompanyPosition.Clerk);
-		
-		ICompanyService lgservice = (ICompanyService)lg;
+
 		CBAccount jasonkimsalaryaccount = kmbankservice.makeNewAccount(jasonkim, EAccountType.Deposit,interestDay);
 		IAAccount jasonkimaccountinfo = jasonkim.getBasicData().getInfoAsset().findAccountInfo(jasonkimsalaryaccount);
 		lgservice.joinCompany(jasonkim, jasonkimaccountinfo, ECompanyPosition.Clerk);
+
+		CBAccount ronaldosalaryaccount = wrbankservice.makeNewAccount(ronaldo , EAccountType.Deposit,interestDay);
+		IAAccount ronaldoaccountinfo = ronaldo.getBasicData().getInfoAsset().findAccountInfo(ronaldosalaryaccount);
+		sktservice.joinCompany(ronaldo,ronaldoaccountinfo,ECompanyPosition.Clerk);
+
+		CBAccount beknimsalaryaccount = wrbankservice.makeNewAccount(beknim , EAccountType.Deposit,interestDay);
+		IAAccount beknimaccountinfo = beknim.getBasicData().getInfoAsset().findAccountInfo(beknimsalaryaccount);
+		cjservice.joinCompany(beknim,beknimaccountinfo,ECompanyPosition.Clerk);
+
+		CBAccount scwindsalaryaccount = shbankservice.makeNewAccount(scwind , EAccountType.Deposit,interestDay);
+		IAAccount scwindaccountinfo = scwind.getBasicData().getInfoAsset().findAccountInfo(scwindsalaryaccount);
+		samsungservice.joinCompany(scwind,scwindaccountinfo,ECompanyPosition.Clerk);
+
+		CBAccount yds0903salaryaccount = kmbankservice.makeNewAccount(yds0903 , EAccountType.Deposit,interestDay);
+		IAAccount yds0903accountinfo = yds0903.getBasicData().getInfoAsset().findAccountInfo(yds0903salaryaccount);
+		giordanoservice.joinCompany(yds0903,yds0903accountinfo,ECompanyPosition.Clerk);
 	}
 }

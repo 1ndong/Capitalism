@@ -16,6 +16,7 @@ import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Info.IAAccount;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ICompanyService;
+import com.indong.capitalism.Util.URandom;
 
 public class ProcessorMain {
 	public ProcessorMain()

@@ -4,9 +4,11 @@ import com.indong.capitalism.DataStructure.DLoan;
 import com.indong.capitalism.DataStructure.DLoanRepayment;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
+import com.indong.capitalism.Enum.ECurrency;
 import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Interface.IInterestChanger;
 import com.indong.capitalism.Interface.IInterestRate;
+import com.indong.capitalism.Util.UCurrency;
 
 import java.util.LinkedList;
 
@@ -110,8 +112,11 @@ public class CBAccount implements IInterestRate{
 		else
 		{
 			FrameLog.getInstance().addLog("repaymentDebt" 
-					, getOwnerName() + "님의 " +temp.getRound() + " 회차 대출원금 " + temp.getRepaymentAmountOneMonth() 
-					+ "원, 이자 " + temp.getRepaymentInterest() +" 원이 상환되었습니다");
+					, getOwnerName() + "님의 " +temp.getRound() + " 회차 대출원금 "
+					+ UCurrency.getInstance().toString(temp.getRepaymentAmountOneMonth(), ECurrency.Won)
+					+ "원, 이자 "
+					+ UCurrency.getInstance().toString(temp.getRepaymentInterest(),ECurrency.Won)
+					+" 원이 상환되었습니다");
 		}
 	}
 	

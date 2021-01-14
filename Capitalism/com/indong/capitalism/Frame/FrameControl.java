@@ -143,7 +143,7 @@ public class FrameControl extends JFrame implements ITime{
 		Font font = new Font("맑은 고딕",Font.BOLD,20);
 		dayField.setFont(font);
 
-		String[] colName = new String[] {"[help]"};
+		String[] colName = new String[] {"[help]beta use only make"};
 		model = new DefaultTableModel(colName,0);
 		
 		JTable table = new JTable(model);
@@ -154,7 +154,7 @@ public class FrameControl extends JFrame implements ITime{
 		int spx = 0;
 		int spy = tfh;
 		int spw = rect.width / 2;
-		int sph = (int)(rect.height * 0.5f);
+		int sph = (int)(rect.height * 0.1f);
 		scrollPane.setBounds(spx, spy, spw, sph);
 		table.setBounds(scrollPane.getBounds());
 		

@@ -1,11 +1,11 @@
 package com.indong.capitalism.Processor;
 
+import com.indong.capitalism.Classes.Bank.CBAccount;
+import com.indong.capitalism.Classes.Bank.CBCommercial;
 import com.indong.capitalism.Classes.CCompany;
 import com.indong.capitalism.Classes.CCountry;
 import com.indong.capitalism.Classes.CPeople;
 import com.indong.capitalism.Classes.CWorld;
-import com.indong.capitalism.Classes.Bank.CBAccount;
-import com.indong.capitalism.Classes.Bank.CBCommercial;
 import com.indong.capitalism.Classes.Government.CGMinistryOfHealthAndWelfare;
 import com.indong.capitalism.Classes.Government.CGMinistryOfTradeIndustryAndEnergy;
 import com.indong.capitalism.DataStructure.DTime;
@@ -16,7 +16,7 @@ import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Info.IAAccount;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ICompanyService;
-import com.indong.capitalism.Util.URandom;
+import com.indong.capitalism.Util.UTime;
 
 public class ProcessorMain {
 	public ProcessorMain()

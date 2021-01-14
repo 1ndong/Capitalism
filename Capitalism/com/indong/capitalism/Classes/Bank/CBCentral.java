@@ -1,7 +1,5 @@
 package com.indong.capitalism.Classes.Bank;
 
-import java.util.LinkedList;
-
 import com.indong.capitalism.Classes.CCountry;
 import com.indong.capitalism.DataStructure.DCareTaker;
 import com.indong.capitalism.DataStructure.DHCentralBank;
@@ -11,6 +9,8 @@ import com.indong.capitalism.Interface.IInterestChanger;
 import com.indong.capitalism.Interface.IInterestRate;
 import com.indong.capitalism.Processor.ProcessorDay;
 import com.indong.capitalism.Util.UCurrency;
+
+import java.util.LinkedList;
 
 public class CBCentral extends CBank implements IInterestChanger{
 	private LinkedList<CBank> bankList = new LinkedList<CBank>();
@@ -28,7 +28,7 @@ public class CBCentral extends CBank implements IInterestChanger{
 		balance.addCash(amount);
 		FrameLog.getInstance().addLog("makeMoney", "중앙은행 현금 발행 " + UCurrency.getInstance().toString(amount, ECurrency.Won));
 		
-		DHCentralBank date = new DHCentralBank(ProcessorDay.GetInstance().getDate(), amount);
+		DHCentralBank date = new DHCentralBank(ProcessorDay.GetInstance().getToday(), amount);
 		careTaker.addMemento(date);
 	}
 	

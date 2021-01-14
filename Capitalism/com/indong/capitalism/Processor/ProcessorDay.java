@@ -62,7 +62,7 @@ public class ProcessorDay implements ITimeKeeper{
 		updateTime();
 	}
 	
-	public DTime getDate()
+	public DTime getToday()
 	{
 		return new DTime(m_Year , m_Month , m_Day);
 	}

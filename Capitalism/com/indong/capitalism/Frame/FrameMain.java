@@ -83,7 +83,7 @@ public class FrameMain extends JFrame implements ITime{
 		
 		compModel = new CMainPanelTableModel();
 		JTable table = new JTable(compModel);
-		table.setRowHeight(new CMainCompCellPanel("",0,0,0,0).getPreferredSize().height);
+		table.setRowHeight(new CMainCompCellPanel(null ,"",0,0,0,0).getPreferredSize().height);
         table.setTableHeader(null);
         table.setRowHeight(40);
         CMainPanelCellEditorRenderer PanelCellEditorRenderer = new CMainPanelCellEditorRenderer();
@@ -111,7 +111,7 @@ public class FrameMain extends JFrame implements ITime{
 		
 		compModel2 = new CMainPanelTableModel();
 		JTable table2 = new JTable(compModel2);
-		table2.setRowHeight(new CMainCompCellPanel("",0,0,0,0).getPreferredSize().height);
+		table2.setRowHeight(new CMainCompCellPanel(null ,"",0,0,0,0).getPreferredSize().height);
 		table2.setTableHeader(null);
 		table2.setRowHeight(40);
         CMainPanelCellEditorRenderer PanelCellEditorRenderer2 = new CMainPanelCellEditorRenderer();
@@ -194,7 +194,7 @@ public class FrameMain extends JFrame implements ITime{
 			}
 			
 			long allAsset = deposit + cash + loan;
-			compModel.addRow(name,allAsset,deposit,cash,loan);	
+			compModel.addRow(people , name,allAsset,deposit,cash,loan);
 		}
 	}
 	
@@ -224,7 +224,7 @@ public class FrameMain extends JFrame implements ITime{
 				}
 			}
 			long allAsset = deposit + cash + loan;
-			compModel2.addRow(name,allAsset,deposit,cash,loan);	
+			compModel2.addRow(company , name,allAsset,deposit,cash,loan);
 		}
 	}
 }

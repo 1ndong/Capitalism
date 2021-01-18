@@ -1,5 +1,6 @@
 package com.indong.capitalism.Frame.CustomTable;
 
+import com.indong.capitalism.Classes.CBeing;
 import com.indong.capitalism.CustomLayout.WrapLayout;
 import com.indong.capitalism.Enum.ECurrency;
 import com.indong.capitalism.Util.UCurrency;
@@ -18,18 +19,20 @@ public class CMainCompCellPanel extends JPanel {
 	private JLabel cash = new JLabel();
 	private JLabel loanLabel = new JLabel("대출:");
 	private JLabel loan = new JLabel();
-	
+	private CBeing being;
 	private JButton detailButton = new JButton("...");
+	private CMainDetailButtonClickListener listener = new CMainDetailButtonClickListener(this);
 
-	public CMainCompCellPanel(String name, long allAsset , long deposit , long cash , long loan) {
+	public CMainCompCellPanel(CBeing being , String name, long allAsset , long deposit , long cash , long loan) {
 		//setLayout(new GridLayout(1,11));
 		setLayout(new WrapLayout());
+		this.being = being;
 		this.name.setText(name);
 		this.allAsset.setText(String.valueOf(allAsset));
 		this.deposit.setText(String.valueOf(deposit));
 		this.cash.setText(String.valueOf(cash));
 		this.loan.setText(String.valueOf(loan));
-		detailButton.addActionListener(new CMainDetailButtonClickListener());
+		detailButton.addActionListener(listener);
 
 		add(this.namelabel);
 		add(this.name);
@@ -45,6 +48,7 @@ public class CMainCompCellPanel extends JPanel {
 	}
 
 	public void setComp(CMainTableComp comp) {
+		being = comp.being;
 		name.setText(comp.name);
 		allAsset.setText(UCurrency.getInstance().toString(comp.allAsset,ECurrency.Won));
 		deposit.setText(UCurrency.getInstance().toString(comp.deposit,ECurrency.Won));
@@ -54,7 +58,7 @@ public class CMainCompCellPanel extends JPanel {
 
 	public CMainTableComp getComp() {
 		return new CMainTableComp
-				(name.getText(),
+				(being , name.getText(),
 					UCurrency.getInstance().toOriginValue(allAsset.getText(),ECurrency.Won),
 					UCurrency.getInstance().toOriginValue(deposit.getText(),ECurrency.Won),
 					UCurrency.getInstance().toOriginValue(cash.getText(),ECurrency.Won),

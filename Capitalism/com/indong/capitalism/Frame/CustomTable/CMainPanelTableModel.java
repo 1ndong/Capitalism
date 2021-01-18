@@ -1,5 +1,7 @@
 package com.indong.capitalism.Frame.CustomTable;
 
+import com.indong.capitalism.Classes.CBeing;
+
 import javax.swing.table.DefaultTableModel;
 
 public class CMainPanelTableModel extends DefaultTableModel{
@@ -10,7 +12,7 @@ public class CMainPanelTableModel extends DefaultTableModel{
         return 1;
     }
 
-    public void addRow(String name,long allAsset , long deposit , long cash , long loan) {
-        super.addRow(new Object[]{new CMainTableComp(name,allAsset , deposit , cash , loan)});//이름 총자산 예금 현금 대출
+    public void addRow(CBeing being , String name, long allAsset , long deposit , long cash , long loan) {
+        super.addRow(new Object[]{new CMainTableComp(being , name,allAsset , deposit , cash , loan)});//이름 총자산 예금 현금 대출
     }
 }

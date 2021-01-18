@@ -1,18 +1,16 @@
 package com.indong.capitalism.Frame.CustomTable;
 
-import java.awt.Component;
-import java.util.EventObject;
-
-import javax.swing.AbstractCellEditor;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+import java.awt.*;
+import java.util.EventObject;
 
 public class CMainPanelCellEditorRenderer extends AbstractCellEditor implements TableCellRenderer, TableCellEditor {
 
 	private static final long serialVersionUID = 1L;
-	private CMainCompCellPanel renderer = new CMainCompCellPanel("",0,0,0,0);
-	private CMainCompCellPanel editor = new CMainCompCellPanel("",0,0,0,0);
+	private CMainCompCellPanel renderer = new CMainCompCellPanel(null ,"",0,0,0,0);
+	private CMainCompCellPanel editor = new CMainCompCellPanel(null ,"",0,0,0,0);
 
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,

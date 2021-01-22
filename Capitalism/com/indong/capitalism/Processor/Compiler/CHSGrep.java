@@ -19,8 +19,8 @@ public class CHSGrep extends CompilerHelpString {
 	public String[] getHelpString(int level) {
 		// TODO Auto-generated method stub
 		String[] result = null;
-		if(level > 4)
-			level = 4;
+//		if(level > 4)
+//			level = 4;
 		
 		switch(level)
 		{
@@ -53,6 +53,9 @@ public class CHSGrep extends CompilerHelpString {
 		case 4://function type per each type
 			result = getFunctionList(commandList.get(1));
 			break;
+//		case 5:
+//			result = getProperFunctionList(commandList.get(4));
+//			break;
 		}
 		
 		return result;

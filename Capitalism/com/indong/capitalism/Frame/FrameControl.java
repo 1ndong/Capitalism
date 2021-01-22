@@ -1,6 +1,7 @@
 package com.indong.capitalism.Frame;
 
 import com.indong.capitalism.DataStructure.DTime;
+import com.indong.capitalism.Frame.CustomPanel.ControlPanel;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
 import com.indong.capitalism.Processor.ProcessorCommand;
@@ -24,6 +25,7 @@ public class FrameControl extends JFrame implements ITime{
 	private DefaultTableModel model;
 	private JTextField textfield;
 	private JTextField dayField;
+	private ControlPanel cp;
 	
 	public static FrameControl getInstance()
 	{
@@ -159,12 +161,22 @@ public class FrameControl extends JFrame implements ITime{
 		table.setBounds(scrollPane.getBounds());
 		
 		updateHelpString();
+
+		//
+		Rectangle controlpanelRect = new Rectangle();
+		controlpanelRect.x = 0;
+		controlpanelRect.y = spy + sph;
+		controlpanelRect.width = rect.width;
+		controlpanelRect.height = rect.height - sph;
+		cp = new ControlPanel(controlpanelRect);
+		//
 		
 		contentPane.add(textfield);
 		contentPane.add(processBtn);
 		contentPane.add(dayField);
 		contentPane.add(dayBtn);
 		contentPane.add(scrollPane);
+		contentPane.add(getControlPanel());
 		
 		ITimeKeeper timekeeper = (ITimeKeeper)ProcessorDay.GetInstance();
 		timekeeper.addTimeSlave(this);
@@ -188,5 +200,9 @@ public class FrameControl extends JFrame implements ITime{
 	public void dayChange(DTime newTime) {
 		// TODO Auto-generated method stub
 		dayField.setText(newTime.getYear() + "/" + newTime.getMonth() + "/" + newTime.getDay() + "/" + newTime.getDayoftheweek() + "요일");
+	}
+
+	public ControlPanel getControlPanel() {
+		return cp;
 	}
 }

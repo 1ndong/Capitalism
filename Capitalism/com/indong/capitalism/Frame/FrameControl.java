@@ -167,7 +167,7 @@ public class FrameControl extends JFrame implements ITime{
 		controlpanelRect.x = 0;
 		controlpanelRect.y = spy + sph;
 		controlpanelRect.width = rect.width;
-		controlpanelRect.height = rect.height - sph;
+		controlpanelRect.height = rect.height - pbh - jbh;
 		cp = new ControlPanel(controlpanelRect);
 		//
 		

@@ -1,4 +1,4 @@
-package com.indong.capitalism.Frame.CustomTable;
+package com.indong.capitalism.Frame.CustomTableDashboard;
 
 import com.indong.capitalism.Classes.CBeing;
 

@@ -15,7 +15,7 @@ import java.util.LinkedList;
 public class CBAccount implements IInterestRate{
 	private int accountNumber = 0;
 	private EAccountType accountType;
-	private CBCommercial bank;
+	private CBank bank;
 	private long rightsOfCash = 0;
 	private float interestRate = 0.0f;
 	private DTime interestDay = new DTime(0,0,0);
@@ -25,7 +25,7 @@ public class CBAccount implements IInterestRate{
 	private DLoan loanData;
 	private LinkedList<DLoanRepayment> repaymentPlanList = new LinkedList<DLoanRepayment>();
 	
-	public CBAccount(String ownerName , CBCommercial bank , int accountNumber , EAccountType type , float interestRate , DTime interestDay)
+	public CBAccount(String ownerName , CBank bank , int accountNumber , EAccountType type , float interestRate , DTime interestDay)
 	{
 		this.ownerName = ownerName; 
 		this.bank = bank;
@@ -37,7 +37,7 @@ public class CBAccount implements IInterestRate{
 		FrameLog.getInstance().addLog("Itemaccount", "계좌 생성 완료 금리 : "+ interestRate + "%");
 	}
 	
-	public CBCommercial getBank()
+	public CBank getBank()
 	{
 		return bank;
 	}

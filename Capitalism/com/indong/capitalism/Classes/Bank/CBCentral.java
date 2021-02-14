@@ -3,6 +3,8 @@ package com.indong.capitalism.Classes.Bank;
 import com.indong.capitalism.Classes.CCountry;
 import com.indong.capitalism.DataStructure.DCareTaker;
 import com.indong.capitalism.DataStructure.DHCentralBank;
+import com.indong.capitalism.DataStructure.DTime;
+import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Enum.ECurrency;
 import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Interface.IInterestChanger;
@@ -17,6 +19,7 @@ public class CBCentral extends CBank implements IInterestChanger{
 	private float baseInterestRate = 0.5f;
 	private DCareTaker careTaker = new DCareTaker();
 	private LinkedList<IInterestRate> ibankList = new LinkedList<IInterestRate>();
+	private CBAccount nationalAccount = new CBAccount("국고",this,1111, EAccountType.NationalAccount,0.0f,new DTime(0,0,0));
 	
 	public CBCentral(CCountry country , String name)
 	{
@@ -76,5 +79,13 @@ public class CBCentral extends CBank implements IInterestChanger{
 		{
 			ibankList.get(i).interestChange(getBaseInterestRate());
 		}
+	}
+
+	public CBAccount getNationalAccount() {
+		return nationalAccount;
+	}
+
+	public void setNationalAccount(CBAccount nationalAccount) {
+		this.nationalAccount = nationalAccount;
 	}
 }

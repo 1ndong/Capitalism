@@ -1,5 +1,5 @@
 package com.indong.capitalism.Enum;
 
 public enum EAccountType {
-	Deposit,Loan,Saving
+	Deposit,Loan,Saving,NationalAccount
 }

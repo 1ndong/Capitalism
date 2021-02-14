@@ -1,6 +1,7 @@
 package com.indong.capitalism.Frame.CustomPanel;
 
 import com.indong.capitalism.Frame.CustomTableCommandList.ControlPanelTableCellRenderer;
+import com.indong.capitalism.Frame.CustomTableDashboard.CMainTableComp;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -69,5 +70,10 @@ public class ControlPanel extends JPanel {
     public void setCustomLayout()
     {
 
+    }
+
+    public void SetAction(CMainTableComp comp)
+    {
+        System.out.println(comp.being.getBasicData().getName());
     }
 }

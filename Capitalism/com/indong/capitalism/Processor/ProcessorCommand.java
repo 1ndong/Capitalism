@@ -10,7 +10,9 @@ import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EGovernmentType;
 import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Processor.Compiler.*;
+import com.indong.capitalism.Processor.Compiler2.C2Command;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
@@ -254,5 +256,18 @@ public class ProcessorCommand {
 		//all command
 		String[] result = new String[] {"'mk' - make" , "'rm' - remove" , "'grep' - select object"};
 		return result;
+	}
+
+	//////////below Compiler 2.0
+	LinkedList<C2Command> commandList = null;
+
+	public void setTypeList()
+	{
+
+	}
+
+	public void setList()
+	{
+
 	}
 }

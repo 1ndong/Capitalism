@@ -2,6 +2,7 @@ package com.indong.capitalism.Frame.CustomTableDashboard;
 
 import com.indong.capitalism.Classes.CBeing;
 import com.indong.capitalism.Frame.FrameControl;
+import com.indong.capitalism.Processor.ProcessorCommand;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -20,7 +21,7 @@ public class CMainDetailButtonClickListener implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		FrameControl.getInstance().getControlPanel().SetAction(parent.getComp());
+		ProcessorCommand.getInstance().setList(parent.getComp().being);
 	}
 
 	public CBeing getBeing() {

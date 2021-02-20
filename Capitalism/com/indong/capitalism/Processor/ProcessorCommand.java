@@ -1,15 +1,17 @@
 package com.indong.capitalism.Processor;
 
-import com.indong.capitalism.Classes.CCompany;
-import com.indong.capitalism.Classes.CCountry;
-import com.indong.capitalism.Classes.CPeople;
-import com.indong.capitalism.Classes.CWorld;
+import com.indong.capitalism.Classes.*;
 import com.indong.capitalism.Classes.Government.CGMinistryOfHealthAndWelfare;
 import com.indong.capitalism.Classes.Government.CGMinistryOfTradeIndustryAndEnergy;
 import com.indong.capitalism.DataStructure.DTime;
+import com.indong.capitalism.Enum.EBeingType;
 import com.indong.capitalism.Enum.EGovernmentType;
+import com.indong.capitalism.Frame.FrameControl;
 import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Processor.Compiler.*;
+import com.indong.capitalism.Processor.Compiler2.C2CBankService;
+import com.indong.capitalism.Processor.Compiler2.C2CBuyClothing;
+import com.indong.capitalism.Processor.Compiler2.C2CEatFood;
 import com.indong.capitalism.Processor.Compiler2.C2Command;
 
 import java.util.HashMap;
@@ -18,12 +20,21 @@ import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
 public class ProcessorCommand {
-	private static ProcessorCommand instance = new ProcessorCommand();
+	private static final ProcessorCommand instance = new ProcessorCommand();
 	public static ProcessorCommand getInstance()
 	{
 		return instance;
 	}
-	
+
+	private LinkedList<C2Command> commandList = new LinkedList<C2Command>();
+
+	public ProcessorCommand()
+	{
+		commandList.add(new C2CBankService());
+		commandList.add(new C2CBuyClothing());
+		commandList.add(new C2CEatFood());
+	}
+
 	public String[] getHelpString(String command)
 	{
 		int level = 0;
@@ -259,15 +270,19 @@ public class ProcessorCommand {
 	}
 
 	//////////below Compiler 2.0
-	LinkedList<C2Command> commandList = null;
 
-	public void setTypeList()
+	public void setList(CBeing being)
 	{
+		String[] result = new String[] {"1","2","3"};
+		if(being.getType() == EBeingType.Company)
+		{
 
-	}
+		}
+		else if(being.getType() == EBeingType.Personal)
+		{
 
-	public void setList()
-	{
+		}
 
+		FrameControl.getInstance().getControlPanel().setCustomLayout(result);
 	}
 }

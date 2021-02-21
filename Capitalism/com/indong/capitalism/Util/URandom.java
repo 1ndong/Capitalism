@@ -1,10 +1,9 @@
 package com.indong.capitalism.Util;
 
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class URandom {
-    private static URandom instance = new URandom();
+    private static final URandom instance = new URandom();
     public static URandom getInstance()
     {
         return instance;

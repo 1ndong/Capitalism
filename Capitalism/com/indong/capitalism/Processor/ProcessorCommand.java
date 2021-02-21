@@ -4,7 +4,7 @@ import com.indong.capitalism.Classes.*;
 import com.indong.capitalism.Classes.Government.CGMinistryOfHealthAndWelfare;
 import com.indong.capitalism.Classes.Government.CGMinistryOfTradeIndustryAndEnergy;
 import com.indong.capitalism.DataStructure.DTime;
-import com.indong.capitalism.Enum.EBeingType;
+import com.indong.capitalism.Enum.ECommandType;
 import com.indong.capitalism.Enum.EGovernmentType;
 import com.indong.capitalism.Frame.FrameControl;
 import com.indong.capitalism.Frame.FrameLog;
@@ -13,8 +13,8 @@ import com.indong.capitalism.Processor.Compiler2.C2CBankService;
 import com.indong.capitalism.Processor.Compiler2.C2CBuyClothing;
 import com.indong.capitalism.Processor.Compiler2.C2CEatFood;
 import com.indong.capitalism.Processor.Compiler2.C2Command;
+import com.indong.capitalism.Util.UConst;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
@@ -273,15 +273,32 @@ public class ProcessorCommand {
 
 	public void setList(CBeing being)
 	{
-		String[] result = new String[] {"1","2","3"};
-		if(being.getType() == EBeingType.Company)
-		{
+		String[] result = null;
 
-		}
-		else if(being.getType() == EBeingType.Personal)
+		ECommandType[] types = ECommandType.values();
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0 ; i < types.length ; i++)
 		{
-
+			sb.append(types[i]);
+			if(i != types.length - 1)
+				sb.append(UConst.StrDelim);
 		}
+
+		/*
+		1. 타입보여주고
+		2. 해당 타입 이 선택된놈이 가능한지 체크여부
+		3. 가능한것만 보여주기
+		4. command별로 스텝 단계 진행
+		* */
+		for(int i = 0 ; i < commandList.size() ; i++)
+		{
+			C2Command command = commandList.get(i);
+
+			//if(being.getType() == command.)
+		}
+
+		if(result == null)
+			return;
 
 		FrameControl.getInstance().getControlPanel().setCustomLayout(result);
 	}

@@ -5,7 +5,7 @@ import com.indong.capitalism.DataStructure.DTime;
 import java.util.Calendar;
 
 public class UTime {
-    private static UTime instance = new UTime();
+    private static final UTime instance = new UTime();
     public static UTime getInstance()
     {
         return instance;

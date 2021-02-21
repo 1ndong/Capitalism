@@ -3,7 +3,7 @@ package com.indong.capitalism.Util;
 import com.indong.capitalism.Enum.ECurrency;
 
 public class UCurrency {
-	private static UCurrency instance = new UCurrency();
+	private static final UCurrency instance = new UCurrency();
 	private String[] han1 = new String[] {
 			"","\uC77C","\uC774","\uC0BC","\uC0AC",
 		    "\uC624","\uC721","\uCE60","\uD314","\uAD6C"

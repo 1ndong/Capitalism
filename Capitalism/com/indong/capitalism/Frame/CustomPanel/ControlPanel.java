@@ -1,13 +1,7 @@
 package com.indong.capitalism.Frame.CustomPanel;
 
-import com.indong.capitalism.Classes.CBeing;
-import com.indong.capitalism.Frame.CustomTableCommandList.ControlPanelTableCellRenderer;
-import com.indong.capitalism.Frame.CustomTableDashboard.CMainTableComp;
-
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 
 public class ControlPanel extends JPanel {
@@ -79,9 +73,12 @@ public class ControlPanel extends JPanel {
         cb.setEnabled(true);
         tf.setEnabled(true);
 
-        cb.addItem("");
-        cb.addItem("a");
-        cb.addItem("a");
+        for(int i = 0 ; i < result.length ; i++)
+        {
+            cb.addItem(result[i]);
+        }
+
+        cb.setSelectedIndex(-1);
     }
 
     /*

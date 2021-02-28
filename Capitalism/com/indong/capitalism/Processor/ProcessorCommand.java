@@ -13,7 +13,6 @@ import com.indong.capitalism.Processor.Compiler2.C2CBankService;
 import com.indong.capitalism.Processor.Compiler2.C2CBuyClothing;
 import com.indong.capitalism.Processor.Compiler2.C2CEatFood;
 import com.indong.capitalism.Processor.Compiler2.C2Command;
-import com.indong.capitalism.Util.UConst;
 
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
@@ -276,12 +275,22 @@ public class ProcessorCommand {
 		String[] result = null;
 
 		ECommandType[] types = ECommandType.values();
-		StringBuilder sb = new StringBuilder();
+
+		result = new String[types.length];
+
 		for(int i = 0 ; i < types.length ; i++)
 		{
-			sb.append(types[i]);
-			if(i != types.length - 1)
-				sb.append(UConst.StrDelim);
+			String temp = "";
+			if(types[i].toString().contains("Spend") == true)
+			{
+				temp = "소비";
+			}
+			else if(types[i].toString().contains("Finance") == true)
+			{
+				temp = "금융";
+			}
+
+			result[i] = temp;
 		}
 
 		/*
@@ -290,12 +299,6 @@ public class ProcessorCommand {
 		3. 가능한것만 보여주기
 		4. command별로 스텝 단계 진행
 		* */
-		for(int i = 0 ; i < commandList.size() ; i++)
-		{
-			C2Command command = commandList.get(i);
-
-			//if(being.getType() == command.)
-		}
 
 		if(result == null)
 			return;

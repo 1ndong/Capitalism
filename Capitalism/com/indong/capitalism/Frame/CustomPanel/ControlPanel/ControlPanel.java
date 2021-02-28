@@ -1,4 +1,7 @@
-package com.indong.capitalism.Frame.CustomPanel;
+package com.indong.capitalism.Frame.CustomPanel.ControlPanel;
+
+import com.indong.capitalism.Classes.CBeing;
+import com.indong.capitalism.Processor.ProcessorCommand;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -47,6 +50,7 @@ public class ControlPanel extends JPanel {
         JButton btnSubmit = new JButton("Submit");
         btnSubmit.setForeground(Color.white);
         btnSubmit.setBackground(new Color(31,138,209));
+        btnSubmit.addActionListener(new SubmitClickListener(this));
         int bsx = 0;
         int bsy = sph;
         int bsw = spw / 2;
@@ -57,6 +61,7 @@ public class ControlPanel extends JPanel {
         JButton btnUnselect = new JButton("Cancel");
         btnUnselect.setForeground(Color.white);
         btnUnselect.setBackground(new Color(210,51,85));
+        btnUnselect.addActionListener(new CancelClickListener(this));
         int bux = bsw;
         int buy = sph;
         int buw = bsw;
@@ -68,17 +73,32 @@ public class ControlPanel extends JPanel {
         add(btnUnselect);
     }
 
-    public void setCustomLayout(String[] result)
+
+
+    public void setCustomLayout(CBeing being)
     {
         cb.setEnabled(true);
-        tf.setEnabled(true);
 
-        for(int i = 0 ; i < result.length ; i++)
-        {
-            cb.addItem(result[i]);
-        }
+        ProcessorCommand instance = ProcessorCommand.getInstance();
+
+        //instance.lksdjflaksjdflkasjdfkl
 
         cb.setSelectedIndex(-1);
+    }
+
+    /*
+    1. 타입보여주고
+    2. 해당 타입 이 선택된놈이 가능한지 체크여부
+    3. 가능한것만 보여주기
+    4. command별로 스텝 단계 진행
+    * */
+
+    public void ResetPanel()
+    {
+        cb.removeAllItems();
+        cb.setEnabled(false);
+        tf.setText("");
+        tf.setEnabled(false);
     }
 
     /*

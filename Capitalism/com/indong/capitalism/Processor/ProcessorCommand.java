@@ -29,6 +29,11 @@ public class ProcessorCommand {
 
 	public ProcessorCommand()
 	{
+		initCommandList();
+	}
+
+	private void initCommandList()
+	{
 		commandList.add(new C2CBankService());
 		commandList.add(new C2CBuyClothing());
 		commandList.add(new C2CEatFood());
@@ -269,40 +274,20 @@ public class ProcessorCommand {
 	}
 
 	//////////below Compiler 2.0
+	private int stage = 0;
 
-	public void setList(CBeing being)
+	public int getStage()
 	{
-		String[] result = null;
+		return stage;
+	}
 
-		ECommandType[] types = ECommandType.values();
+	public void nextStage()
+	{
+		stage++;
+	}
 
-		result = new String[types.length];
-
-		for(int i = 0 ; i < types.length ; i++)
-		{
-			String temp = "";
-			if(types[i].toString().contains("Spend") == true)
-			{
-				temp = "소비";
-			}
-			else if(types[i].toString().contains("Finance") == true)
-			{
-				temp = "금융";
-			}
-
-			result[i] = temp;
-		}
-
-		/*
-		1. 타입보여주고
-		2. 해당 타입 이 선택된놈이 가능한지 체크여부
-		3. 가능한것만 보여주기
-		4. command별로 스텝 단계 진행
-		* */
-
-		if(result == null)
-			return;
-
-		FrameControl.getInstance().getControlPanel().setCustomLayout(result);
+	public void resetStage()
+	{
+		stage = 0;
 	}
 }

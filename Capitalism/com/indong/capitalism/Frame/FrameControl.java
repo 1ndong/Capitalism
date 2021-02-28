@@ -1,7 +1,7 @@
 package com.indong.capitalism.Frame;
 
 import com.indong.capitalism.DataStructure.DTime;
-import com.indong.capitalism.Frame.CustomPanel.ControlPanel;
+import com.indong.capitalism.Frame.CustomPanel.ControlPanel.ControlPanel;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
 import com.indong.capitalism.Processor.ProcessorCommand;

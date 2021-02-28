@@ -16,12 +16,13 @@ public class CMainDetailButtonClickListener implements ActionListener{
 	public CMainDetailButtonClickListener(CMainCompCellPanel parent)
 	{
 		this.parent = parent;
+		setBeing(parent.getComp().being);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		ProcessorCommand.getInstance().setList(parent.getComp().being);
+		FrameControl.getInstance().getControlPanel().setCustomLayout(getBeing());
 	}
 
 	public CBeing getBeing() {

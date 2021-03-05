@@ -1,5 +1,6 @@
 package com.indong.capitalism.Classes;
 
+import com.indong.capitalism.DataCenter.DataCenter;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EBeingType;
 import com.indong.capitalism.Enum.ESearchType;
@@ -13,6 +14,8 @@ public class CPeople extends CBeing implements ISearch
 		super(country);
 		type = EBeingType.Personal;
 		basicData = new InfoPersonalData(birth , name);
+
+		registerObject();
 	}
 
 	@Override
@@ -24,5 +27,10 @@ public class CPeople extends CBeing implements ISearch
 	@Override
 	public boolean isTypeOf(ESearchType type) {
 		return type == ESearchType.People;
+	}
+
+	@Override
+	public void registerObject() {
+		DataCenter.getInstance().addNewObject(this);
 	}
 }

@@ -1,5 +1,6 @@
 package com.indong.capitalism.Classes;
 
+import com.indong.capitalism.DataCenter.DataCenter;
 import com.indong.capitalism.DataStructure.DCompanyMember;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
@@ -25,6 +26,8 @@ public class CCompany extends CBeing implements ICompanyService , ISearch {
 		super(country);
 		type = EBeingType.Company;
 		basicData = new InfoCompanyData(birth , name);
+
+		registerObject();
 	}
 	
 	@Override
@@ -123,5 +126,10 @@ public class CCompany extends CBeing implements ICompanyService , ISearch {
 	@Override
 	public boolean isTypeOf(ESearchType type) {
 		return type == ESearchType.Company;
+	}
+
+	@Override
+	public void registerObject() {
+		DataCenter.getInstance().addNewObject(this);
 	}
 }

@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import com.indong.capitalism.Classes.Bank.CBCentral;
 import com.indong.capitalism.Classes.Bank.CBank;
 import com.indong.capitalism.Classes.Government.CGovernment;
+import com.indong.capitalism.DataCenter.DataCenter;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EGovernmentType;
 import com.indong.capitalism.Enum.ESearchType;
@@ -31,6 +32,8 @@ public class CCountry implements ITime , ISearch {
 		
 		ITimeKeeper timeKeeper = (ITimeKeeper)ProcessorDay.GetInstance();
 		timeKeeper.addTimeSlave(this);
+
+		registerObject();
 	}
 	
 	public String getCountryName()
@@ -63,5 +66,10 @@ public class CCountry implements ITime , ISearch {
 	@Override
 	public boolean isTypeOf(ESearchType type) {
 		return type == ESearchType.Country;
+	}
+
+	@Override
+	public void registerObject() {
+		DataCenter.getInstance().addNewObject(this);
 	}
 }

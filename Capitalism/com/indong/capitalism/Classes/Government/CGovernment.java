@@ -2,6 +2,7 @@ package com.indong.capitalism.Classes.Government;
 
 import com.indong.capitalism.Classes.CBelong;
 import com.indong.capitalism.Classes.CCountry;
+import com.indong.capitalism.DataCenter.DataCenter;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.ESearchType;
 import com.indong.capitalism.Interface.ISearch;
@@ -17,6 +18,8 @@ public class CGovernment extends CBelong implements ITime , ISearch {
 		super(country);
 		ITimeKeeper timeKeeper = (ITimeKeeper)ProcessorDay.GetInstance();
 		timeKeeper.addTimeSlave(this);
+
+		registerObject();
 	}
 	
 	@Override
@@ -32,5 +35,10 @@ public class CGovernment extends CBelong implements ITime , ISearch {
 	@Override
 	public boolean isTypeOf(ESearchType type) {
 		return type == ESearchType.Government;
+	}
+
+	@Override
+	public void registerObject() {
+		DataCenter.getInstance().addNewObject(this);
 	}
 }

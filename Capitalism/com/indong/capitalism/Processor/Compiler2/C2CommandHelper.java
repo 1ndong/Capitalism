@@ -2,14 +2,8 @@ package com.indong.capitalism.Processor.Compiler2;
 
 import com.indong.capitalism.Classes.CCompany;
 import com.indong.capitalism.Classes.CCountry;
-import com.indong.capitalism.Classes.CPeople;
-import com.indong.capitalism.Classes.CWorld;
-import com.indong.capitalism.Classes.Government.CGMinistryOfHealthAndWelfare;
-import com.indong.capitalism.Classes.Government.CGMinistryOfTradeIndustryAndEnergy;
-import com.indong.capitalism.Classes.Government.CGovernment;
-import com.indong.capitalism.Enum.EGovernmentType;
 
-import java.util.Iterator;
+import java.util.LinkedList;
 
 public class C2CommandHelper {
     private CCountry country = null;
@@ -17,5 +11,14 @@ public class C2CommandHelper {
     public void setCountry(CCountry country)
     {
         this.country = country;
+    }
+
+    protected LinkedList<CCompany> getCompanyList()
+    {
+        LinkedList<CCompany> result = new LinkedList<CCompany>();
+
+
+
+        return result;
     }
 }

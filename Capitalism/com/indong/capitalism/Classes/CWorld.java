@@ -2,6 +2,7 @@ package com.indong.capitalism.Classes;
 
 import java.util.LinkedList;
 
+import com.indong.capitalism.DataCenter.DataCenter;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.ESearchType;
 import com.indong.capitalism.Frame.FrameLog;
@@ -19,6 +20,8 @@ public class CWorld implements ITime , ISearch {
 		FrameLog.getInstance().addLog("creation", "world 생성");
 		ITimeKeeper timeKeeper = (ITimeKeeper)ProcessorDay.GetInstance();
 		timeKeeper.addTimeSlave(this);
+
+		registerObject();
 	}
 	
 	public static CWorld getInstance()
@@ -39,5 +42,10 @@ public class CWorld implements ITime , ISearch {
 	@Override
 	public boolean isTypeOf(ESearchType type) {
 		return type == ESearchType.World;
+	}
+
+	@Override
+	public void registerObject() {
+		DataCenter.getInstance().addNewObject(this);
 	}
 }

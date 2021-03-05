@@ -5,15 +5,17 @@ import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Enum.EBeingType;
 import com.indong.capitalism.Enum.ECompanyPosition;
+import com.indong.capitalism.Enum.ESearchType;
 import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Info.IAAccount;
 import com.indong.capitalism.Info.InfoCompanyData;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ICompanyService;
+import com.indong.capitalism.Interface.ISearch;
 
 import java.util.LinkedList;
 
-public class CCompany extends CBeing implements ICompanyService{
+public class CCompany extends CBeing implements ICompanyService , ISearch {
 	private int salaryDay = 0;
 	protected LinkedList<DCompanyMember> staffList = new LinkedList<DCompanyMember>();
 	protected DTime today = new DTime(0,0,0);
@@ -116,5 +118,10 @@ public class CCompany extends CBeing implements ICompanyService{
 
 	public void setSalaryDay(int salaryDay) {
 		this.salaryDay = salaryDay;
+	}
+
+	@Override
+	public boolean isTypeOf(ESearchType type) {
+		return type == ESearchType.Company;
 	}
 }

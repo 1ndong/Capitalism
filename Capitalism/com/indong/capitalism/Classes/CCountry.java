@@ -8,12 +8,14 @@ import com.indong.capitalism.Classes.Bank.CBank;
 import com.indong.capitalism.Classes.Government.CGovernment;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EGovernmentType;
+import com.indong.capitalism.Enum.ESearchType;
 import com.indong.capitalism.Frame.FrameLog;
+import com.indong.capitalism.Interface.ISearch;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
 import com.indong.capitalism.Processor.ProcessorDay;
 
-public class CCountry implements ITime{
+public class CCountry implements ITime , ISearch {
 	private String name;
 	private CBCentral centralBank;
 	private LinkedList<CBank> bankList = new LinkedList<CBank>();
@@ -56,5 +58,10 @@ public class CCountry implements ITime{
 
 	public HashMap<EGovernmentType , CGovernment> getGovernmentMap() {
 		return governmentMap;
+	}
+
+	@Override
+	public boolean isTypeOf(ESearchType type) {
+		return type == ESearchType.Country;
 	}
 }

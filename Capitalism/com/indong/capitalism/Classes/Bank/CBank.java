@@ -4,11 +4,13 @@ import com.indong.capitalism.Classes.CBelong;
 import com.indong.capitalism.Classes.CCountry;
 import com.indong.capitalism.Classes.Asset.CACCash;
 import com.indong.capitalism.DataStructure.DTime;
+import com.indong.capitalism.Enum.ESearchType;
+import com.indong.capitalism.Interface.ISearch;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
 import com.indong.capitalism.Processor.ProcessorDay;
 
-public class CBank extends CBelong implements ITime{
+public class CBank extends CBelong implements ITime , ISearch {
 	protected CACCash balance = new CACCash();
 	protected String name;
 	
@@ -40,5 +42,10 @@ public class CBank extends CBelong implements ITime{
 	public void dayChange(DTime newTime) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean isTypeOf(ESearchType type) {
+		return type == ESearchType.Bank;
 	}
 }

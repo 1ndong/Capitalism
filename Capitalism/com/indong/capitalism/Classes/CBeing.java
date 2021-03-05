@@ -12,7 +12,7 @@ import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
 import com.indong.capitalism.Processor.ProcessorDay;
 
-public class CBeing extends CBelong implements ITime{
+public class CBeing extends CBelong implements ITime {
 	protected EBeingType type;
 	protected InfoBasicData basicData;
 	private final CACCash wallet;

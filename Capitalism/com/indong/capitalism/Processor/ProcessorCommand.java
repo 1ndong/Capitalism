@@ -39,6 +39,15 @@ public class ProcessorCommand {
 		commandList.add(new C2CEatFood());
 	}
 
+	public void changeCountry(CCountry country)
+	{
+		for(int i = 0 ; i < commandList.size(); i++)
+		{
+			C2Command command = commandList.get(i);
+			command.setCountry(country);
+		}
+	}
+
 	public String[] getHelpString(String command)
 	{
 		int level = 0;

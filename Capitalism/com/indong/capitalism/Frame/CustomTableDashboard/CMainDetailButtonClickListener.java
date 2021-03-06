@@ -2,9 +2,7 @@ package com.indong.capitalism.Frame.CustomTableDashboard;
 
 import com.indong.capitalism.Classes.CBeing;
 import com.indong.capitalism.Frame.FrameControl;
-import com.indong.capitalism.Processor.ProcessorCommand;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -22,7 +20,7 @@ public class CMainDetailButtonClickListener implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		FrameControl.getInstance().getControlPanel().setCustomLayout(getBeing());
+		FrameControl.getInstance().getControlPanel().startCommandProcess(getBeing());
 	}
 
 	public CBeing getBeing() {

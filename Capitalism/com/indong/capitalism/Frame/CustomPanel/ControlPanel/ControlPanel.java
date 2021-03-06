@@ -1,7 +1,7 @@
 package com.indong.capitalism.Frame.CustomPanel.ControlPanel;
 
 import com.indong.capitalism.Classes.CBeing;
-import com.indong.capitalism.Processor.ProcessorCommand;
+import com.indong.capitalism.Enum.ECommandType;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,6 +12,7 @@ public class ControlPanel extends JPanel {
     private DefaultTableModel model;
     private JComboBox<String> cb;
     private JTextField tf;
+    private SubmitClickListener submitClickListener = new SubmitClickListener(this);
 
     public ControlPanel(Rectangle dashboardRect) {
         // TODO Auto-generated constructor stub
@@ -50,7 +51,7 @@ public class ControlPanel extends JPanel {
         JButton btnSubmit = new JButton("Submit");
         btnSubmit.setForeground(Color.white);
         btnSubmit.setBackground(new Color(31,138,209));
-        btnSubmit.addActionListener(new SubmitClickListener(this));
+        btnSubmit.addActionListener(submitClickListener);
         int bsx = 0;
         int bsy = sph;
         int bsw = spw / 2;
@@ -73,15 +74,43 @@ public class ControlPanel extends JPanel {
         add(btnUnselect);
     }
 
-
-
-    public void setCustomLayout(CBeing being)
+    public JComboBox<String> getCombobox()
     {
+        return cb;
+    }
+
+    public JTextField getTextField()
+    {
+        return tf;
+    }
+
+    public void startCommandProcess(CBeing being)
+    {
+        ResetPanel();
+
         cb.setEnabled(true);
+        submitClickListener.setStage(0);
 
-        ProcessorCommand instance = ProcessorCommand.getInstance();
+        ECommandType[] types = ECommandType.values();
+        for(int i = 0 ; i < types.length ; i++)
+        {
+            String temp = types[i].toString();
+            String str = null;
 
-        //instance.lksdjflaksjdflkasjdfkl
+            switch (temp)
+            {
+                case "CTSpend":
+                    str = "소비";
+                    break;
+                case "CTFinance":
+                    str = "금융";
+                    break;
+                default:
+                    continue;
+            }
+
+            cb.addItem(str);
+        }
 
         cb.setSelectedIndex(-1);
     }

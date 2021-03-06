@@ -1,12 +1,13 @@
 package com.indong.capitalism.Processor;
 
-import com.indong.capitalism.Classes.*;
+import com.indong.capitalism.Classes.CCompany;
+import com.indong.capitalism.Classes.CCountry;
+import com.indong.capitalism.Classes.CPeople;
+import com.indong.capitalism.Classes.CWorld;
 import com.indong.capitalism.Classes.Government.CGMinistryOfHealthAndWelfare;
 import com.indong.capitalism.Classes.Government.CGMinistryOfTradeIndustryAndEnergy;
 import com.indong.capitalism.DataStructure.DTime;
-import com.indong.capitalism.Enum.ECommandType;
 import com.indong.capitalism.Enum.EGovernmentType;
-import com.indong.capitalism.Frame.FrameControl;
 import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Processor.Compiler.*;
 import com.indong.capitalism.Processor.Compiler2.C2CBankService;
@@ -283,20 +284,5 @@ public class ProcessorCommand {
 	}
 
 	//////////below Compiler 2.0
-	private int stage = 0;
 
-	public int getStage()
-	{
-		return stage;
-	}
-
-	public void nextStage()
-	{
-		stage++;
-	}
-
-	public void resetStage()
-	{
-		stage = 0;
-	}
 }

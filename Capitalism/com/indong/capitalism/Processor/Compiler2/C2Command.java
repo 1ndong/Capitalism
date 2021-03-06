@@ -5,11 +5,11 @@ import com.indong.capitalism.Enum.ECommandType;
 
 public class C2Command{
     protected ECommandType eType;
-    protected C2CommandHelper helper = new C2CommandHelper();
+    protected CCountry country;
 
     public void setCountry(CCountry country)
     {
-        helper.setCountry(country);
+        this.country = country;
     }
 
     //spend

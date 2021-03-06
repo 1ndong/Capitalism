@@ -5,9 +5,9 @@ import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EBeingType;
 import com.indong.capitalism.Enum.ESearchType;
 import com.indong.capitalism.Info.InfoPersonalData;
-import com.indong.capitalism.Interface.ISearch;
+import com.indong.capitalism.Interface.ISearchable;
 
-public class CPeople extends CBeing implements ISearch
+public class CPeople extends CBeing implements ISearchable
 {
 	public CPeople(CCountry country , DTime birth , String name)
 	{

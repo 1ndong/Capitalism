@@ -12,11 +12,11 @@ import com.indong.capitalism.Info.IAAccount;
 import com.indong.capitalism.Info.InfoCompanyData;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ICompanyService;
-import com.indong.capitalism.Interface.ISearch;
+import com.indong.capitalism.Interface.ISearchable;
 
 import java.util.LinkedList;
 
-public class CCompany extends CBeing implements ICompanyService , ISearch {
+public class CCompany extends CBeing implements ICompanyService , ISearchable {
 	private int salaryDay = 0;
 	protected LinkedList<DCompanyMember> staffList = new LinkedList<DCompanyMember>();
 	protected DTime today = new DTime(0,0,0);

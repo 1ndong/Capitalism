@@ -11,12 +11,12 @@ import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EGovernmentType;
 import com.indong.capitalism.Enum.ESearchType;
 import com.indong.capitalism.Frame.FrameLog;
-import com.indong.capitalism.Interface.ISearch;
+import com.indong.capitalism.Interface.ISearchable;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
 import com.indong.capitalism.Processor.ProcessorDay;
 
-public class CCountry implements ITime , ISearch {
+public class CCountry implements ITime , ISearchable {
 	private String name;
 	private CBCentral centralBank;
 	private LinkedList<CBank> bankList = new LinkedList<CBank>();

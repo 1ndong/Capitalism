@@ -5,12 +5,12 @@ import com.indong.capitalism.Classes.CCountry;
 import com.indong.capitalism.DataCenter.DataCenter;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.ESearchType;
-import com.indong.capitalism.Interface.ISearch;
+import com.indong.capitalism.Interface.ISearchable;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
 import com.indong.capitalism.Processor.ProcessorDay;
 
-public class CGovernment extends CBelong implements ITime , ISearch {
+public class CGovernment extends CBelong implements ITime , ISearchable {
 	protected String name;
 	
 	public CGovernment(CCountry country)

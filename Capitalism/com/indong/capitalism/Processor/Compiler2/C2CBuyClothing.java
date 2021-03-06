@@ -6,7 +6,5 @@ public class C2CBuyClothing extends C2Command{
     public C2CBuyClothing()
     {
         eType = ECommandType.CTSpend;
-
-
     }
 }

@@ -87,9 +87,11 @@ public class CCMake extends CompilerCommand{
 							
 							if(gmotiae != null)
 							{
-								CCompany newcompany = new CCompany(country,new DTime(year,month,day),commandList.removeFirst());
-								gmotiae.registerCompany(newcompany);
-								result = true;
+								//todo company는 설정할께 많기때문에 런타임에 생성은 못하는걸로
+								//CCompany newcompany = new CCompany(country,new DTime(year,month,day),commandList.removeFirst(), ESectorType.Consumption);
+								//gmotiae.registerCompany(newcompany);
+								//result = true;
+								result = false;
 							}
 						}	
 					}

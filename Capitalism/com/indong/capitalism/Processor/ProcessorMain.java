@@ -12,6 +12,7 @@ import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Enum.ECompanyPosition;
 import com.indong.capitalism.Enum.EGovernmentType;
+import com.indong.capitalism.Enum.ESectorType;
 import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Info.IAAccount;
 import com.indong.capitalism.Interface.IBankService;
@@ -52,16 +53,16 @@ public class ProcessorMain {
 		rok.getCentralBank().releaseMoney(kookminbank, 100000000000L);
 		rok.getCentralBank().releaseMoney(wooribank, 100000000000L);
 		
-		CCompany samsung = new CCompany(rok,new DTime(1955,2,12),"삼성");
-		CCompany lg = new CCompany(rok,new DTime(1958,3,21),"LG");
+		CCompany samsung = new CCompany(rok,new DTime(1955,2,12),"삼성" , ESectorType.Consumption);
+		CCompany lg = new CCompany(rok,new DTime(1958,3,21),"LG", ESectorType.Consumption);
 		gmotiae.registerCompany(samsung);
 		samsung.setSalaryDay(25);
 		gmotiae.registerCompany(lg);
 		lg.setSalaryDay(25);
 
-		CCompany skt = new CCompany(rok,new DTime(1970,5,4),"SK텔레콤");
-		CCompany cj = new CCompany(rok,new DTime(1984,2,3),"CJ");
-		CCompany giordano = new CCompany(rok, new DTime(1988 , 6,7),"지오다노");
+		CCompany skt = new CCompany(rok,new DTime(1970,5,4),"SK텔레콤", ESectorType.Consumption);
+		CCompany cj = new CCompany(rok,new DTime(1984,2,3),"CJ", ESectorType.Consumption);
+		CCompany giordano = new CCompany(rok, new DTime(1988 , 6,7),"지오다노", ESectorType.Consumption);
 		gmotiae.registerCompany(skt);
 		gmotiae.registerCompany(cj);
 		gmotiae.registerCompany(giordano);

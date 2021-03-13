@@ -1,6 +1,5 @@
 package com.indong.capitalism.Processor;
 
-import com.indong.capitalism.Classes.CCompany;
 import com.indong.capitalism.Classes.CCountry;
 import com.indong.capitalism.Classes.CPeople;
 import com.indong.capitalism.Classes.CWorld;
@@ -10,9 +9,6 @@ import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EGovernmentType;
 import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Processor.Compiler.*;
-import com.indong.capitalism.Processor.Compiler2.C2CBankService;
-import com.indong.capitalism.Processor.Compiler2.C2CBuyClothing;
-import com.indong.capitalism.Processor.Compiler2.C2CEatFood;
 import com.indong.capitalism.Processor.Compiler2.C2Command;
 
 import java.util.LinkedList;
@@ -35,9 +31,6 @@ public class ProcessorCommand {
 
 	private void initCommandList()
 	{
-		commandList.add(new C2CBankService());
-		commandList.add(new C2CBuyClothing());
-		commandList.add(new C2CEatFood());
 	}
 
 	public void changeCountry(CCountry country)
@@ -169,9 +162,11 @@ public class ProcessorCommand {
 								
 								if(gmotiae != null)
 								{
-									CCompany newcompany = new CCompany(country,new DTime(year,month,day),commandList.removeFirst());
-									gmotiae.registerCompany(newcompany);
-									result = true;
+									//todo company는 설정할께 많기때문에 런타임에 생성은 못하는걸로
+									//CCompany newcompany = new CCompany(country,new DTime(year,month,day),commandList.removeFirst(), ESectorType.Consumption);
+									//gmotiae.registerCompany(newcompany);
+									//result = true;
+									result = false;
 								}
 							}	
 					}

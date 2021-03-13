@@ -3,10 +3,7 @@ package com.indong.capitalism.Classes;
 import com.indong.capitalism.DataCenter.DataCenter;
 import com.indong.capitalism.DataStructure.DCompanyMember;
 import com.indong.capitalism.DataStructure.DTime;
-import com.indong.capitalism.Enum.EAccountType;
-import com.indong.capitalism.Enum.EBeingType;
-import com.indong.capitalism.Enum.ECompanyPosition;
-import com.indong.capitalism.Enum.ESearchType;
+import com.indong.capitalism.Enum.*;
 import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Info.IAAccount;
 import com.indong.capitalism.Info.InfoCompanyData;
@@ -21,11 +18,14 @@ public class CCompany extends CBeing implements ICompanyService , ISearchable {
 	protected LinkedList<DCompanyMember> staffList = new LinkedList<DCompanyMember>();
 	protected DTime today = new DTime(0,0,0);
 
-	public CCompany(CCountry country , DTime birth , String name)
+	protected ESectorType sectorType;
+
+	public CCompany(CCountry country , DTime birth , String name , ESectorType sectorType)
 	{
 		super(country);
 		type = EBeingType.Company;
 		basicData = new InfoCompanyData(birth , name);
+		this.sectorType = sectorType;
 
 		registerObject();
 	}
@@ -131,5 +131,9 @@ public class CCompany extends CBeing implements ICompanyService , ISearchable {
 	@Override
 	public void registerObject() {
 		DataCenter.getInstance().addNewObject(this);
+	}
+
+	public ESectorType getSectorType() {
+		return sectorType;
 	}
 }

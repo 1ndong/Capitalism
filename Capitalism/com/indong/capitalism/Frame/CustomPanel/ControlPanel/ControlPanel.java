@@ -1,7 +1,7 @@
 package com.indong.capitalism.Frame.CustomPanel.ControlPanel;
 
 import com.indong.capitalism.Classes.CBeing;
-import com.indong.capitalism.Enum.ECommandType;
+import com.indong.capitalism.Enum.ESectorType;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -91,7 +91,7 @@ public class ControlPanel extends JPanel {
         cb.setEnabled(true);
         submitClickListener.setStage(0);
 
-        ECommandType[] types = ECommandType.values();
+        ESectorType[] types = ESectorType.values();
         for(int i = 0 ; i < types.length ; i++)
         {
             String temp = types[i].toString();
@@ -99,10 +99,10 @@ public class ControlPanel extends JPanel {
 
             switch (temp)
             {
-                case "CTSpend":
+                case "Consumption":
                     str = "소비";
                     break;
-                case "CTFinance":
+                case "Finance":
                     str = "금융";
                     break;
                 default:
@@ -116,11 +116,14 @@ public class ControlPanel extends JPanel {
     }
 
     /*
-    1. 타입보여주고
-    2. 해당 타입 이 선택된놈이 가능한지 체크여부
-    3. 가능한것만 보여주기
-    4. command별로 스텝 단계 진행
-    * */
+    todo 210313
+    먼저 maven으로 하고 json만들기 부터 해야될듯 
+    example companysectorlist
+    sk{'통신',}
+    1. cb선택시 datacenter에서 현재 country기준으로 company리스트 가져옴
+    2. 해당 company리스트에서 선택된거 있는놈만 리스트업해서 '업종'으로 콤보박스 업데이트
+    3. 선택된거
+     */
 
     public void ResetPanel()
     {

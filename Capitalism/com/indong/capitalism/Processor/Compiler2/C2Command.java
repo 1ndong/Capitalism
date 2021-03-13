@@ -1,10 +1,8 @@
 package com.indong.capitalism.Processor.Compiler2;
 
 import com.indong.capitalism.Classes.CCountry;
-import com.indong.capitalism.Enum.ECommandType;
 
 public class C2Command{
-    protected ECommandType eType;
     protected CCountry country;
 
     public void setCountry(CCountry country)

@@ -66,41 +66,57 @@ public class ProcessorMain {
 		samsung.setSalaryDay(25);
 		{
 			DService s1first = new DService("휴대폰",0);
-			DService s1fs2first = new DService("갤럭시S21",1000000L);
-			DService s1fs2second = new DService("갤럭시S21울트라",1300000L);
+				DService s1fs2first = new DService("갤럭시S21",1000000L);
+				DService s1fs2second = new DService("갤럭시S21울트라",1300000L);
 
 			DService s1second = new DService("냉장고",0);
-			DService s1ss2first = new DService("비스포크",3500000L);
-			DService s1ss2second = new DService("디오스",2000000L);
+				DService s1ss2first = new DService("비스포크",3500000L);
+				DService s1ss2second = new DService("디오스",2000000L);
 
 			DService s1third = new DService("TV",0);
-			DService s1ts2first = new DService("4kUHD 75'" , 3000000L);
-			DService s1ts2second = new DService("8kUHD 82'", 6000000L);
+				DService s1ts2first = new DService("4kUHD" , 0);
+					DService s1ts2fs3first = new DService("75'" , 3000000L);
+					DService s1ts2fs3second = new DService("82'" , 4500000L);
+				DService s1ts2second = new DService("8kUHD",0);
+					DService s1ts2ss3first = new DService("82'",6000000L);
+					DService s1ts2ss3second = new DService("101'" , 20000000L);
 
-			ArrayList<DService> step1 = new ArrayList<DService>();
-			step1.add(s1first);
+			ArrayList<DService> list = new ArrayList<DService>();
+			list.add(s1first);
 			{
-				ArrayList<DService> step1_2 = new ArrayList<DService>();
-				step1_2.add(s1fs2first);
-				step1_2.add(s1fs2second);
-				s1first.setNextList(step1_2);
+				ArrayList<DService> step2 = new ArrayList<DService>();
+				step2.add(s1fs2first);
+				step2.add(s1fs2second);
+				s1first.setNextList(step2);
 			}
-			step1.add(s1second);
+			list.add(s1second);
 			{
-				ArrayList<DService> step2_2 = new ArrayList<DService>();
-				step2_2.add(s1ss2first);
-				step2_2.add(s1ss2second);
-				s1second.setNextList(step2_2);
+				ArrayList<DService> step2 = new ArrayList<DService>();
+				step2.add(s1ss2first);
+				step2.add(s1ss2second);
+				s1second.setNextList(step2);
 			}
-			step1.add(s1third);
+			list.add(s1third);
 			{
-				ArrayList<DService> step3_2 = new ArrayList<DService>();
-				step3_2.add(s1ts2first);
-				step3_2.add(s1ts2second);
-				s1third.setNextList(step3_2);
+				ArrayList<DService> step2 = new ArrayList<DService>();
+				step2.add(s1ts2first);
+				{
+					ArrayList<DService> step3 = new ArrayList<DService>();
+					step3.add(s1ts2fs3first);
+					step3.add(s1ts2fs3second);
+					s1ts2first.setNextList(step3);
+				}
+				step2.add(s1ts2second);
+				{
+					ArrayList<DService> step3 = new ArrayList<DService>();
+					step3.add(s1ts2ss3first);
+					step3.add(s1ts2ss3second);
+					s1ts2second.setNextList(step3);
+				}
+				s1third.setNextList(step2);
 			}
 
-			((ISector)samsung).setServiceList(step1);
+			((ISector)samsung).setServiceList(list);
 		}
 		//
 

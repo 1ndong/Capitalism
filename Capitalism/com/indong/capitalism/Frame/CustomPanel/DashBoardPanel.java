@@ -14,7 +14,6 @@ import com.indong.capitalism.DataStructure.DHCentralBank;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.ECurrency;
 import com.indong.capitalism.Enum.EGovernmentType;
-import com.indong.capitalism.Frame.FrameControl;
 import com.indong.capitalism.Frame.FrameMain;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
@@ -220,7 +219,7 @@ public class DashBoardPanel extends JPanel implements ITime{
 			}
 		}
 		
-		CGMinistryOfHealthAndWelfare mohaw = (CGMinistryOfHealthAndWelfare) country.getGovernmentMap().get(EGovernmentType.EHealthAndWelfare);
+		CGMinistryOfHealthAndWelfare mohaw = (CGMinistryOfHealthAndWelfare) country.getGovernmentMap().get(EGovernmentType.HealthAndWelfare);
 		
 		Iterator<Integer> mapIter = mohaw.getPeopleMap().keySet().iterator();
 		LinkedList<CPeople> peopleList = new LinkedList<CPeople>();
@@ -232,7 +231,7 @@ public class DashBoardPanel extends JPanel implements ITime{
         }
         FrameMain.getInstance().addPeopleList(peopleList);
         
-        CGMinistryOfTradeIndustryAndEnergy motia = (CGMinistryOfTradeIndustryAndEnergy) country.getGovernmentMap().get(EGovernmentType.ETradeIndustryAndEnergy);
+        CGMinistryOfTradeIndustryAndEnergy motia = (CGMinistryOfTradeIndustryAndEnergy) country.getGovernmentMap().get(EGovernmentType.TradeIndustryAndEnergy);
         
         Iterator<Integer> mapIter2 = motia.getCompanyMap().keySet().iterator();
 		LinkedList<CCompany> companyList = new LinkedList<CCompany>();

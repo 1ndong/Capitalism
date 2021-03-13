@@ -44,7 +44,7 @@ public class CCRemove extends CompilerCommand {
 			{
 				if(target.equalsIgnoreCase("p"))
 				{
-					CGMinistryOfHealthAndWelfare gov = (CGMinistryOfHealthAndWelfare)countryobj.getGovernmentMap().get(EGovernmentType.EHealthAndWelfare);
+					CGMinistryOfHealthAndWelfare gov = (CGMinistryOfHealthAndWelfare)countryobj.getGovernmentMap().get(EGovernmentType.HealthAndWelfare);
 					if(gov != null)
 					{
 						Iterator<Integer> mapIter = gov.getPeopleMap().keySet().iterator();
@@ -71,7 +71,7 @@ public class CCRemove extends CompilerCommand {
 				}
 				else if(target.equalsIgnoreCase("c"))
 				{
-					CGMinistryOfTradeIndustryAndEnergy gov = (CGMinistryOfTradeIndustryAndEnergy)countryobj.getGovernmentMap().get(EGovernmentType.ETradeIndustryAndEnergy);
+					CGMinistryOfTradeIndustryAndEnergy gov = (CGMinistryOfTradeIndustryAndEnergy)countryobj.getGovernmentMap().get(EGovernmentType.TradeIndustryAndEnergy);
 					if(gov != null)
 					{
 						Iterator<Integer> mapIter = gov.getCompanyMap().keySet().iterator();

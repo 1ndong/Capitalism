@@ -8,6 +8,7 @@ import com.indong.capitalism.Classes.CPeople;
 import com.indong.capitalism.Classes.CWorld;
 import com.indong.capitalism.Classes.Government.CGMinistryOfHealthAndWelfare;
 import com.indong.capitalism.Classes.Government.CGMinistryOfTradeIndustryAndEnergy;
+import com.indong.capitalism.DataStructure.DService;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Enum.ECompanyPosition;
@@ -17,7 +18,9 @@ import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Info.IAAccount;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ICompanyService;
-import com.indong.capitalism.Util.UTime;
+import com.indong.capitalism.Interface.ISector;
+
+import java.util.ArrayList;
 
 public class ProcessorMain {
 	public ProcessorMain()
@@ -35,12 +38,15 @@ public class ProcessorMain {
 		
 		CGMinistryOfHealthAndWelfare gmohaw = new CGMinistryOfHealthAndWelfare(rok);
 		CGMinistryOfTradeIndustryAndEnergy gmotiae = new CGMinistryOfTradeIndustryAndEnergy(rok);
-		rok.getGovernmentMap().put(EGovernmentType.EHealthAndWelfare , gmohaw);
-		rok.getGovernmentMap().put(EGovernmentType.ETradeIndustryAndEnergy, gmotiae);
+		rok.getGovernmentMap().put(EGovernmentType.HealthAndWelfare, gmohaw);
+		rok.getGovernmentMap().put(EGovernmentType.TradeIndustryAndEnergy, gmotiae);
 		
 		CBCommercial shinhanbank = new CBCommercial(rok , "신한");
+		shinhanbank.setSector(ESectorType.Finance.getValue());
 		CBCommercial kookminbank = new CBCommercial(rok , "국민");
+		kookminbank.setSector(ESectorType.Finance.getValue());
 		CBCommercial wooribank = new CBCommercial(rok , "우리");
+		wooribank.setSector(ESectorType.Finance.getValue());
 		rok.getBankList().add(shinhanbank);
 		shinhanbank.setSpreadInterestRate(2.1f);
 		rok.getBankList().add(kookminbank);
@@ -52,38 +58,109 @@ public class ProcessorMain {
 		rok.getCentralBank().releaseMoney(shinhanbank, 100000000000L);//1000억
 		rok.getCentralBank().releaseMoney(kookminbank, 100000000000L);
 		rok.getCentralBank().releaseMoney(wooribank, 100000000000L);
-		
-		CCompany samsung = new CCompany(rok,new DTime(1955,2,12),"삼성" , ESectorType.Consumption);
-		CCompany lg = new CCompany(rok,new DTime(1958,3,21),"LG", ESectorType.Consumption);
+
+		//samsung
+		CCompany samsung = new CCompany(rok,new DTime(1955,2,12),"삼성");
+		samsung.setSector(ESectorType.Consumption.getValue());
 		gmotiae.registerCompany(samsung);
 		samsung.setSalaryDay(25);
+		{
+			DService s1first = new DService("휴대폰",0);
+			DService s1fs2first = new DService("갤럭시S21",1000000L);
+			DService s1fs2second = new DService("갤럭시S21울트라",1300000L);
+
+			DService s1second = new DService("냉장고",0);
+			DService s1ss2first = new DService("비스포크",3500000L);
+			DService s1ss2second = new DService("디오스",2000000L);
+
+			DService s1third = new DService("TV",0);
+			DService s1ts2first = new DService("4kUHD 75'" , 3000000L);
+			DService s1ts2second = new DService("8kUHD 82'", 6000000L);
+
+			ArrayList<DService> step1 = new ArrayList<DService>();
+			step1.add(s1first);
+			{
+				ArrayList<DService> step1_2 = new ArrayList<DService>();
+				step1_2.add(s1fs2first);
+				step1_2.add(s1fs2second);
+				s1first.setNextList(step1_2);
+			}
+			step1.add(s1second);
+			{
+				ArrayList<DService> step2_2 = new ArrayList<DService>();
+				step2_2.add(s1ss2first);
+				step2_2.add(s1ss2second);
+				s1second.setNextList(step2_2);
+			}
+			step1.add(s1third);
+			{
+				ArrayList<DService> step3_2 = new ArrayList<DService>();
+				step3_2.add(s1ts2first);
+				step3_2.add(s1ts2second);
+				s1third.setNextList(step3_2);
+			}
+
+			((ISector)samsung).setServiceList(step1);
+		}
+		//
+
+		//lg
+		CCompany lg = new CCompany(rok,new DTime(1958,3,21),"LG");
+		lg.setSector(ESectorType.Consumption.getValue());
 		gmotiae.registerCompany(lg);
 		lg.setSalaryDay(25);
+		//
 
-		CCompany skt = new CCompany(rok,new DTime(1970,5,4),"SK텔레콤", ESectorType.Consumption);
-		CCompany cj = new CCompany(rok,new DTime(1984,2,3),"CJ", ESectorType.Consumption);
-		CCompany giordano = new CCompany(rok, new DTime(1988 , 6,7),"지오다노", ESectorType.Consumption);
+		//skt
+		CCompany skt = new CCompany(rok,new DTime(1970,5,4),"SK텔레콤");
+		skt.setSector(ESectorType.Consumption.getValue());
 		gmotiae.registerCompany(skt);
-		gmotiae.registerCompany(cj);
-		gmotiae.registerCompany(giordano);
 		skt.setSalaryDay(25);
+		//
+
+		//cj
+		CCompany cj = new CCompany(rok,new DTime(1984,2,3),"CJ");
+		cj.setSector(ESectorType.Consumption.getValue());
+		gmotiae.registerCompany(cj);
 		cj.setSalaryDay(25);
+		//
+
+		//giordano
+		CCompany giordano = new CCompany(rok, new DTime(1988 , 6,7),"지오다노");
+		giordano.setSector(ESectorType.Consumption.getValue());
+		gmotiae.registerCompany(giordano);
 		giordano.setSalaryDay(25);
+		//
 
+		//indong
 		CPeople indong = new CPeople(rok, new DTime(1987,2,12), "김인동");
-		CPeople ronaldo = new CPeople(rok , new DTime(1985,6,20) , "효날도");
-		CPeople jasonkim = new CPeople(rok, new DTime(1985,10,20),"자손킴");
 		gmohaw.registerPeople(indong);
-		gmohaw.registerPeople(ronaldo);
-		gmohaw.registerPeople(jasonkim);
+		//
 
+		//ronaldo
+		CPeople ronaldo = new CPeople(rok , new DTime(1985,6,20) , "효날도");
+		gmohaw.registerPeople(ronaldo);
+		//
+
+		//jasonkim
+		CPeople jasonkim = new CPeople(rok, new DTime(1985,10,20),"자손킴");
+		gmohaw.registerPeople(jasonkim);
+		//
+
+		//beknim
 		CPeople beknim = new CPeople(rok , new DTime(1986,2,28),"박상뱀");
-		CPeople scwind = new CPeople(rok , new DTime(1986,10,28),"최형택");
-		CPeople yds0903 = new CPeople(rok, new DTime(1986,9,3),"윤동식디스크");
 		gmohaw.registerPeople(beknim);
+		//
+
+		//scwind
+		CPeople scwind = new CPeople(rok , new DTime(1986,10,28),"최형택");
 		gmohaw.registerPeople(scwind);
+		//
+
+		//yds0903
+		CPeople yds0903 = new CPeople(rok, new DTime(1986,9,3),"윤동식디스크");
 		gmohaw.registerPeople(yds0903);
-		
+		//
 		//////////////////////////////
 		
 		DTime interestDay = new DTime(0,0,7);

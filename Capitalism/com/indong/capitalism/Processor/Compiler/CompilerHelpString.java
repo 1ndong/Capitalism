@@ -52,7 +52,7 @@ public abstract class CompilerHelpString {
 		String[] result = null;
 		if(country != null)
 		{
-			CGMinistryOfHealthAndWelfare gov = (CGMinistryOfHealthAndWelfare)country.getGovernmentMap().get(EGovernmentType.EHealthAndWelfare);
+			CGMinistryOfHealthAndWelfare gov = (CGMinistryOfHealthAndWelfare)country.getGovernmentMap().get(EGovernmentType.HealthAndWelfare);
 			if(gov != null)
 			{
 				Iterator<Integer> mapIter = gov.getPeopleMap().keySet().iterator();
@@ -79,7 +79,7 @@ public abstract class CompilerHelpString {
 		String[] result = null;
 		if(country != null)
 		{
-			CGMinistryOfTradeIndustryAndEnergy gov = (CGMinistryOfTradeIndustryAndEnergy)country.getGovernmentMap().get(EGovernmentType.ETradeIndustryAndEnergy);
+			CGMinistryOfTradeIndustryAndEnergy gov = (CGMinistryOfTradeIndustryAndEnergy)country.getGovernmentMap().get(EGovernmentType.TradeIndustryAndEnergy);
 			if(gov != null)
 			{
 				Iterator<Integer> mapIter = gov.getCompanyMap().keySet().iterator();

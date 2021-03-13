@@ -2,30 +2,36 @@ package com.indong.capitalism.Classes;
 
 import com.indong.capitalism.DataCenter.DataCenter;
 import com.indong.capitalism.DataStructure.DCompanyMember;
+import com.indong.capitalism.DataStructure.DService;
 import com.indong.capitalism.DataStructure.DTime;
-import com.indong.capitalism.Enum.*;
+import com.indong.capitalism.Enum.EAccountType;
+import com.indong.capitalism.Enum.EBeingType;
+import com.indong.capitalism.Enum.ECompanyPosition;
+import com.indong.capitalism.Enum.ESearchType;
 import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Info.IAAccount;
 import com.indong.capitalism.Info.InfoCompanyData;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ICompanyService;
 import com.indong.capitalism.Interface.ISearchable;
+import com.indong.capitalism.Interface.ISector;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class CCompany extends CBeing implements ICompanyService , ISearchable {
+public class CCompany extends CBeing implements ICompanyService , ISearchable , ISector {
 	private int salaryDay = 0;
 	protected LinkedList<DCompanyMember> staffList = new LinkedList<DCompanyMember>();
 	protected DTime today = new DTime(0,0,0);
 
-	protected ESectorType sectorType;
+	protected int sector = 0;
+	protected ArrayList<DService> serviceList = null;
 
-	public CCompany(CCountry country , DTime birth , String name , ESectorType sectorType)
+	public CCompany(CCountry country , DTime birth , String name)
 	{
 		super(country);
 		type = EBeingType.Company;
 		basicData = new InfoCompanyData(birth , name);
-		this.sectorType = sectorType;
 
 		registerObject();
 	}
@@ -133,7 +139,23 @@ public class CCompany extends CBeing implements ICompanyService , ISearchable {
 		DataCenter.getInstance().addNewObject(this);
 	}
 
-	public ESectorType getSectorType() {
-		return sectorType;
+	@Override
+	public int getSector() {
+		return sector;
+	}
+
+	@Override
+	public void setSector(int newsector) {
+		sector = newsector;
+	}
+
+	@Override
+	public ArrayList<DService> getServiceList() {
+		return serviceList;
+	}
+
+	@Override
+	public void setServiceList(ArrayList<DService> list) {
+		serviceList = list;
 	}
 }

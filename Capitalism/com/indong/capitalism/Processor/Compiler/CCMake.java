@@ -71,7 +71,7 @@ public class CCMake extends CompilerCommand{
 						if(target.equalsIgnoreCase("p"))
 						{
 							CGMinistryOfHealthAndWelfare gmohaw = null;
-							gmohaw = (CGMinistryOfHealthAndWelfare)country.getGovernmentMap().get(EGovernmentType.EHealthAndWelfare);
+							gmohaw = (CGMinistryOfHealthAndWelfare)country.getGovernmentMap().get(EGovernmentType.HealthAndWelfare);
 							
 							if(gmohaw != null)
 							{
@@ -83,15 +83,13 @@ public class CCMake extends CompilerCommand{
 						else if(target.equalsIgnoreCase("c"));
 						{
 							CGMinistryOfTradeIndustryAndEnergy gmotiae = null;
-							gmotiae = (CGMinistryOfTradeIndustryAndEnergy)country.getGovernmentMap().get(EGovernmentType.ETradeIndustryAndEnergy);
+							gmotiae = (CGMinistryOfTradeIndustryAndEnergy)country.getGovernmentMap().get(EGovernmentType.TradeIndustryAndEnergy);
 							
 							if(gmotiae != null)
 							{
-								//todo company는 설정할께 많기때문에 런타임에 생성은 못하는걸로
-								//CCompany newcompany = new CCompany(country,new DTime(year,month,day),commandList.removeFirst(), ESectorType.Consumption);
-								//gmotiae.registerCompany(newcompany);
-								//result = true;
-								result = false;
+								CCompany newcompany = new CCompany(country,new DTime(year,month,day),commandList.removeFirst());
+								gmotiae.registerCompany(newcompany);
+								result = true;
 							}
 						}	
 					}

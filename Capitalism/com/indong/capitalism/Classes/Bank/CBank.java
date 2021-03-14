@@ -14,7 +14,8 @@ import com.indong.capitalism.Processor.ProcessorDay;
 public class CBank extends CBelong implements ITime , ISearchable {
 	protected CACCash balance = new CACCash();
 	protected String name;
-	
+
+	protected ESearchType searchType = ESearchType.Bank;
 	public CBank(CCountry country , String name)
 	{
 		super(country);
@@ -55,5 +56,10 @@ public class CBank extends CBelong implements ITime , ISearchable {
 	@Override
 	public void registerObject() {
 		DataCenter.getInstance().addNewObject(this);
+	}
+
+	@Override
+	public ESearchType getSearchType() {
+		return searchType;
 	}
 }

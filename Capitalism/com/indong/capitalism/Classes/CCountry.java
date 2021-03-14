@@ -22,7 +22,9 @@ public class CCountry implements ITime , ISearchable {
 	private LinkedList<CBank> bankList = new LinkedList<CBank>();
 	private LinkedList<CCompany> companyList = new LinkedList<CCompany>();
 	private HashMap<EGovernmentType , CGovernment> governmentMap = new HashMap<EGovernmentType,CGovernment>();
-	
+
+	protected ESearchType searchType = ESearchType.Country;
+
 	public CCountry(String name)
 	{
 		this.name = name;
@@ -71,5 +73,10 @@ public class CCountry implements ITime , ISearchable {
 	@Override
 	public void registerObject() {
 		DataCenter.getInstance().addNewObject(this);
+	}
+
+	@Override
+	public ESearchType getSearchType() {
+		return searchType;
 	}
 }

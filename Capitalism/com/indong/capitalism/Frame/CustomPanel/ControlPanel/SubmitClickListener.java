@@ -1,12 +1,16 @@
 package com.indong.capitalism.Frame.CustomPanel.ControlPanel;
 
+import com.indong.capitalism.DataCenter.DataCenter;
 import com.indong.capitalism.DataStructure.DService;
+import com.indong.capitalism.Enum.ESearchType;
 import com.indong.capitalism.Enum.ESectorType;
+import com.indong.capitalism.Interface.ISearchable;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class SubmitClickListener implements ActionListener {
 
@@ -50,7 +54,7 @@ public class SubmitClickListener implements ActionListener {
                 ESectorType result = null;
                 for(int i = 0 ; i < types.length ; i++)
                 {
-                    if(types[i].toString().equals(selItem) == true)
+                    if(types[i].getLocaleValue(types[i]).equals(selItem) == true)
                     {
                         result = types[i];
                         break;
@@ -58,7 +62,13 @@ public class SubmitClickListener implements ActionListener {
                 }
                 if(result != null)
                 {
+                    LinkedList<ISearchable> list = DataCenter.getInstance().getList(-1);
 
+                    for(int i = 0 ; i < list.size() ; i++)
+                    {
+                        ISearchable temp = list.get(i);
+                        //...
+                    }
                 }
             }
             break;

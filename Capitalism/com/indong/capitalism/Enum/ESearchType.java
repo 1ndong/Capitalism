@@ -1,14 +1,6 @@
 package com.indong.capitalism.Enum;
 
-public class ESearchType {
-    enum SearchType{}
-    Bank,
-    Government,
-    World,
-    Country,
-    Company,
-    People
-    /*
+public enum ESearchType {
     Bank(1),
     Government(2),
     World(3),
@@ -26,6 +18,4 @@ public class ESearchType {
     {
         return val;
     }
-
-     */
 }

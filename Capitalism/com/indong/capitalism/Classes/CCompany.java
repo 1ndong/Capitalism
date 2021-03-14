@@ -26,6 +26,7 @@ public class CCompany extends CBeing implements ICompanyService , ISearchable , 
 
 	protected int sector = 0;
 	protected ArrayList<DService> serviceList = null;
+	protected ESearchType searchType = ESearchType.Company;
 
 	public CCompany(CCountry country , DTime birth , String name)
 	{
@@ -137,6 +138,11 @@ public class CCompany extends CBeing implements ICompanyService , ISearchable , 
 	@Override
 	public void registerObject() {
 		DataCenter.getInstance().addNewObject(this);
+	}
+
+	@Override
+	public ESearchType getSearchType() {
+		return searchType;
 	}
 
 	@Override

@@ -12,7 +12,8 @@ import com.indong.capitalism.Processor.ProcessorDay;
 
 public class CGovernment extends CBelong implements ITime , ISearchable {
 	protected String name;
-	
+
+	protected ESearchType searchType = ESearchType.Government;
 	public CGovernment(CCountry country)
 	{
 		super(country);
@@ -40,5 +41,10 @@ public class CGovernment extends CBelong implements ITime , ISearchable {
 	@Override
 	public void registerObject() {
 		DataCenter.getInstance().addNewObject(this);
+	}
+
+	@Override
+	public ESearchType getSearchType() {
+		return searchType;
 	}
 }

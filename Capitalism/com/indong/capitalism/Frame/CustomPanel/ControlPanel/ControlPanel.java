@@ -93,24 +93,7 @@ public class ControlPanel extends JPanel {
 
         ESectorType[] types = ESectorType.values();
         for(int i = 0 ; i < types.length ; i++)
-        {
-            String temp = types[i].toString();
-            String str = null;
-
-            switch (temp)
-            {
-                case "Consumption":
-                    str = "소비";
-                    break;
-                case "Finance":
-                    str = "금융";
-                    break;
-                default:
-                    continue;
-            }
-
-            cb.addItem(str);
-        }
+            cb.addItem(types[i].getLocaleValue(types[i]));
 
         cb.setSelectedIndex(-1);
     }

@@ -9,6 +9,8 @@ import com.indong.capitalism.Interface.ISearchable;
 
 public class CPeople extends CBeing implements ISearchable
 {
+	protected ESearchType searchType = ESearchType.People;
+
 	public CPeople(CCountry country , DTime birth , String name)
 	{
 		super(country);
@@ -32,5 +34,10 @@ public class CPeople extends CBeing implements ISearchable
 	@Override
 	public void registerObject() {
 		DataCenter.getInstance().addNewObject(this);
+	}
+
+	@Override
+	public ESearchType getSearchType() {
+		return searchType;
 	}
 }

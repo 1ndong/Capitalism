@@ -1,9 +1,12 @@
 package com.indong.capitalism.DataCenter;
 
+import com.indong.capitalism.Classes.Bank.CBCommercial;
+import com.indong.capitalism.Classes.Bank.CBank;
 import com.indong.capitalism.Enum.ESearchType;
 import com.indong.capitalism.Interface.ISearchable;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class DataCenter {
     private static final DataCenter instance = new DataCenter();
@@ -22,23 +25,28 @@ public class DataCenter {
         allObjects.add(obj);
     }
 
-    public ArrayList<ISearchable> getList(int searchType)
+    public LinkedList<ISearchable> getList(int searchType)
     {
-        ArrayList<ISearchable> result = new ArrayList<ISearchable>();
+        boolean returnallType = false;
+        if(searchType == -1)
+            returnallType = true;
+        LinkedList<ISearchable> result = new LinkedList<ISearchable>();
 
         ESearchType[] types = null;
-
-        if (searchType & ESearchType.Bank.getValue() = ESearchType.Bank.getValue())
-        {
-        }
 
         for(int i = 0 ; i < allObjects.size() ; i++)
         {
             ISearchable temp = allObjects.get(i);
-            //if(temp.isTypeOf(searchType) == true)
+
+            if(returnallType == false)
             {
-                result.add(temp);
+                if((searchType | temp.getSearchType().getValue()) == temp.getSearchType().getValue())
+                {
+                    result.add(temp);
+                }
             }
+            else
+                result.add(temp);
         }
 
         return result;

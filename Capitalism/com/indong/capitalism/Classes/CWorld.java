@@ -14,7 +14,8 @@ import com.indong.capitalism.Processor.ProcessorDay;
 public class CWorld implements ITime , ISearchable {
 	private LinkedList<CCountry> countryList = new LinkedList<CCountry>();
 	private static CWorld instance = new CWorld();
-	
+
+	protected ESearchType searchType = ESearchType.World;
 	private CWorld()
 	{
 		FrameLog.getInstance().addLog("creation", "world 생성");
@@ -47,5 +48,10 @@ public class CWorld implements ITime , ISearchable {
 	@Override
 	public void registerObject() {
 		DataCenter.getInstance().addNewObject(this);
+	}
+
+	@Override
+	public ESearchType getSearchType() {
+		return searchType;
 	}
 }

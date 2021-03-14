@@ -22,14 +22,20 @@ public class DataCenter {
         allObjects.add(obj);
     }
 
-    public ArrayList<ISearchable> getList(ESearchType searchType)
+    public ArrayList<ISearchable> getList(int searchType)
     {
         ArrayList<ISearchable> result = new ArrayList<ISearchable>();
+
+        ESearchType[] types = null;
+
+        if (searchType & ESearchType.Bank.getValue() = ESearchType.Bank.getValue())
+        {
+        }
 
         for(int i = 0 ; i < allObjects.size() ; i++)
         {
             ISearchable temp = allObjects.get(i);
-            if(temp.isTypeOf(searchType) == true)
+            //if(temp.isTypeOf(searchType) == true)
             {
                 result.add(temp);
             }

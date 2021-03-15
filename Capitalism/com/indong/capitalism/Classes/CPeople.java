@@ -40,4 +40,9 @@ public class CPeople extends CBeing implements ISearchable
 	public ESearchType getSearchType() {
 		return searchType;
 	}
+
+	@Override
+	public String getSearchableOriginName() {
+		return getBasicData().getName();
+	}
 }

@@ -1,11 +1,15 @@
 package com.indong.capitalism.Frame.CustomPanel.ControlPanel;
 
+import com.indong.capitalism.Classes.Bank.CBank;
 import com.indong.capitalism.Classes.CBeing;
+import com.indong.capitalism.DataStructure.DService;
 import com.indong.capitalism.Enum.ESectorType;
+import com.indong.capitalism.Interface.ISearchable;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class ControlPanel extends JPanel {
     private JTable table;
@@ -25,16 +29,16 @@ public class ControlPanel extends JPanel {
         int spx = 0;
         int spy = 0;
         int spw = dashboardRect.width;
-        int sph = (int)(dashboardRect.height * 0.8f);
-        panel.setBounds(spx,spy,spw,sph);
-        panel.setBackground(new Color(0,43,54));
+        int sph = (int) (dashboardRect.height * 0.8f);
+        panel.setBounds(spx, spy, spw, sph);
+        panel.setBackground(new Color(0, 43, 54));
         {
             cb = new JComboBox<String>();
             int cx = 0;
             int cy = 0;
             int cw = dashboardRect.width / 2;
             int ch = 50;
-            cb.setBounds(cx,cy,cw,ch);
+            cb.setBounds(cx, cy, cw, ch);
             cb.setEnabled(false);
             panel.add(cb);
 
@@ -43,57 +47,105 @@ public class ControlPanel extends JPanel {
             int ty = cy;
             int tw = cw;
             int th = ch;
-            tf.setBounds(tx,ty,tw,th);
+            tf.setBounds(tx, ty, tw, th);
             tf.setEnabled(false);
             panel.add(tf);
         }
 
         JButton btnSubmit = new JButton("Submit");
         btnSubmit.setForeground(Color.white);
-        btnSubmit.setBackground(new Color(31,138,209));
+        btnSubmit.setBackground(new Color(31, 138, 209));
         btnSubmit.addActionListener(submitClickListener);
         int bsx = 0;
         int bsy = sph;
         int bsw = spw / 2;
         //int bsh = (int)(dashboardRect.height * 0.2f);
         int bsh = 100;
-        btnSubmit.setBounds(bsx,bsy,bsw,bsh);
+        btnSubmit.setBounds(bsx, bsy, bsw, bsh);
 
         JButton btnUnselect = new JButton("Cancel");
         btnUnselect.setForeground(Color.white);
-        btnUnselect.setBackground(new Color(210,51,85));
+        btnUnselect.setBackground(new Color(210, 51, 85));
         btnUnselect.addActionListener(new CancelClickListener(this));
         int bux = bsw;
         int buy = sph;
         int buw = bsw;
         int buh = 100;
-        btnUnselect.setBounds(bux,buy,buw,buh);
+        btnUnselect.setBounds(bux, buy, buw, buh);
 
         add(panel);
         add(btnSubmit);
         add(btnUnselect);
     }
 
-    public JComboBox<String> getCombobox()
-    {
+    public JComboBox<String> getCombobox() {
         return cb;
     }
 
-    public JTextField getTextField()
-    {
+    public JTextField getTextField() {
         return tf;
     }
 
-    public void startCommandProcess(CBeing being)
-    {
+    private CBeing targetBeing = null;
+    private ArrayList<ISearchable> zeroStageList = null;
+    private ArrayList<DService> currentStageList = null;
+
+    public ArrayList<ISearchable> getZeroStageList() {
+        return zeroStageList;
+    }
+
+    public ArrayList<DService> getCurrentStageList() {
+        return currentStageList;
+    }
+
+    public CBeing getTargetBeing() {
+        return targetBeing;
+    }
+
+    public void startCommandProcess(CBeing being) {
         ResetPanel();
+
+        targetBeing = being;
 
         cb.setEnabled(true);
         submitClickListener.setStage(0);
 
         ESectorType[] types = ESectorType.values();
-        for(int i = 0 ; i < types.length ; i++)
+        for (int i = 0; i < types.length; i++)
             cb.addItem(types[i].getLocaleValue(types[i]));
+
+        cb.setSelectedIndex(-1);
+    }
+
+    public void setZeroStage(ArrayList<ISearchable> zeroStageList)
+    {
+        ResetPanel();
+
+        cb.setEnabled(true);
+
+        this.zeroStageList = zeroStageList;
+
+        for (int i = 0; i < zeroStageList.size(); i++) {
+            ISearchable temp = zeroStageList.get(i);
+            cb.addItem(temp.getSearchableOriginName());
+        }
+
+        cb.setSelectedIndex(-1);
+    }
+
+    public void setNextStage(ArrayList<DService> curStageList)
+    {
+        ResetPanel();
+        cb.setEnabled(true);
+
+        this.currentStageList = curStageList;
+
+        JComboBox<String> cb = getCombobox();
+        for(int i = 0 ; i < curStageList.size() ; i++)
+        {
+            DService temp = curStageList.get(i);
+            cb.addItem(temp.getName());
+        }
 
         cb.setSelectedIndex(-1);
     }
@@ -108,12 +160,18 @@ public class ControlPanel extends JPanel {
     3. 선택된거
      */
 
-    public void ResetPanel()
-    {
+    public void ResetPanel() {
         cb.removeAllItems();
         cb.setEnabled(false);
         tf.setText("");
         tf.setEnabled(false);
+    }
+
+    public void initPanel()
+    {
+        zeroStageList = null;
+        currentStageList = null;
+        targetBeing = null;
     }
 
     /*

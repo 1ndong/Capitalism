@@ -47,4 +47,9 @@ public class CGovernment extends CBelong implements ITime , ISearchable {
 	public ESearchType getSearchType() {
 		return searchType;
 	}
+
+	@Override
+	public String getSearchableOriginName() {
+		return getName();
+	}
 }

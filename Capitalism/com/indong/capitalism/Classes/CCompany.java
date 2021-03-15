@@ -146,6 +146,11 @@ public class CCompany extends CBeing implements ICompanyService , ISearchable , 
 	}
 
 	@Override
+	public String getSearchableOriginName() {
+		return getBasicData().getName();
+	}
+
+	@Override
 	public int getSector() {
 		return sector;
 	}

@@ -54,4 +54,9 @@ public class CWorld implements ITime , ISearchable {
 	public ESearchType getSearchType() {
 		return searchType;
 	}
+
+	@Override
+	public String getSearchableOriginName() {
+		return "the earth";
+	}
 }

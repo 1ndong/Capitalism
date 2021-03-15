@@ -79,4 +79,9 @@ public class CCountry implements ITime , ISearchable {
 	public ESearchType getSearchType() {
 		return searchType;
 	}
+
+	@Override
+	public String getSearchableOriginName() {
+		return getCountryName();
+	}
 }

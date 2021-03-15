@@ -16,5 +16,6 @@ public class CancelClickListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         cp.ResetPanel();
+        cp.initPanel();
     }
 }

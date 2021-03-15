@@ -3,9 +3,11 @@ package com.indong.capitalism.Frame.CustomPanel.ControlPanel;
 import com.indong.capitalism.Classes.Stuff.CStuff;
 import com.indong.capitalism.DataCenter.DataCenter;
 import com.indong.capitalism.DataStructure.DService;
+import com.indong.capitalism.Enum.ECurrency;
 import com.indong.capitalism.Enum.ESectorType;
 import com.indong.capitalism.Interface.ISearchable;
 import com.indong.capitalism.Interface.ISector;
+import com.indong.capitalism.Util.UCurrency;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -129,12 +131,25 @@ public class SubmitClickListener implements ActionListener {
         ArrayList<DService> nextList = selItem.getNextList();
         if(nextList == null)
         {//todo last 아이템이므로 결제를하고 stuff list에 들어가야됨
-            //JOptionPane.showMessageDialog(null,"last");
-            String[] result = new String[1];
-            result[0] = cp.getTextField().getText();
-            cp.getModel().addRow(result);
+            StringBuilder sb = new StringBuilder("구매하시겠습니까?");
+            sb.append("\n");
+            sb.append("가격 : ");
+            sb.append(UCurrency.getInstance().toString(selItem.getValue(),ECurrency.Won));
 
-            cp.getTargetBeing().getStuffList().add(new CStuff(result[0]));
+            int result = JOptionPane.showConfirmDialog(null,sb.toString(),"구매여부",JOptionPane.YES_NO_OPTION);
+            if(result == JOptionPane.YES_OPTION)
+            {
+                String[] resultItem = new String[1];
+                resultItem[0] = cp.getTextField().getText();
+                cp.getModel().addRow(resultItem);
+
+                cp.getTargetBeing().getStuffList().add(new CStuff(resultItem[0]));
+
+                //todo 결제하면 돈을 보내야됨
+                //돈을 보내려면 어느계좌에서 보낼지 어떻게 보낼지
+                //결제시스템 만들어야됨!!
+            }
+
             cp.getCombobox().removeAllItems();
             cp.getCombobox().setSelectedIndex(-1);
             cp.getTextField().setText("");

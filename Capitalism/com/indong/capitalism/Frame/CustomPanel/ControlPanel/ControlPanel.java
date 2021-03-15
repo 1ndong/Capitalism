@@ -28,7 +28,7 @@ public class ControlPanel extends JPanel {
         int spx = 0;
         int spy = 0;
         int spw = dashboardRect.width;
-        int sph = (int) (dashboardRect.height * 0.8f);
+        int sph = dashboardRect.height;
         panel.setBounds(spx, spy, spw, sph);
         panel.setBackground(new Color(0, 43, 54));
         {
@@ -56,10 +56,10 @@ public class ControlPanel extends JPanel {
         btnSubmit.setBackground(new Color(31, 138, 209));
         btnSubmit.addActionListener(submitClickListener);
         int bsx = 0;
-        int bsy = sph;
+        int bsy = 50;
         int bsw = spw / 2;
         //int bsh = (int)(dashboardRect.height * 0.2f);
-        int bsh = 100;
+        int bsh = 50;
         btnSubmit.setBounds(bsx, bsy, bsw, bsh);
 
         JButton btnUnselect = new JButton("Cancel");
@@ -67,9 +67,9 @@ public class ControlPanel extends JPanel {
         btnUnselect.setBackground(new Color(210, 51, 85));
         btnUnselect.addActionListener(new CancelClickListener(this));
         int bux = bsw;
-        int buy = sph;
+        int buy = 50;
         int buw = bsw;
-        int buh = 100;
+        int buh = 50;
         btnUnselect.setBounds(bux, buy, buw, buh);
 
         //stuff list
@@ -82,17 +82,17 @@ public class ControlPanel extends JPanel {
         table.setFillsViewportHeight(true);
 
         int tx = 0;
-        int ty = 50;
+        int ty = 100;
         int tw = dashboardRect.width;
-        int th = dashboardRect.height - ty - 100 - 50;
+        int th = dashboardRect.height - ty;
         scrollPane.setBounds(tx, ty, tw, th);
         table.setBounds(scrollPane.getBounds());
 
         add(scrollPane);
         //
-        add(panel);
         add(btnSubmit);
         add(btnUnselect);
+        add(panel);
     }
 
     public DefaultTableModel getModel()

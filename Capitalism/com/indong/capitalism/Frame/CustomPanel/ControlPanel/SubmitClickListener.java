@@ -2,7 +2,6 @@ package com.indong.capitalism.Frame.CustomPanel.ControlPanel;
 
 import com.indong.capitalism.DataCenter.DataCenter;
 import com.indong.capitalism.DataStructure.DService;
-import com.indong.capitalism.Enum.ESearchType;
 import com.indong.capitalism.Enum.ESectorType;
 import com.indong.capitalism.Interface.ISearchable;
 import com.indong.capitalism.Interface.ISector;
@@ -43,6 +42,20 @@ public class SubmitClickListener implements ActionListener {
     {
         if(cp.getCombobox().getSelectedIndex() == -1)
             return;
+
+        String selStr = (String)cp.getCombobox().getSelectedItem();
+
+        String asis = cp.getTextField().getText();
+        StringBuilder sb= new StringBuilder(asis);
+
+        if(asis.isEmpty() == true)
+        {
+            sb.append(cp.getTargetBeing().getBasicData().getName());
+        }
+
+        sb.append(' ');
+        sb.append(selStr);
+        cp.getTextField().setText(sb.toString());
 
         if(getStage() == 0)
         {
@@ -124,7 +137,7 @@ public class SubmitClickListener implements ActionListener {
         DService selItem = list.get(selIndex);
         ArrayList<DService> nextList = selItem.getNextList();
         if(nextList == null)
-        {//last 아이템이므로 결제를하고 stuff list에 들어가야됨
+        {//todo last 아이템이므로 결제를하고 stuff list에 들어가야됨
             JOptionPane.showMessageDialog(null,"last");
         }
         else

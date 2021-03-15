@@ -27,6 +27,7 @@ public class CMainCompCellPanel extends JPanel {
 		//setLayout(new GridLayout(1,11));
 		setLayout(new WrapLayout());
 		this.being = being;
+		listener.setBeing(this.being);
 		this.name.setText(name);
 		this.allAsset.setText(String.valueOf(allAsset));
 		this.deposit.setText(String.valueOf(deposit));
@@ -49,6 +50,7 @@ public class CMainCompCellPanel extends JPanel {
 
 	public void setComp(CMainTableComp comp) {
 		being = comp.being;
+		listener.setBeing(being);
 		name.setText(comp.name);
 		allAsset.setText(UCurrency.getInstance().toString(comp.allAsset,ECurrency.Won));
 		deposit.setText(UCurrency.getInstance().toString(comp.deposit,ECurrency.Won));

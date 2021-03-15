@@ -1,6 +1,5 @@
 package com.indong.capitalism.Frame.CustomPanel.ControlPanel;
 
-import com.indong.capitalism.Classes.Bank.CBank;
 import com.indong.capitalism.Classes.CBeing;
 import com.indong.capitalism.DataStructure.DService;
 import com.indong.capitalism.Enum.ESectorType;
@@ -48,7 +47,7 @@ public class ControlPanel extends JPanel {
             int tw = cw;
             int th = ch;
             tf.setBounds(tx, ty, tw, th);
-            tf.setEnabled(false);
+
             panel.add(tf);
         }
 
@@ -150,21 +149,9 @@ public class ControlPanel extends JPanel {
         cb.setSelectedIndex(-1);
     }
 
-    /*
-    todo 210313
-    먼저 maven으로 하고 json만들기 부터 해야될듯 
-    example companysectorlist
-    sk{'통신',}
-    1. cb선택시 datacenter에서 현재 country기준으로 company리스트 가져옴
-    2. 해당 company리스트에서 선택된거 있는놈만 리스트업해서 '업종'으로 콤보박스 업데이트
-    3. 선택된거
-     */
-
     public void ResetPanel() {
         cb.removeAllItems();
         cb.setEnabled(false);
-        tf.setText("");
-        tf.setEnabled(false);
     }
 
     public void initPanel()

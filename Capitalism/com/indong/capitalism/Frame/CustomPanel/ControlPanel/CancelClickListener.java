@@ -1,6 +1,5 @@
 package com.indong.capitalism.Frame.CustomPanel.ControlPanel;
 
-import javax.naming.ldap.Control;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

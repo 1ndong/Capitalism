@@ -1,5 +1,6 @@
 package com.indong.capitalism.Frame.CustomPanel.ControlPanel;
 
+import com.indong.capitalism.Classes.Stuff.CStuff;
 import com.indong.capitalism.DataCenter.DataCenter;
 import com.indong.capitalism.DataStructure.DService;
 import com.indong.capitalism.Enum.ESectorType;
@@ -16,7 +17,6 @@ public class SubmitClickListener implements ActionListener {
 
     private ControlPanel cp;
     private int stage = -1;
-    private ArrayList<DService> currentService = null;
 
     public SubmitClickListener(ControlPanel cp)
     {
@@ -33,10 +33,6 @@ public class SubmitClickListener implements ActionListener {
         stage = n;
     }
 
-    /*
-    stage 0 소비 금
-    * */
-
     @Override
     public void actionPerformed(ActionEvent e)
     {
@@ -47,11 +43,6 @@ public class SubmitClickListener implements ActionListener {
 
         String asis = cp.getTextField().getText();
         StringBuilder sb= new StringBuilder(asis);
-
-        if(asis.isEmpty() == true)
-        {
-            sb.append(cp.getTargetBeing().getBasicData().getName());
-        }
 
         sb.append(' ');
         sb.append(selStr);
@@ -138,7 +129,15 @@ public class SubmitClickListener implements ActionListener {
         ArrayList<DService> nextList = selItem.getNextList();
         if(nextList == null)
         {//todo last 아이템이므로 결제를하고 stuff list에 들어가야됨
-            JOptionPane.showMessageDialog(null,"last");
+            //JOptionPane.showMessageDialog(null,"last");
+            String[] result = new String[1];
+            result[0] = cp.getTextField().getText();
+            cp.getModel().addRow(result);
+
+            cp.getTargetBeing().getStuffList().add(new CStuff(result[0]));
+            cp.getCombobox().removeAllItems();
+            cp.getCombobox().setSelectedIndex(-1);
+            cp.getTextField().setText("");
         }
         else
         {

@@ -1,6 +1,7 @@
 package com.indong.capitalism.Frame.CustomPanel.ControlPanel;
 
 import com.indong.capitalism.Classes.CBeing;
+import com.indong.capitalism.Classes.Stuff.CStuff;
 import com.indong.capitalism.DataStructure.DService;
 import com.indong.capitalism.Enum.ESectorType;
 import com.indong.capitalism.Interface.ISearchable;
@@ -11,7 +12,6 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class ControlPanel extends JPanel {
-    private JTable table;
     private DefaultTableModel model;
     private JComboBox<String> cb;
     private JTextField tf;
@@ -72,9 +72,32 @@ public class ControlPanel extends JPanel {
         int buh = 100;
         btnUnselect.setBounds(bux, buy, buw, buh);
 
+        //stuff list
+        String[] colName = new String[] {"[stuff list]"};
+        model = new DefaultTableModel(colName,0);
+
+        JTable table = new JTable(model);
+
+        JScrollPane scrollPane = new JScrollPane(table);
+        table.setFillsViewportHeight(true);
+
+        int tx = 0;
+        int ty = 50;
+        int tw = dashboardRect.width;
+        int th = dashboardRect.height - ty - 100 - 50;
+        scrollPane.setBounds(tx, ty, tw, th);
+        table.setBounds(scrollPane.getBounds());
+
+        add(scrollPane);
+        //
         add(panel);
         add(btnSubmit);
         add(btnUnselect);
+    }
+
+    public DefaultTableModel getModel()
+    {
+        return model;
     }
 
     public JComboBox<String> getCombobox() {
@@ -104,7 +127,23 @@ public class ControlPanel extends JPanel {
     public void startCommandProcess(CBeing being) {
         ResetPanel();
 
+        tf.setText("");
         targetBeing = being;
+        {
+            getTextField().setText(targetBeing.getBasicData().getName());
+            model.setRowCount(0);
+            ArrayList<CStuff> stuffList = targetBeing.getStuffList();
+
+            if(stuffList.size() > 0)
+            {
+                String[] str = new String[stuffList.size()];
+                for(int i = 0 ; i < stuffList.size() ; i++)
+                {
+                    str[i] = stuffList.get(i).getName();
+                }
+                model.addRow(str);
+            }
+        }
 
         cb.setEnabled(true);
         submitClickListener.setStage(0);

@@ -2,6 +2,7 @@ package com.indong.capitalism.Classes;
 
 import com.indong.capitalism.Classes.Asset.CACCash;
 import com.indong.capitalism.Classes.Bank.CBAccount;
+import com.indong.capitalism.Classes.Stuff.CStuff;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Enum.EBeingType;
@@ -12,11 +13,15 @@ import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
 import com.indong.capitalism.Processor.ProcessorDay;
 
+import java.util.ArrayList;
+
 public class CBeing extends CBelong implements ITime {
 	protected EBeingType type;
 	protected InfoBasicData basicData;
 	private final CACCash wallet;
-	
+
+	protected ArrayList<CStuff> stuffList = new ArrayList<CStuff>();
+
 	public CBeing(CCountry country)
 	{
 		super(country);
@@ -61,5 +66,10 @@ public class CBeing extends CBelong implements ITime {
 
 	public void addCash(long cash) {
 		this.wallet.addCash(cash);
+	}
+
+	public ArrayList<CStuff> getStuffList()
+	{
+		return stuffList;
 	}
 }

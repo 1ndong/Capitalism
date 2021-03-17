@@ -10,7 +10,6 @@ import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EGovernmentType;
 import com.indong.capitalism.Frame.FrameLog;
 import com.indong.capitalism.Processor.Compiler.*;
-import com.indong.capitalism.Processor.Compiler2.C2Command;
 
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
@@ -23,24 +22,8 @@ public class ProcessorCommand {
 		return instance;
 	}
 
-	private LinkedList<C2Command> commandList = new LinkedList<C2Command>();
-
 	public ProcessorCommand()
 	{
-		initCommandList();
-	}
-
-	private void initCommandList()
-	{
-	}
-
-	public void changeCountry(CCountry country)
-	{
-		for(int i = 0 ; i < commandList.size(); i++)
-		{
-			C2Command command = commandList.get(i);
-			command.setCountry(country);
-		}
 	}
 
 	public String[] getHelpString(String command)

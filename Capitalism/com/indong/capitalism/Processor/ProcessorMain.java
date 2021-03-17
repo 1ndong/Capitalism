@@ -15,7 +15,7 @@ import com.indong.capitalism.Enum.ECompanyPosition;
 import com.indong.capitalism.Enum.EGovernmentType;
 import com.indong.capitalism.Enum.ESectorType;
 import com.indong.capitalism.Frame.FrameLog;
-import com.indong.capitalism.Info.IAAccount;
+import com.indong.capitalism.Property.PAAccount;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ICompanyService;
 import com.indong.capitalism.Interface.ISector;
@@ -229,27 +229,27 @@ public class ProcessorMain {
 		ICompanyService giordanoservice = (ICompanyService)giordano;
 
 		CBAccount indongsalaryaccount = shbankservice.makeNewAccount(indong, EAccountType.Deposit,interestDay);
-		IAAccount indongaccountinfo = indong.getBasicData().getInfoAsset().findAccountInfo(indongsalaryaccount);
+		PAAccount indongaccountinfo = indong.getBasicData().getInfoAsset().findAccountInfo(indongsalaryaccount);
 		samsungservice.joinCompany(indong, indongaccountinfo, ECompanyPosition.Clerk);
 
 		CBAccount jasonkimsalaryaccount = kmbankservice.makeNewAccount(jasonkim, EAccountType.Deposit,interestDay);
-		IAAccount jasonkimaccountinfo = jasonkim.getBasicData().getInfoAsset().findAccountInfo(jasonkimsalaryaccount);
+		PAAccount jasonkimaccountinfo = jasonkim.getBasicData().getInfoAsset().findAccountInfo(jasonkimsalaryaccount);
 		lgservice.joinCompany(jasonkim, jasonkimaccountinfo, ECompanyPosition.Clerk);
 
 		CBAccount ronaldosalaryaccount = wrbankservice.makeNewAccount(ronaldo , EAccountType.Deposit,interestDay);
-		IAAccount ronaldoaccountinfo = ronaldo.getBasicData().getInfoAsset().findAccountInfo(ronaldosalaryaccount);
+		PAAccount ronaldoaccountinfo = ronaldo.getBasicData().getInfoAsset().findAccountInfo(ronaldosalaryaccount);
 		sktservice.joinCompany(ronaldo,ronaldoaccountinfo,ECompanyPosition.Clerk);
 
 		CBAccount beknimsalaryaccount = wrbankservice.makeNewAccount(beknim , EAccountType.Deposit,interestDay);
-		IAAccount beknimaccountinfo = beknim.getBasicData().getInfoAsset().findAccountInfo(beknimsalaryaccount);
+		PAAccount beknimaccountinfo = beknim.getBasicData().getInfoAsset().findAccountInfo(beknimsalaryaccount);
 		cjservice.joinCompany(beknim,beknimaccountinfo,ECompanyPosition.Clerk);
 
 		CBAccount scwindsalaryaccount = shbankservice.makeNewAccount(scwind , EAccountType.Deposit,interestDay);
-		IAAccount scwindaccountinfo = scwind.getBasicData().getInfoAsset().findAccountInfo(scwindsalaryaccount);
+		PAAccount scwindaccountinfo = scwind.getBasicData().getInfoAsset().findAccountInfo(scwindsalaryaccount);
 		samsungservice.joinCompany(scwind,scwindaccountinfo,ECompanyPosition.Clerk);
 
 		CBAccount yds0903salaryaccount = kmbankservice.makeNewAccount(yds0903 , EAccountType.Deposit,interestDay);
-		IAAccount yds0903accountinfo = yds0903.getBasicData().getInfoAsset().findAccountInfo(yds0903salaryaccount);
+		PAAccount yds0903accountinfo = yds0903.getBasicData().getInfoAsset().findAccountInfo(yds0903salaryaccount);
 		giordanoservice.joinCompany(yds0903,yds0903accountinfo,ECompanyPosition.Clerk);
 	}
 }

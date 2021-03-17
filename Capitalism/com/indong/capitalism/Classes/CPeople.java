@@ -4,7 +4,7 @@ import com.indong.capitalism.DataCenter.DataCenter;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EBeingType;
 import com.indong.capitalism.Enum.ESearchType;
-import com.indong.capitalism.Info.InfoPersonalData;
+import com.indong.capitalism.Property.PPersonalData;
 import com.indong.capitalism.Interface.ISearchable;
 
 public class CPeople extends CBeing implements ISearchable
@@ -15,7 +15,7 @@ public class CPeople extends CBeing implements ISearchable
 	{
 		super(country);
 		type = EBeingType.Personal;
-		basicData = new InfoPersonalData(birth , name);
+		basicData = new PPersonalData(birth , name);
 
 		registerObject();
 	}

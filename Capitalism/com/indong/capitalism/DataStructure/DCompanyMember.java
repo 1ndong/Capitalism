@@ -2,14 +2,14 @@ package com.indong.capitalism.DataStructure;
 
 import com.indong.capitalism.Classes.CPeople;
 import com.indong.capitalism.Enum.ECompanyPosition;
-import com.indong.capitalism.Info.IAAccount;
+import com.indong.capitalism.Property.PAAccount;
 
 public class DCompanyMember {
 	private CPeople member;
-	private IAAccount salaryAccount;
+	private PAAccount salaryAccount;
 	private ECompanyPosition companyPosition;
 	
-	public DCompanyMember(CPeople people , IAAccount account , ECompanyPosition position)
+	public DCompanyMember(CPeople people , PAAccount account , ECompanyPosition position)
 	{
 		this.member = people;
 		this.salaryAccount = account;
@@ -23,10 +23,10 @@ public class DCompanyMember {
 		this.member = member;
 	}
 	
-	public IAAccount getSalaryAccount() {
+	public PAAccount getSalaryAccount() {
 		return salaryAccount;
 	}
-	public void setSalaryAccount(IAAccount salaryAccount) {
+	public void setSalaryAccount(PAAccount salaryAccount) {
 		this.salaryAccount = salaryAccount;
 	}
 

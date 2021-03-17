@@ -9,7 +9,7 @@ import com.indong.capitalism.DataStructure.DService;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Frame.FrameLog;
-import com.indong.capitalism.Info.IAAccount;
+import com.indong.capitalism.Property.PAAccount;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.IInterestChanger;
 import com.indong.capitalism.Interface.IInterestRate;
@@ -43,7 +43,7 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 		float confirmInterestRate = getMyCountry().getCentralBank().getBaseInterestRate() + getSpreadInterestRate();
 		CBAccount na = new CBAccount(newclient.getBasicData().getName() , this, makeUniqueAccountNumber(), type , confirmInterestRate , interestDay);
 		
-		IAAccount ia = new IAAccount(newclient.getBasicData().getName(),this,na.getAccountNumber(),type);
+		PAAccount ia = new PAAccount(newclient.getBasicData().getName(),this,na.getAccountNumber(),type);
 		newclient.getBasicData().getInfoAsset().addNewAccountInfo(ia);
 		
 		for(int i = 0 ; i < bankmemberList.size() ; i++)
@@ -70,7 +70,7 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 	}
 
 	@Override
-	public boolean sendMoney(IAAccount sender, IAAccount receiver , long amount) {
+	public boolean sendMoney(PAAccount sender, PAAccount receiver , long amount) {
 		// TODO Auto-generated method stub
 		CBAccount senderAccount = ((IBankService)sender.getBank()).findAccount(sender.getOwnerName() , sender.getAccountNumber());
 		CBAccount receiverAccount = ((IBankService)receiver.getBank()).findAccount(receiver.getOwnerName(), receiver.getAccountNumber());
@@ -105,7 +105,7 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 	}
 
 	@Override
-	public long withdrawCash(IAAccount account, long amount) {
+	public long withdrawCash(PAAccount account, long amount) {
 		// TODO Auto-generated method stub
 		CBAccount realaccount = ((IBankService)account.getBank()).findAccount(account.getOwnerName(), account.getAccountNumber());
 		if(realaccount.getRightsOfCash() < amount)
@@ -131,7 +131,7 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 	}
 
 	@Override
-	public void depositCash(IAAccount account, CACCash cash , long amount) {
+	public void depositCash(PAAccount account, CACCash cash , long amount) {
 		// TODO Auto-generated method stub
 		CBAccount realAccount = ((IBankService)account.getBank()).findAccount(account.getOwnerName(), account.getAccountNumber());
 		if(cash.getCash() < amount)

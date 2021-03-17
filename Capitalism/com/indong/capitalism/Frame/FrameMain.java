@@ -9,7 +9,7 @@ import com.indong.capitalism.Frame.CustomPanel.DashBoardPanel;
 import com.indong.capitalism.Frame.CustomTableDashboard.CMainCompCellPanel;
 import com.indong.capitalism.Frame.CustomTableDashboard.CMainPanelCellEditorRenderer;
 import com.indong.capitalism.Frame.CustomTableDashboard.CMainPanelTableModel;
-import com.indong.capitalism.Info.IAAccount;
+import com.indong.capitalism.Property.PAAccount;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
@@ -180,7 +180,7 @@ public class FrameMain extends JFrame implements ITime{
 			long loan = 0;
 			for(int j = 0 ; j < people.getBasicData().getInfoAsset().getAccountList().size() ; j++)
 			{
-				IAAccount infoaccount = people.getBasicData().getInfoAsset().getAccountList().get(j);
+				PAAccount infoaccount = people.getBasicData().getInfoAsset().getAccountList().get(j);
 				IBankService bankservice = (IBankService)infoaccount.getBank();
 				CBAccount account = bankservice.findAccount(people.getBasicData().getName(), infoaccount.getAccountNumber());
 				if(account.getAccountType() == EAccountType.Deposit)
@@ -211,7 +211,7 @@ public class FrameMain extends JFrame implements ITime{
 			long loan = 0;
 			for(int j = 0 ; j < company.getBasicData().getInfoAsset().getAccountList().size() ; j++)
 			{
-				IAAccount infoaccount = company.getBasicData().getInfoAsset().getAccountList().get(j);
+				PAAccount infoaccount = company.getBasicData().getInfoAsset().getAccountList().get(j);
 				IBankService bankservice = (IBankService)infoaccount.getBank();
 				CBAccount account = bankservice.findAccount(company.getBasicData().getName(), infoaccount.getAccountNumber());
 				if(account.getAccountType() == EAccountType.Deposit)

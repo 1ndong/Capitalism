@@ -17,7 +17,6 @@ import com.indong.capitalism.Enum.EGovernmentType;
 import com.indong.capitalism.Frame.FrameMain;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
-import com.indong.capitalism.Processor.ProcessorCommand;
 import com.indong.capitalism.Processor.ProcessorDay;
 import com.indong.capitalism.Util.UCurrency;
 
@@ -25,8 +24,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -62,25 +59,7 @@ public class DashBoardPanel extends JPanel implements ITime{
 		combobox.setBounds(0,0,(int)(upperRect.width * combowidthRatio),upperRect.height);
 		combobox.setSelectedIndex(-1);
 		combobox.setFont(font);
-		combobox.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(combobox.getSelectedItem() != null)
-				{
-					String selectedItem = combobox.getSelectedItem().toString();
-					for(int i = 0 ; i < CWorld.getInstance().getCountryList().size() ; i++)
-					{
-						CCountry temp = CWorld.getInstance().getCountryList().get(i);
-						if(selectedItem.equalsIgnoreCase(temp.getCountryName()) == true)
-						{
-							ProcessorCommand.getInstance().changeCountry(temp);
-							return;
-						}
-					}
-				}
-			}
-		});
-		
+
 		Rectangle comboboxRect = combobox.getBounds();
 		
 		dayField = new JTextField();

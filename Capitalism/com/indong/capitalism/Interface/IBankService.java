@@ -5,13 +5,13 @@ import com.indong.capitalism.Classes.Asset.CACCash;
 import com.indong.capitalism.Classes.Bank.CBAccount;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
-import com.indong.capitalism.Info.IAAccount;
+import com.indong.capitalism.Property.PAAccount;
 
 public interface IBankService {
 	CBAccount makeNewAccount(CBeing newclient , EAccountType type , DTime interestDay);
-	boolean sendMoney(IAAccount sender , IAAccount receiver , long amount);
-	long withdrawCash(IAAccount account , long amount);
-	void depositCash(IAAccount account , CACCash cash , long amount);
+	boolean sendMoney(PAAccount sender , PAAccount receiver , long amount);
+	long withdrawCash(PAAccount account , long amount);
+	void depositCash(PAAccount account , CACCash cash , long amount);
 	CBAccount findAccount(String name,int accountNumber);
 	void raiseLoan(CBAccount account , long amount , int loanMonth , int repaymentDay);
 }

@@ -9,8 +9,8 @@ import com.indong.capitalism.Enum.EBeingType;
 import com.indong.capitalism.Enum.ECompanyPosition;
 import com.indong.capitalism.Enum.ESearchType;
 import com.indong.capitalism.Frame.FrameLog;
-import com.indong.capitalism.Info.IAAccount;
-import com.indong.capitalism.Info.InfoCompanyData;
+import com.indong.capitalism.Property.PAAccount;
+import com.indong.capitalism.Property.PCompanyData;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ICompanyService;
 import com.indong.capitalism.Interface.ISearchable;
@@ -32,7 +32,7 @@ public class CCompany extends CBeing implements ICompanyService , ISearchable , 
 	{
 		super(country);
 		type = EBeingType.Company;
-		basicData = new InfoCompanyData(birth , name);
+		basicData = new PCompanyData(birth , name);
 
 		registerObject();
 	}
@@ -43,10 +43,10 @@ public class CCompany extends CBeing implements ICompanyService , ISearchable , 
 		today = newTime;
 		if(today.getDay() == salaryDay)
 		{
-			IAAccount accountForPaySalary = null;
+			PAAccount accountForPaySalary = null;
 			for(int i = 0 ; i < basicData.getInfoAsset().getAccountList().size() ; i++)
 			{
-				IAAccount infoaccount = basicData.getInfoAsset().getAccountList().get(i);
+				PAAccount infoaccount = basicData.getInfoAsset().getAccountList().get(i);
 				if(infoaccount.getAccountType() == EAccountType.Deposit)
 				{
 					accountForPaySalary = infoaccount;
@@ -101,7 +101,7 @@ public class CCompany extends CBeing implements ICompanyService , ISearchable , 
 		repaymentDebt(newTime);
 	}
 	
-	public void joinCompany(CPeople newpeople , IAAccount salaryaccount , ECompanyPosition position)
+	public void joinCompany(CPeople newpeople , PAAccount salaryaccount , ECompanyPosition position)
 	{
 		DCompanyMember newmember = new DCompanyMember(newpeople,salaryaccount , position);
 		staffList.add(newmember);

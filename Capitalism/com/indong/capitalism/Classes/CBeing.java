@@ -6,8 +6,8 @@ import com.indong.capitalism.Classes.Stuff.CStuff;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Enum.EBeingType;
-import com.indong.capitalism.Info.IAAccount;
-import com.indong.capitalism.Info.InfoBasicData;
+import com.indong.capitalism.Property.PAAccount;
+import com.indong.capitalism.Property.PBasicData;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class CBeing extends CBelong implements ITime {
 	protected EBeingType type;
-	protected InfoBasicData basicData;
+	protected PBasicData basicData;
 	private final CACCash wallet;
 
 	protected ArrayList<CStuff> stuffList = new ArrayList<CStuff>();
@@ -39,7 +39,7 @@ public class CBeing extends CBelong implements ITime {
 	{
 		for(int i = 0 ; i < basicData.getInfoAsset().getAccountList().size() ; i++)
 		{
-			IAAccount account = basicData.getInfoAsset().getAccountList().get(i);
+			PAAccount account = basicData.getInfoAsset().getAccountList().get(i);
 			if(account.getAccountType() == EAccountType.Loan)
 			{
 				IBankService bankservice = ((IBankService)account.getBank()); 
@@ -56,7 +56,7 @@ public class CBeing extends CBelong implements ITime {
 		return type;
 	}
 	
-	public InfoBasicData getBasicData() {
+	public PBasicData getBasicData() {
 		return basicData;
 	}
 	

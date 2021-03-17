@@ -1,4 +1,4 @@
-package com.indong.capitalism.Frame.CustomPanel.ControlPanel;
+package com.indong.capitalism.UI.CustomPanel.ControlPanel;
 
 import com.indong.capitalism.Classes.CBeing;
 import com.indong.capitalism.Classes.Stuff.CStuff;

@@ -1,4 +1,4 @@
-package com.indong.capitalism.Frame.CustomTableDashboard;
+package com.indong.capitalism.UI.CustomTableDashboard;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;

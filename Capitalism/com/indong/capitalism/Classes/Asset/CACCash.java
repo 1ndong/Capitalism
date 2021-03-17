@@ -1,6 +1,6 @@
 package com.indong.capitalism.Classes.Asset;
 
-import com.indong.capitalism.Frame.FrameLog;
+import com.indong.capitalism.UI.FrameLog;
 
 public class CACCash extends CACurrency{
 	private long cash = 0;

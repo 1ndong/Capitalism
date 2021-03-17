@@ -8,7 +8,7 @@ import com.indong.capitalism.Classes.Government.CGMinistryOfHealthAndWelfare;
 import com.indong.capitalism.Classes.Government.CGMinistryOfTradeIndustryAndEnergy;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EGovernmentType;
-import com.indong.capitalism.Frame.FrameLog;
+import com.indong.capitalism.UI.FrameLog;
 import com.indong.capitalism.Processor.Compiler.*;
 
 import java.util.LinkedList;
@@ -259,7 +259,4 @@ public class ProcessorCommand {
 		String[] result = new String[] {"'mk' - make" , "'rm' - remove" , "'grep' - select object"};
 		return result;
 	}
-
-	//////////below Compiler 2.0
-
 }

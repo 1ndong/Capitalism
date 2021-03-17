@@ -1,4 +1,4 @@
-package com.indong.capitalism.Frame;
+package com.indong.capitalism.UI;
 
 import java.awt.BorderLayout;
 import java.awt.event.ComponentAdapter;

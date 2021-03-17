@@ -1,14 +1,14 @@
-package com.indong.capitalism.Frame;
+package com.indong.capitalism.UI;
 
 import com.indong.capitalism.Classes.Bank.CBAccount;
 import com.indong.capitalism.Classes.CCompany;
 import com.indong.capitalism.Classes.CPeople;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
-import com.indong.capitalism.Frame.CustomPanel.DashBoardPanel;
-import com.indong.capitalism.Frame.CustomTableDashboard.CMainCompCellPanel;
-import com.indong.capitalism.Frame.CustomTableDashboard.CMainPanelCellEditorRenderer;
-import com.indong.capitalism.Frame.CustomTableDashboard.CMainPanelTableModel;
+import com.indong.capitalism.UI.CustomPanel.DashBoardPanel;
+import com.indong.capitalism.UI.CustomTableDashboard.CMainCompCellPanel;
+import com.indong.capitalism.UI.CustomTableDashboard.CMainPanelCellEditorRenderer;
+import com.indong.capitalism.UI.CustomTableDashboard.CMainPanelTableModel;
 import com.indong.capitalism.Property.PAAccount;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ITime;

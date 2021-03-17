@@ -1,8 +1,8 @@
 package com.indong.capitalism;
 
-import com.indong.capitalism.Frame.FrameControl;
-import com.indong.capitalism.Frame.FrameLog;
-import com.indong.capitalism.Frame.FrameMain;
+import com.indong.capitalism.UI.FrameControl;
+import com.indong.capitalism.UI.FrameLog;
+import com.indong.capitalism.UI.FrameMain;
 
 import java.awt.*;
 

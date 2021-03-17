@@ -8,7 +8,7 @@ import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Enum.EBeingType;
 import com.indong.capitalism.Enum.ECompanyPosition;
 import com.indong.capitalism.Enum.ESearchType;
-import com.indong.capitalism.Frame.FrameLog;
+import com.indong.capitalism.UI.FrameLog;
 import com.indong.capitalism.Property.PAAccount;
 import com.indong.capitalism.Property.PCompanyData;
 import com.indong.capitalism.Interface.IBankService;

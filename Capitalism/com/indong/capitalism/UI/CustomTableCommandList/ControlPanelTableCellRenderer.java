@@ -1,4 +1,4 @@
-package com.indong.capitalism.Frame.CustomTableCommandList;
+package com.indong.capitalism.UI.CustomTableCommandList;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;

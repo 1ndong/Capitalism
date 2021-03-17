@@ -1,7 +1,7 @@
-package com.indong.capitalism.Frame.CustomTableDashboard;
+package com.indong.capitalism.UI.CustomTableDashboard;
 
 import com.indong.capitalism.Classes.CBeing;
-import com.indong.capitalism.Frame.FrameControl;
+import com.indong.capitalism.UI.FrameControl;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -1,4 +1,4 @@
-package com.indong.capitalism.Frame.CustomPanel.ControlPanel;
+package com.indong.capitalism.UI.CustomPanel.ControlPanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

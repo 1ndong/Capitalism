@@ -1,4 +1,4 @@
-package com.indong.capitalism.Frame.CustomPanel.ControlPanel;
+package com.indong.capitalism.UI.CustomPanel.ControlPanel;
 
 import com.indong.capitalism.Classes.Stuff.CStuff;
 import com.indong.capitalism.DataCenter.DataCenter;
@@ -7,6 +7,7 @@ import com.indong.capitalism.Enum.ECurrency;
 import com.indong.capitalism.Enum.ESectorType;
 import com.indong.capitalism.Interface.ISearchable;
 import com.indong.capitalism.Interface.ISector;
+import com.indong.capitalism.UI.Dialog.DialogPayment;
 import com.indong.capitalism.Util.UCurrency;
 
 import javax.swing.*;
@@ -139,6 +140,10 @@ public class SubmitClickListener implements ActionListener {
             int result = JOptionPane.showConfirmDialog(null,sb.toString(),"구매여부",JOptionPane.YES_NO_OPTION);
             if(result == JOptionPane.YES_OPTION)
             {
+                DialogPayment dp = new DialogPayment(this);
+                dp.setVisible(true);
+                //todo!!!!
+
                 String[] resultItem = new String[1];
                 resultItem[0] = cp.getTextField().getText();
                 cp.getModel().addRow(resultItem);

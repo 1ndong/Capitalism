@@ -10,7 +10,7 @@ import com.indong.capitalism.DataCenter.DataCenter;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EGovernmentType;
 import com.indong.capitalism.Enum.ESearchType;
-import com.indong.capitalism.Frame.FrameLog;
+import com.indong.capitalism.UI.FrameLog;
 import com.indong.capitalism.Interface.ISearchable;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;

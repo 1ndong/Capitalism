@@ -8,7 +8,7 @@ import com.indong.capitalism.Classes.Government.CGMinistryOfHealthAndWelfare;
 import com.indong.capitalism.Classes.Government.CGMinistryOfTradeIndustryAndEnergy;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EGovernmentType;
-import com.indong.capitalism.Frame.FrameLog;
+import com.indong.capitalism.UI.FrameLog;
 
 import java.util.LinkedList;
 import java.util.NoSuchElementException;

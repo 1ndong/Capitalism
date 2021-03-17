@@ -2,7 +2,7 @@ package com.indong.capitalism.Processor.Compiler;
 
 import java.util.LinkedList;
 
-import com.indong.capitalism.Frame.FrameLog;
+import com.indong.capitalism.UI.FrameLog;
 
 public class CCGrep extends CompilerCommand {
 

@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import com.indong.capitalism.Classes.CCompany;
 import com.indong.capitalism.Classes.CCountry;
-import com.indong.capitalism.Frame.FrameLog;
+import com.indong.capitalism.UI.FrameLog;
 
 public class CGMinistryOfTradeIndustryAndEnergy extends CGovernment{
 

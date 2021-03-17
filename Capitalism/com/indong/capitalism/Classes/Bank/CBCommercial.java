@@ -8,7 +8,7 @@ import com.indong.capitalism.DataStructure.DLoan;
 import com.indong.capitalism.DataStructure.DService;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
-import com.indong.capitalism.Frame.FrameLog;
+import com.indong.capitalism.UI.FrameLog;
 import com.indong.capitalism.Property.PAAccount;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.IInterestChanger;

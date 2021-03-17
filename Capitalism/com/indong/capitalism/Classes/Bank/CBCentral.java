@@ -6,7 +6,7 @@ import com.indong.capitalism.DataStructure.DHCentralBank;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Enum.ECurrency;
-import com.indong.capitalism.Frame.FrameLog;
+import com.indong.capitalism.UI.FrameLog;
 import com.indong.capitalism.Interface.IInterestChanger;
 import com.indong.capitalism.Interface.IInterestRate;
 import com.indong.capitalism.Processor.ProcessorDay;

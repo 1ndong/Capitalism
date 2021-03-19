@@ -15,6 +15,7 @@ import com.indong.capitalism.Interface.IInterestChanger;
 import com.indong.capitalism.Interface.IInterestRate;
 import com.indong.capitalism.Interface.ISector;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -192,6 +193,19 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 		account.setLoanData(new DLoan(loanMonth , amount));
 		account.setInterestDay(new DTime(0,0,repaymentDay));
 		FrameLog.getInstance().addLog("raiseLoan","대출 성공");
+	}
+
+	@Override
+	public LinkedList<CBAccount> findAccountList(String name) {
+		for(int i = 0 ; i < bankmemberList.size() ; i++)
+		{
+			if(bankmemberList.get(i).getClient().getBasicData().getName().equalsIgnoreCase(name))
+			{
+				return bankmemberList.get(i).getAccountList();
+			}
+		}
+
+		return null;
 	}
 
 	@Override

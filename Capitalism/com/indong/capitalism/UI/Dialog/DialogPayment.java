@@ -1,8 +1,10 @@
 package com.indong.capitalism.UI.Dialog;
 
+import com.indong.capitalism.Classes.Bank.CBAccount;
 import com.indong.capitalism.Classes.CBeing;
 import com.indong.capitalism.DataCenter.DataCenter;
 import com.indong.capitalism.DataStructure.DPayment;
+import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Enum.ECurrency;
 import com.indong.capitalism.Enum.ESearchType;
 import com.indong.capitalism.Interface.IBankService;
@@ -10,6 +12,8 @@ import com.indong.capitalism.Interface.ISearchable;
 import com.indong.capitalism.Util.UCurrency;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -30,7 +34,9 @@ public class DialogPayment extends JDialog {
     private ButtonGroup buttonGroup;
     private JLabel labelCash;
     private DefaultTableModel model;
-    private JLabel labelAccountBalance;
+    //private JLabel labelAccountBalance;
+    private JRadioButton cashBtn;
+    private JRadioButton cardBtn;
 
     private boolean result = false;
 
@@ -75,12 +81,12 @@ public class DialogPayment extends JDialog {
         labelStuffPrice.setBounds(cw,cy,cw,ch);
         panel.add(labelStuffPrice);
         //
-        JRadioButton cardBtn = new JRadioButton("계좌 이체");
+        cardBtn = new JRadioButton("계좌 이체");
         setComponentProperty(cardBtn);
         cardBtn.setBounds(cx,cy + ch ,cw,ch);
         panel.add(cardBtn);
         //
-        JRadioButton cashBtn = new JRadioButton("현금 결제");
+        cashBtn = new JRadioButton("현금 결제");
         setComponentProperty(cashBtn);
         cashBtn.setBounds(cw,cy+ch,cw,ch);
         panel.add(cashBtn);
@@ -122,14 +128,36 @@ public class DialogPayment extends JDialog {
         labelCash.setBounds(cw,cashBtn.getY() + (cashBtn.getHeight() * 2) , cw , (int)(rect.height * 0.1f));
         panel.add(labelCash);
         //
-        labelAccountBalance = new JLabel("계좌잔액");
-        setComponentProperty(labelAccountBalance);
-        labelAccountBalance.setBounds(cw,cashBtn.getY() + (cashBtn.getHeight() * 3) , cw , (int)(rect.height * 0.1f));
-        panel.add(labelAccountBalance);
+        //labelAccountBalance = new JLabel("결제후예상잔액");
+        //setComponentProperty(labelAccountBalance);
+        //labelAccountBalance.setBounds(cw,cashBtn.getY() + (cashBtn.getHeight() * 3) , cw , (int)(rect.height * 0.1f));
+        //panel.add(labelAccountBalance);
         //
         JButton confirmBtn = new JButton("확인");
         setComponentProperty(confirmBtn);
         confirmBtn.setBounds(cw,(int)(rect.height - ((rect.height * 0.1f) * 3)),cw, (int)(rect.height * 0.1f));
+        confirmBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(cashBtn.isSelected() == false && cardBtn.isSelected() == false)
+                {
+                    JOptionPane.showMessageDialog(null,"결제방식을 선택하세요","선택",JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                else if(table.getSelectedRow() == -1 && cardBtn.isSelected() == true)
+                {
+                    JOptionPane.showMessageDialog(null,"계좌를 선택하세요","선택",JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                //todo
+                //선택한 열의 계좌에서 stuff회사로 돈이 옮겨가야됨
+                
+
+                result = true;
+                dispose();
+            }
+        });
         panel.add(confirmBtn);
         //
         JButton cancelBtn = new JButton("취소");
@@ -154,11 +182,26 @@ public class DialogPayment extends JDialog {
         LinkedList<ISearchable> banklist = DataCenter.getInstance().getList(ESearchType.Bank.getValue());
         for(int i = 0 ; i < banklist.size() ; i++)
         {
-            IBankService bs = (IBankService) banklist.get(i);
-            //todo
-            //implement list = getaccountlist(name) at ibankservice
-            //list 에서 deposit 찾아서
-            //리스트에 넣어줌
+            if(banklist.get(i) instanceof  IBankService)
+            {
+                IBankService bs = (IBankService) banklist.get(i);
+                LinkedList<CBAccount> list = bs.findAccountList(being.getBasicData().getName());
+                if(list != null)
+                {
+                    for(int j = 0 ; j < list.size() ; j++)
+                    {
+                        CBAccount account = list.get(j);
+                        if(account.getAccountType() == EAccountType.Deposit)
+                        {
+                            //"[예금 계좌]","[계좌 번호]","[잔액]"
+                            String[] item = new String[]{account.getBank().getName()
+                                    ,""+account.getAccountNumber()
+                                    ,UCurrency.getInstance().toString(account.getRightsOfCash(),ECurrency.Won)};
+                            model.addRow(item);
+                        }
+                    }
+                }
+            }
         }
     }
 

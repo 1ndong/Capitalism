@@ -37,9 +37,9 @@ public class CBeing extends CBelong implements ITime {
 	
 	protected void repaymentDebt(DTime today)
 	{
-		for(int i = 0 ; i < basicData.getInfoAsset().getAccountList().size() ; i++)
+		for(int i = 0; i < basicData.getPropertyAsset().getAccountList().size() ; i++)
 		{
-			PAAccount account = basicData.getInfoAsset().getAccountList().get(i);
+			PAAccount account = basicData.getPropertyAsset().getAccountList().get(i);
 			if(account.getAccountType() == EAccountType.Loan)
 			{
 				IBankService bankservice = ((IBankService)account.getBank()); 
@@ -60,7 +60,7 @@ public class CBeing extends CBelong implements ITime {
 		return basicData;
 	}
 	
-	public CACCash getCash() {
+	public CACCash getWallet() {
 		return wallet;
 	}
 

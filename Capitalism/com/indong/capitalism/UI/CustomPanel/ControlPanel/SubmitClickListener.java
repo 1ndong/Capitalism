@@ -2,6 +2,7 @@ package com.indong.capitalism.UI.CustomPanel.ControlPanel;
 
 import com.indong.capitalism.Classes.Stuff.CStuff;
 import com.indong.capitalism.DataCenter.DataCenter;
+import com.indong.capitalism.DataStructure.DPayment;
 import com.indong.capitalism.DataStructure.DService;
 import com.indong.capitalism.Enum.ECurrency;
 import com.indong.capitalism.Enum.ESectorType;
@@ -140,19 +141,16 @@ public class SubmitClickListener implements ActionListener {
             int result = JOptionPane.showConfirmDialog(null,sb.toString(),"구매여부",JOptionPane.YES_NO_OPTION);
             if(result == JOptionPane.YES_OPTION)
             {
-                DialogPayment dp = new DialogPayment(this);
-                dp.setVisible(true);
-                //todo!!!!
+                DialogPayment dp = new DialogPayment(new DPayment(cp.getTargetBeing() , selItem));
 
-                String[] resultItem = new String[1];
-                resultItem[0] = cp.getTextField().getText();
-                cp.getModel().addRow(resultItem);
+                if(dp.getResult() == true)
+                {
+                    String[] resultItem = new String[1];
+                    resultItem[0] = cp.getTextField().getText();
+                    cp.getModel().addRow(resultItem);
 
-                cp.getTargetBeing().getStuffList().add(new CStuff(resultItem[0]));
-
-                //todo 결제하면 돈을 보내야됨
-                //돈을 보내려면 어느계좌에서 보낼지 어떻게 보낼지
-                //결제시스템 만들어야됨!!
+                    cp.getTargetBeing().getStuffList().add(new CStuff(resultItem[0]));
+                }
             }
 
             cp.getCombobox().removeAllItems();

@@ -44,7 +44,7 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 		CBAccount na = new CBAccount(newclient.getBasicData().getName() , this, makeUniqueAccountNumber(), type , confirmInterestRate , interestDay);
 		
 		PAAccount ia = new PAAccount(newclient.getBasicData().getName(),this,na.getAccountNumber(),type);
-		newclient.getBasicData().getInfoAsset().addNewAccountInfo(ia);
+		newclient.getBasicData().getPropertyAsset().addNewAccountInfo(ia);
 		
 		for(int i = 0 ; i < bankmemberList.size() ; i++)
 		{

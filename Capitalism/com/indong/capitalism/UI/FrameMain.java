@@ -175,12 +175,12 @@ public class FrameMain extends JFrame implements ITime{
 			CPeople people = peopleList.get(i);
 			String name = people.getBasicData().getName();
 			
-			long cash = people.getCash().getCash();
+			long cash = people.getWallet().getCash();
 			long deposit = 0;
 			long loan = 0;
-			for(int j = 0 ; j < people.getBasicData().getInfoAsset().getAccountList().size() ; j++)
+			for(int j = 0; j < people.getBasicData().getPropertyAsset().getAccountList().size() ; j++)
 			{
-				PAAccount infoaccount = people.getBasicData().getInfoAsset().getAccountList().get(j);
+				PAAccount infoaccount = people.getBasicData().getPropertyAsset().getAccountList().get(j);
 				IBankService bankservice = (IBankService)infoaccount.getBank();
 				CBAccount account = bankservice.findAccount(people.getBasicData().getName(), infoaccount.getAccountNumber());
 				if(account.getAccountType() == EAccountType.Deposit)
@@ -206,12 +206,12 @@ public class FrameMain extends JFrame implements ITime{
 			CCompany company = companyList.get(i);
 			String name = company.getBasicData().getName();
 
-			long cash = company.getCash().getCash();
+			long cash = company.getWallet().getCash();
 			long deposit = 0;
 			long loan = 0;
-			for(int j = 0 ; j < company.getBasicData().getInfoAsset().getAccountList().size() ; j++)
+			for(int j = 0; j < company.getBasicData().getPropertyAsset().getAccountList().size() ; j++)
 			{
-				PAAccount infoaccount = company.getBasicData().getInfoAsset().getAccountList().get(j);
+				PAAccount infoaccount = company.getBasicData().getPropertyAsset().getAccountList().get(j);
 				IBankService bankservice = (IBankService)infoaccount.getBank();
 				CBAccount account = bankservice.findAccount(company.getBasicData().getName(), infoaccount.getAccountNumber());
 				if(account.getAccountType() == EAccountType.Deposit)

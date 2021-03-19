@@ -44,9 +44,9 @@ public class CCompany extends CBeing implements ICompanyService , ISearchable , 
 		if(today.getDay() == salaryDay)
 		{
 			PAAccount accountForPaySalary = null;
-			for(int i = 0 ; i < basicData.getInfoAsset().getAccountList().size() ; i++)
+			for(int i = 0; i < basicData.getPropertyAsset().getAccountList().size() ; i++)
 			{
-				PAAccount infoaccount = basicData.getInfoAsset().getAccountList().get(i);
+				PAAccount infoaccount = basicData.getPropertyAsset().getAccountList().get(i);
 				if(infoaccount.getAccountType() == EAccountType.Deposit)
 				{
 					accountForPaySalary = infoaccount;

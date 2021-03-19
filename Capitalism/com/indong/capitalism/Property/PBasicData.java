@@ -25,7 +25,7 @@ public class PBasicData {
 		return name;
 	}
 
-	public PAsset getInfoAsset() {
+	public PAsset getPropertyAsset() {
 		return infoAsset;
 	}
 }

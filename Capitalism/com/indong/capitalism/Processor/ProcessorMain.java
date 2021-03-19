@@ -185,22 +185,22 @@ public class ProcessorMain {
 		CBAccount samsungdepositaccount = shbankservice.makeNewAccount(samsung, EAccountType.Deposit,interestDay);
 		CBAccount samsungloanaccount = shbankservice.makeNewAccount(samsung, EAccountType.Loan,interestDay);
 		shbankservice.raiseLoan(samsungloanaccount, 50000000000L , 120 , 7);//500억
-		shbankservice.sendMoney(samsung.getBasicData().getInfoAsset().findAccountInfo(samsungloanaccount)
-				, samsung.getBasicData().getInfoAsset().findAccountInfo(samsungdepositaccount), 3000000000L);
+		shbankservice.sendMoney(samsung.getBasicData().getPropertyAsset().findAccountInfo(samsungloanaccount)
+				, samsung.getBasicData().getPropertyAsset().findAccountInfo(samsungdepositaccount), 3000000000L);
 
 /////////////////////
 		IBankService kmbankservice = (IBankService)kookminbank;
 		CBAccount lgdepositaccount = kmbankservice.makeNewAccount(lg, EAccountType.Deposit,interestDay);
 		CBAccount lgloanaccount = kmbankservice.makeNewAccount(lg, EAccountType.Loan,interestDay);
 		kmbankservice.raiseLoan(lgloanaccount, 50000000000L, 120, 7);
-		kmbankservice.sendMoney(lg.getBasicData().getInfoAsset().findAccountInfo(lgloanaccount)
-				, lg.getBasicData().getInfoAsset().findAccountInfo(lgdepositaccount), 2000000000L);
+		kmbankservice.sendMoney(lg.getBasicData().getPropertyAsset().findAccountInfo(lgloanaccount)
+				, lg.getBasicData().getPropertyAsset().findAccountInfo(lgdepositaccount), 2000000000L);
 
 		CBAccount giordanodepositaccount = kmbankservice.makeNewAccount(giordano, EAccountType.Deposit,interestDay);
 		CBAccount giordanoloanaccount = kmbankservice.makeNewAccount(giordano, EAccountType.Loan,interestDay);
 		kmbankservice.raiseLoan(giordanoloanaccount, 30000000000L, 120, 7);
-		kmbankservice.sendMoney(giordano.getBasicData().getInfoAsset().findAccountInfo(giordanoloanaccount)
-				, giordano.getBasicData().getInfoAsset().findAccountInfo(giordanodepositaccount), 2000000000L);
+		kmbankservice.sendMoney(giordano.getBasicData().getPropertyAsset().findAccountInfo(giordanoloanaccount)
+				, giordano.getBasicData().getPropertyAsset().findAccountInfo(giordanodepositaccount), 2000000000L);
 /////////////////////
 		IBankService wrbankservice = (IBankService)wooribank;
 		CBAccount samsungwrloanaccount = wrbankservice.makeNewAccount(samsung, EAccountType.Loan,interestDay);
@@ -211,14 +211,14 @@ public class ProcessorMain {
 		CBAccount sktdepositaccount = wrbankservice.makeNewAccount(skt, EAccountType.Deposit,interestDay);
 		CBAccount sktloanaccount = wrbankservice.makeNewAccount(skt, EAccountType.Loan,interestDay);
 		wrbankservice.raiseLoan(sktloanaccount, 30000000000L, 120, 7);
-		wrbankservice.sendMoney(skt.getBasicData().getInfoAsset().findAccountInfo(sktloanaccount)
-				, skt.getBasicData().getInfoAsset().findAccountInfo(sktdepositaccount), 2000000000L);
+		wrbankservice.sendMoney(skt.getBasicData().getPropertyAsset().findAccountInfo(sktloanaccount)
+				, skt.getBasicData().getPropertyAsset().findAccountInfo(sktdepositaccount), 2000000000L);
 
 		CBAccount cjdepositaccount = wrbankservice.makeNewAccount(cj, EAccountType.Deposit,interestDay);
 		CBAccount cjloanaccount = wrbankservice.makeNewAccount(cj, EAccountType.Loan,interestDay);
 		wrbankservice.raiseLoan(cjloanaccount, 20000000000L, 120, 7);
-		wrbankservice.sendMoney(cj.getBasicData().getInfoAsset().findAccountInfo(cjloanaccount)
-				, cj.getBasicData().getInfoAsset().findAccountInfo(cjdepositaccount), 2000000000L);
+		wrbankservice.sendMoney(cj.getBasicData().getPropertyAsset().findAccountInfo(cjloanaccount)
+				, cj.getBasicData().getPropertyAsset().findAccountInfo(cjdepositaccount), 2000000000L);
 
 
 	///////////////////
@@ -229,27 +229,27 @@ public class ProcessorMain {
 		ICompanyService giordanoservice = (ICompanyService)giordano;
 
 		CBAccount indongsalaryaccount = shbankservice.makeNewAccount(indong, EAccountType.Deposit,interestDay);
-		PAAccount indongaccountinfo = indong.getBasicData().getInfoAsset().findAccountInfo(indongsalaryaccount);
+		PAAccount indongaccountinfo = indong.getBasicData().getPropertyAsset().findAccountInfo(indongsalaryaccount);
 		samsungservice.joinCompany(indong, indongaccountinfo, ECompanyPosition.Clerk);
 
 		CBAccount jasonkimsalaryaccount = kmbankservice.makeNewAccount(jasonkim, EAccountType.Deposit,interestDay);
-		PAAccount jasonkimaccountinfo = jasonkim.getBasicData().getInfoAsset().findAccountInfo(jasonkimsalaryaccount);
+		PAAccount jasonkimaccountinfo = jasonkim.getBasicData().getPropertyAsset().findAccountInfo(jasonkimsalaryaccount);
 		lgservice.joinCompany(jasonkim, jasonkimaccountinfo, ECompanyPosition.Clerk);
 
 		CBAccount ronaldosalaryaccount = wrbankservice.makeNewAccount(ronaldo , EAccountType.Deposit,interestDay);
-		PAAccount ronaldoaccountinfo = ronaldo.getBasicData().getInfoAsset().findAccountInfo(ronaldosalaryaccount);
+		PAAccount ronaldoaccountinfo = ronaldo.getBasicData().getPropertyAsset().findAccountInfo(ronaldosalaryaccount);
 		sktservice.joinCompany(ronaldo,ronaldoaccountinfo,ECompanyPosition.Clerk);
 
 		CBAccount beknimsalaryaccount = wrbankservice.makeNewAccount(beknim , EAccountType.Deposit,interestDay);
-		PAAccount beknimaccountinfo = beknim.getBasicData().getInfoAsset().findAccountInfo(beknimsalaryaccount);
+		PAAccount beknimaccountinfo = beknim.getBasicData().getPropertyAsset().findAccountInfo(beknimsalaryaccount);
 		cjservice.joinCompany(beknim,beknimaccountinfo,ECompanyPosition.Clerk);
 
 		CBAccount scwindsalaryaccount = shbankservice.makeNewAccount(scwind , EAccountType.Deposit,interestDay);
-		PAAccount scwindaccountinfo = scwind.getBasicData().getInfoAsset().findAccountInfo(scwindsalaryaccount);
+		PAAccount scwindaccountinfo = scwind.getBasicData().getPropertyAsset().findAccountInfo(scwindsalaryaccount);
 		samsungservice.joinCompany(scwind,scwindaccountinfo,ECompanyPosition.Clerk);
 
 		CBAccount yds0903salaryaccount = kmbankservice.makeNewAccount(yds0903 , EAccountType.Deposit,interestDay);
-		PAAccount yds0903accountinfo = yds0903.getBasicData().getInfoAsset().findAccountInfo(yds0903salaryaccount);
+		PAAccount yds0903accountinfo = yds0903.getBasicData().getPropertyAsset().findAccountInfo(yds0903salaryaccount);
 		giordanoservice.joinCompany(yds0903,yds0903accountinfo,ECompanyPosition.Clerk);
 	}
 }

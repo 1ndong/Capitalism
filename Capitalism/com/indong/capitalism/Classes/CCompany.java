@@ -3,6 +3,7 @@ package com.indong.capitalism.Classes;
 import com.indong.capitalism.DataCenter.DataCenter;
 import com.indong.capitalism.DataStructure.DCompanyMember;
 import com.indong.capitalism.DataStructure.DService;
+import com.indong.capitalism.DataStructure.DServiceTree;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Enum.EBeingType;
@@ -27,6 +28,8 @@ public class CCompany extends CBeing implements ICompanyService , ISearchable , 
 	protected int sector = 0;
 	protected ArrayList<DService> serviceList = null;
 	protected ESearchType searchType = ESearchType.Company;
+
+	protected DServiceTree serviceTree;
 
 	public CCompany(CCountry country , DTime birth , String name)
 	{
@@ -168,5 +171,15 @@ public class CCompany extends CBeing implements ICompanyService , ISearchable , 
 	@Override
 	public void setServiceList(ArrayList<DService> list) {
 		serviceList = list;
+	}
+
+	@Override
+	public void setServiceList2(DServiceTree serviceTree) {
+		this.serviceTree = serviceTree;
+	}
+
+	@Override
+	public DServiceTree getServiceList2() {
+		return serviceTree;
 	}
 }

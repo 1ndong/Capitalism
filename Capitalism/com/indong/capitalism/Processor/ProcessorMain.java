@@ -14,11 +14,13 @@ import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Enum.ECompanyPosition;
 import com.indong.capitalism.Enum.EGovernmentType;
 import com.indong.capitalism.Enum.ESectorType;
+import com.indong.capitalism.Property.PCompanyData;
 import com.indong.capitalism.UI.FrameLog;
 import com.indong.capitalism.Property.PAAccount;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ICompanyService;
 import com.indong.capitalism.Interface.ISector;
+import com.indong.capitalism.Util.UJson;
 
 import java.util.ArrayList;
 
@@ -64,6 +66,7 @@ public class ProcessorMain {
 		samsung.setSector(ESectorType.Consumption.getValue());
 		gmotiae.registerCompany(samsung);
 		samsung.setSalaryDay(25);
+		//((ISector)samsung).setServiceList2(UJson.getInstance().makeServiceTree(samsung.getBasicData().getName()));
 		{
 			DService s1first = new DService("휴대폰",0);
 				DService s1fs2first = new DService("갤럭시S21",1000000L);
@@ -187,6 +190,11 @@ public class ProcessorMain {
 		shbankservice.raiseLoan(samsungloanaccount, 50000000000L , 120 , 7);//500억
 		shbankservice.sendMoney(samsung.getBasicData().getPropertyAsset().findAccountInfo(samsungloanaccount)
 				, samsung.getBasicData().getPropertyAsset().findAccountInfo(samsungdepositaccount), 3000000000L);
+		if(samsung.getBasicData() instanceof PCompanyData)
+		{
+			PCompanyData cd = (PCompanyData) samsung.getBasicData();
+			cd.setMainDepositAccount(samsung.getBasicData().getPropertyAsset().findAccountInfo(samsungdepositaccount));
+		}
 
 /////////////////////
 		IBankService kmbankservice = (IBankService)kookminbank;
@@ -195,12 +203,22 @@ public class ProcessorMain {
 		kmbankservice.raiseLoan(lgloanaccount, 50000000000L, 120, 7);
 		kmbankservice.sendMoney(lg.getBasicData().getPropertyAsset().findAccountInfo(lgloanaccount)
 				, lg.getBasicData().getPropertyAsset().findAccountInfo(lgdepositaccount), 2000000000L);
+		if(lg.getBasicData() instanceof PCompanyData)
+		{
+			PCompanyData cd = (PCompanyData) lg.getBasicData();
+			cd.setMainDepositAccount(lg.getBasicData().getPropertyAsset().findAccountInfo(lgdepositaccount));
+		}
 
 		CBAccount giordanodepositaccount = kmbankservice.makeNewAccount(giordano, EAccountType.Deposit,interestDay);
 		CBAccount giordanoloanaccount = kmbankservice.makeNewAccount(giordano, EAccountType.Loan,interestDay);
 		kmbankservice.raiseLoan(giordanoloanaccount, 30000000000L, 120, 7);
 		kmbankservice.sendMoney(giordano.getBasicData().getPropertyAsset().findAccountInfo(giordanoloanaccount)
 				, giordano.getBasicData().getPropertyAsset().findAccountInfo(giordanodepositaccount), 2000000000L);
+		if(giordano.getBasicData() instanceof PCompanyData)
+		{
+			PCompanyData cd = (PCompanyData) giordano.getBasicData();
+			cd.setMainDepositAccount(giordano.getBasicData().getPropertyAsset().findAccountInfo(giordanodepositaccount));
+		}
 /////////////////////
 		IBankService wrbankservice = (IBankService)wooribank;
 		CBAccount samsungwrloanaccount = wrbankservice.makeNewAccount(samsung, EAccountType.Loan,interestDay);
@@ -213,13 +231,22 @@ public class ProcessorMain {
 		wrbankservice.raiseLoan(sktloanaccount, 30000000000L, 120, 7);
 		wrbankservice.sendMoney(skt.getBasicData().getPropertyAsset().findAccountInfo(sktloanaccount)
 				, skt.getBasicData().getPropertyAsset().findAccountInfo(sktdepositaccount), 2000000000L);
+		if(skt.getBasicData() instanceof PCompanyData)
+		{
+			PCompanyData cd = (PCompanyData) skt.getBasicData();
+			cd.setMainDepositAccount(skt.getBasicData().getPropertyAsset().findAccountInfo(sktdepositaccount));
+		}
 
 		CBAccount cjdepositaccount = wrbankservice.makeNewAccount(cj, EAccountType.Deposit,interestDay);
 		CBAccount cjloanaccount = wrbankservice.makeNewAccount(cj, EAccountType.Loan,interestDay);
 		wrbankservice.raiseLoan(cjloanaccount, 20000000000L, 120, 7);
 		wrbankservice.sendMoney(cj.getBasicData().getPropertyAsset().findAccountInfo(cjloanaccount)
 				, cj.getBasicData().getPropertyAsset().findAccountInfo(cjdepositaccount), 2000000000L);
-
+		if(cj.getBasicData() instanceof PCompanyData)
+		{
+			PCompanyData cd = (PCompanyData) cj.getBasicData();
+			cd.setMainDepositAccount(cj.getBasicData().getPropertyAsset().findAccountInfo(cjdepositaccount));
+		}
 
 	///////////////////
 		ICompanyService samsungservice = (ICompanyService)samsung;

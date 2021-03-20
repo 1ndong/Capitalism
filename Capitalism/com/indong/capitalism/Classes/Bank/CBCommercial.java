@@ -3,10 +3,7 @@ package com.indong.capitalism.Classes.Bank;
 import com.indong.capitalism.Classes.Asset.CACCash;
 import com.indong.capitalism.Classes.CBeing;
 import com.indong.capitalism.Classes.CCountry;
-import com.indong.capitalism.DataStructure.DBankMember;
-import com.indong.capitalism.DataStructure.DLoan;
-import com.indong.capitalism.DataStructure.DService;
-import com.indong.capitalism.DataStructure.DTime;
+import com.indong.capitalism.DataStructure.*;
 import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.UI.FrameLog;
 import com.indong.capitalism.Property.PAAccount;
@@ -27,6 +24,8 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 
 	protected int sector = 0;
 	protected ArrayList<DService> serviceList = null;
+
+	protected DServiceTree serviceTree;
 
 	public CBCommercial(CCountry country , String name)
 	{
@@ -271,5 +270,15 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 	@Override
 	public void setServiceList(ArrayList<DService> list) {
 		serviceList = list;
+	}
+
+	@Override
+	public void setServiceList2(DServiceTree serviceTree) {
+		this.serviceTree = serviceTree;
+	}
+
+	@Override
+	public DServiceTree getServiceList2() {
+		return serviceTree;
 	}
 }

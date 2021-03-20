@@ -1,11 +1,14 @@
 package com.indong.capitalism.DataStructure;
 
+import com.indong.capitalism.Classes.CCompany;
+
 import java.util.ArrayList;
 
 public class DService {
     private ArrayList<DService> nextList = null;
     private String name = null;
     private long price = 0L;
+    private CCompany company = null;
 
     /*
     example
@@ -19,10 +22,11 @@ public class DService {
     22.setnext(33);
     * */
 
-    public DService(String name , long price)
+    public DService(String name , long price , CCompany company)
     {
         this.name = name;
         this.price = price;
+        this.company = company;
     }
 
     public String getName() {
@@ -32,6 +36,11 @@ public class DService {
     public long getPrice()
     {
         return price;
+    }
+
+    public CCompany getCompany()
+    {
+        return company;
     }
 
     public ArrayList<DService> getNextList()

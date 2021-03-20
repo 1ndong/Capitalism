@@ -68,21 +68,21 @@ public class ProcessorMain {
 		samsung.setSalaryDay(25);
 		//((ISector)samsung).setServiceList2(UJson.getInstance().makeServiceTree(samsung.getBasicData().getName()));
 		{
-			DService s1first = new DService("휴대폰",0);
-				DService s1fs2first = new DService("갤럭시S21",1000000L);
-				DService s1fs2second = new DService("갤럭시S21울트라",1300000L);
+			DService s1first = new DService("휴대폰",0 , null);
+				DService s1fs2first = new DService("갤럭시S21",1000000L , samsung);
+				DService s1fs2second = new DService("갤럭시S21울트라",1300000L , samsung);
 
-			DService s1second = new DService("냉장고",0);
-				DService s1ss2first = new DService("비스포크",3500000L);
-				DService s1ss2second = new DService("디오스",2000000L);
+			DService s1second = new DService("냉장고",0 , null);
+				DService s1ss2first = new DService("비스포크",3500000L , samsung);
+				DService s1ss2second = new DService("디오스",2000000L , samsung);
 
-			DService s1third = new DService("TV",0);
-				DService s1ts2first = new DService("4kUHD" , 0);
-					DService s1ts2fs3first = new DService("75'" , 3000000L);
-					DService s1ts2fs3second = new DService("82'" , 4500000L);
-				DService s1ts2second = new DService("8kUHD",0);
-					DService s1ts2ss3first = new DService("82'",6000000L);
-					DService s1ts2ss3second = new DService("101'" , 20000000L);
+			DService s1third = new DService("TV",0, null);
+				DService s1ts2first = new DService("4kUHD" , 0, null);
+					DService s1ts2fs3first = new DService("75'" , 3000000L , samsung);
+					DService s1ts2fs3second = new DService("82'" , 4500000L , samsung);
+				DService s1ts2second = new DService("8kUHD",0, null);
+					DService s1ts2ss3first = new DService("82'",6000000L , samsung);
+					DService s1ts2ss3second = new DService("101'" , 20000000L , samsung);
 
 			ArrayList<DService> list = new ArrayList<DService>();
 			list.add(s1first);

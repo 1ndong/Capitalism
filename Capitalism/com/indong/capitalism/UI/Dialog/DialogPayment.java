@@ -2,13 +2,17 @@ package com.indong.capitalism.UI.Dialog;
 
 import com.indong.capitalism.Classes.Bank.CBAccount;
 import com.indong.capitalism.Classes.CBeing;
+import com.indong.capitalism.Classes.CCompany;
 import com.indong.capitalism.DataCenter.DataCenter;
 import com.indong.capitalism.DataStructure.DPayment;
+import com.indong.capitalism.DataStructure.DService;
 import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Enum.ECurrency;
 import com.indong.capitalism.Enum.ESearchType;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ISearchable;
+import com.indong.capitalism.Property.PAAccount;
+import com.indong.capitalism.Property.PCompanyData;
 import com.indong.capitalism.Util.UCurrency;
 
 import javax.swing.*;
@@ -154,10 +158,6 @@ public class DialogPayment extends JDialog {
                         JOptionPane.showMessageDialog(null,"잔여 현금이 부족합니다","선택",JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    else
-                    {
-
-                    }
                 }
                 else if(cardBtn.isSelected())
                 {
@@ -169,9 +169,37 @@ public class DialogPayment extends JDialog {
                         JOptionPane.showMessageDialog(null,"계좌 잔액이 부족합니다","선택",JOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    else
+                }
+
+                CBeing being = payment.getTargetBeing();
+                DService service = payment.getTargetService();
+                CCompany serviceCompany = service.getCompany();
+
+                if(cashBtn.isSelected())
+                {
+                    /*
+                    1. 사람 cash 에서 
+                    2. servicecompany의 대표 deposit계좌로 이동
+                     */
+                    if(serviceCompany.getBasicData() instanceof PCompanyData)
                     {
-                        
+                        PAAccount mainDepositAccountInfo = ((PCompanyData)serviceCompany.getBasicData()).getMainDepositAccount();
+                        boolean result = ((IBankService)mainDepositAccountInfo.getBank()).depositCash(mainDepositAccountInfo,being.getWallet(),service.getPrice());
+                        if(result == false)
+                            return;
+                    }
+                }
+                else if(cardBtn.isSelected())
+                {
+                    /*
+                    1. 사람 선택된 계좌로
+                    2. servicecompany의 대표 deposit계좌로 이동
+                     */
+                    if(serviceCompany.getBasicData() instanceof PCompanyData)
+                    {
+
+                        PAAccount mainDepositAccountInfo = ((PCompanyData)serviceCompany.getBasicData()).getMainDepositAccount();
+                        ((IBankService)mainDepositAccountInfo.getBank()).sendMoney(todo!!!,mainDepositAccountInfo,service.getPrice());
                     }
                 }
 

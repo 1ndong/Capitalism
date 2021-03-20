@@ -131,17 +131,18 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 	}
 
 	@Override
-	public void depositCash(PAAccount account, CACCash cash , long amount) {
+	public boolean depositCash(PAAccount account, CACCash cash , long amount) {
 		// TODO Auto-generated method stub
 		CBAccount realAccount = ((IBankService)account.getBank()).findAccount(account.getOwnerName(), account.getAccountNumber());
 		if(cash.getCash() < amount)
 		{
 			FrameLog.getInstance().addLog("depositcash", "맡길 금액 부족");
-			return;
+			return false;
 		}
 		realAccount.addRightsOfCash(amount);
 		realAccount.getBank().getBalance().addCash(amount);
 		cash.addCash(-amount);
+		return true;
 	}
 
 	@Override

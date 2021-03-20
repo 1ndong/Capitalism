@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class DService {
     private ArrayList<DService> nextList = null;
     private String name = null;
-    private long value = 0L;
+    private long price = 0L;
 
     /*
     example
@@ -19,19 +19,19 @@ public class DService {
     22.setnext(33);
     * */
 
-    public DService(String name , long value)
+    public DService(String name , long price)
     {
         this.name = name;
-        this.value = value;
+        this.price = price;
     }
 
     public String getName() {
         return name;
     }
 
-    public long getValue()
+    public long getPrice()
     {
-        return value;
+        return price;
     }
 
     public ArrayList<DService> getNextList()

@@ -12,8 +12,6 @@ import com.indong.capitalism.Interface.ISearchable;
 import com.indong.capitalism.Util.UCurrency;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -34,17 +32,17 @@ public class DialogPayment extends JDialog {
     private ButtonGroup buttonGroup;
     private JLabel labelCash;
     private DefaultTableModel model;
+    private JTable table;
     //private JLabel labelAccountBalance;
     private JRadioButton cashBtn;
     private JRadioButton cardBtn;
+    private DPayment payment;
 
     private boolean result = false;
 
-    //todo 결제하면 돈을 보내야됨
-    //돈을 보내려면 어느계좌에서 보낼지 어떻게 보낼지
-    //결제시스템 만들어야됨!!
     public DialogPayment(DPayment payment)
     {
+        this.payment = payment;
         setModal(true);
         setTitle("결제");
         setLayout(null);
@@ -76,7 +74,7 @@ public class DialogPayment extends JDialog {
         labelStuffName.setBounds(cx,cy,cw,ch);
         panel.add(labelStuffName);
         //
-        labelStuffPrice = new JLabel(UCurrency.getInstance().toString(payment.getTargetService().getValue(), ECurrency.Won));
+        labelStuffPrice = new JLabel(UCurrency.getInstance().toString(payment.getTargetService().getPrice(), ECurrency.Won));
         setComponentProperty(labelStuffPrice);
         labelStuffPrice.setBounds(cw,cy,cw,ch);
         panel.add(labelStuffPrice);
@@ -100,7 +98,7 @@ public class DialogPayment extends JDialog {
         String[] colName = new String[] {"[예금 계좌]","[계좌 번호]","[잔액]"};
         model = new DefaultTableModel(colName,0);
 
-        JTable table = new JTable(model);
+        table = new JTable(model);
 
         JScrollPane scrollPane = new JScrollPane(table);
         int spx = 0;
@@ -149,10 +147,33 @@ public class DialogPayment extends JDialog {
                     JOptionPane.showMessageDialog(null,"계좌를 선택하세요","선택",JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+                else if(cashBtn.isSelected())
+                {
+                    if(payment.getTargetBeing().getWallet().getCash() < payment.getTargetService().getPrice())
+                    {
+                        JOptionPane.showMessageDialog(null,"잔여 현금이 부족합니다","선택",JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    else
+                    {
 
-                //todo
-                //선택한 열의 계좌에서 stuff회사로 돈이 옮겨가야됨
-                
+                    }
+                }
+                else if(cardBtn.isSelected())
+                {
+                    int row = table.getSelectedRow();
+                    String balance = (String)table.getValueAt(row,2);
+
+                    if(UCurrency.getInstance().toOriginValue(balance,ECurrency.Won) < payment.getTargetService().getPrice())
+                    {
+                        JOptionPane.showMessageDialog(null,"계좌 잔액이 부족합니다","선택",JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    else
+                    {
+                        
+                    }
+                }
 
                 result = true;
                 dispose();

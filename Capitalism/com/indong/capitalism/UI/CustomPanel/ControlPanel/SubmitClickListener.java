@@ -136,7 +136,7 @@ public class SubmitClickListener implements ActionListener {
             StringBuilder sb = new StringBuilder("구매하시겠습니까?");
             sb.append("\n");
             sb.append("가격 : ");
-            sb.append(UCurrency.getInstance().toString(selItem.getValue(),ECurrency.Won));
+            sb.append(UCurrency.getInstance().toString(selItem.getPrice(),ECurrency.Won));
 
             int result = JOptionPane.showConfirmDialog(null,sb.toString(),"구매여부",JOptionPane.YES_NO_OPTION);
             if(result == JOptionPane.YES_OPTION)

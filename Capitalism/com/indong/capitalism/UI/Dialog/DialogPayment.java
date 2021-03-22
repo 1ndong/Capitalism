@@ -1,6 +1,7 @@
 package com.indong.capitalism.UI.Dialog;
 
 import com.indong.capitalism.Classes.Bank.CBAccount;
+import com.indong.capitalism.Classes.Bank.CBank;
 import com.indong.capitalism.Classes.CBeing;
 import com.indong.capitalism.Classes.CCompany;
 import com.indong.capitalism.DataCenter.DataCenter;
@@ -20,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class DialogPayment extends JDialog {
@@ -41,6 +43,8 @@ public class DialogPayment extends JDialog {
     private JRadioButton cashBtn;
     private JRadioButton cardBtn;
     private DPayment payment;
+
+    private LinkedList<PAAccount> beingAccountList = new LinkedList<PAAccount>();
 
     private boolean result = false;
 
@@ -184,7 +188,7 @@ public class DialogPayment extends JDialog {
                     if(serviceCompany.getBasicData() instanceof PCompanyData)
                     {
                         PAAccount mainDepositAccountInfo = ((PCompanyData)serviceCompany.getBasicData()).getMainDepositAccount();
-                        boolean result = ((IBankService)mainDepositAccountInfo.getBank()).depositCash(mainDepositAccountInfo,being.getWallet(),service.getPrice());
+                        boolean result = ((IBankService)mainDepositAccountInfo.getBank()).transferCash(mainDepositAccountInfo,being.getWallet(),service.getPrice());
                         if(result == false)
                             return;
                     }
@@ -197,9 +201,10 @@ public class DialogPayment extends JDialog {
                      */
                     if(serviceCompany.getBasicData() instanceof PCompanyData)
                     {
-
                         PAAccount mainDepositAccountInfo = ((PCompanyData)serviceCompany.getBasicData()).getMainDepositAccount();
-                        ((IBankService)mainDepositAccountInfo.getBank()).sendMoney(todo!!!,mainDepositAccountInfo,service.getPrice());
+                        boolean result = ((IBankService)mainDepositAccountInfo.getBank()).sendMoney(beingAccountList.get(table.getSelectedRow()),mainDepositAccountInfo,service.getPrice());
+                        if(result == false)
+                            return;
                     }
                 }
 
@@ -226,30 +231,19 @@ public class DialogPayment extends JDialog {
 
     private void initTable(CBeing being)
     {
-        //뱅크 돌면서 이사람 계좌 다 가져오기
-        //그 계좌중에 deposit만 리스트에 보여주기
-        LinkedList<ISearchable> banklist = DataCenter.getInstance().getList(ESearchType.Bank.getValue());
-        for(int i = 0 ; i < banklist.size() ; i++)
+        LinkedList<PAAccount> list = being.getBasicData().getPropertyAsset().getAccountList();
+        for(int i = 0 ; i < list.size() ; i++)
         {
-            if(banklist.get(i) instanceof  IBankService)
+            PAAccount account = list.get(i);
+            if(account.getAccountType() == EAccountType.Deposit)
             {
-                IBankService bs = (IBankService) banklist.get(i);
-                LinkedList<CBAccount> list = bs.findAccountList(being.getBasicData().getName());
-                if(list != null)
-                {
-                    for(int j = 0 ; j < list.size() ; j++)
-                    {
-                        CBAccount account = list.get(j);
-                        if(account.getAccountType() == EAccountType.Deposit)
-                        {
-                            //"[예금 계좌]","[계좌 번호]","[잔액]"
-                            String[] item = new String[]{account.getBank().getName()
-                                    ,""+account.getAccountNumber()
-                                    ,UCurrency.getInstance().toString(account.getRightsOfCash(),ECurrency.Won)};
-                            model.addRow(item);
-                        }
-                    }
-                }
+                CBAccount realAccount = ((IBankService)account.getBank()).findAccount(account.getOwnerName(),account.getAccountNumber());
+                //"[예금 계좌]","[계좌 번호]","[잔액]"
+                String[] item = new String[]{account.getBank().getName()
+                        ,""+account.getAccountNumber()
+                        ,UCurrency.getInstance().toString(realAccount.getRightsOfCash(),ECurrency.Won)};
+                model.addRow(item);
+                beingAccountList.add(account);
             }
         }
     }

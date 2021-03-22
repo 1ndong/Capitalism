@@ -18,6 +18,8 @@ import com.indong.capitalism.Processor.ProcessorMain;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -34,6 +36,8 @@ public class FrameMain extends JFrame implements ITime{
 	private CMainPanelTableModel compModel2;
 	private static FrameMain instance;
 	private DashBoardPanel dashboard;
+
+	JTable table;
 	/**
 	 * Create the frame.
 	 */
@@ -61,9 +65,6 @@ public class FrameMain extends JFrame implements ITime{
 		//
 		Rectangle rect = this.getBounds();
 		
-//		float RATIO_DASHBOARD = 0.6f;
-//		Rectangle dashboardRect = new Rectangle(rect);
-//		dashboardRect.height *= RATIO_DASHBOARD;
 		float RATIO_DASHBOARD_WIDTH = 0.4f;
 		Rectangle dashboardRect = new Rectangle(rect);
 		dashboardRect.width *= RATIO_DASHBOARD_WIDTH;
@@ -71,10 +72,6 @@ public class FrameMain extends JFrame implements ITime{
 		dashboard = new DashBoardPanel(dashboardRect);
 		
 		//peopleList
-//		Rectangle scrollPaneRect = new Rectangle(rect);
-//		scrollPaneRect.y = dashboardRect.height;
-//		scrollPaneRect.height = rect.height - dashboardRect.height;
-//		scrollPaneRect.width = rect.width / 2;
 		Rectangle scrollPaneRect = new Rectangle(rect);
 		scrollPaneRect.x = dashboardRect.width;
 		scrollPaneRect.y = 0;
@@ -82,14 +79,14 @@ public class FrameMain extends JFrame implements ITime{
 		scrollPaneRect.height = rect.height / 2;
 		
 		compModel = new CMainPanelTableModel();
-		JTable table = new JTable(compModel);
+		table = new JTable(compModel);
 		table.setRowHeight(new CMainCompCellPanel(null ,"",0,0,0,0).getPreferredSize().height);
         table.setTableHeader(null);
         table.setRowHeight(40);
         CMainPanelCellEditorRenderer PanelCellEditorRenderer = new CMainPanelCellEditorRenderer();
         table.setDefaultRenderer(Object.class, PanelCellEditorRenderer);
         table.setDefaultEditor(Object.class, PanelCellEditorRenderer);
-		
+
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBackground(Color.green);
 		scrollPane.setBounds(scrollPaneRect);
@@ -98,11 +95,6 @@ public class FrameMain extends JFrame implements ITime{
 		table.setBounds(scrollPane.getBounds());
 		
 		//companyList
-//		Rectangle scrollPaneRect2 = new Rectangle(rect);
-//		scrollPaneRect2.y = dashboardRect.height;
-//		scrollPaneRect2.height = rect.height - dashboardRect.height;
-//		scrollPaneRect2.width = rect.width / 2;
-//		scrollPaneRect2.x = scrollPaneRect.width;
 		Rectangle scrollPaneRect2 = new Rectangle(rect);
 		scrollPaneRect2.x = dashboardRect.width;
 		scrollPaneRect2.y = scrollPaneRect.height;

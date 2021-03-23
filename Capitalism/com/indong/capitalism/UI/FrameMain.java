@@ -5,21 +5,19 @@ import com.indong.capitalism.Classes.CCompany;
 import com.indong.capitalism.Classes.CPeople;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
-import com.indong.capitalism.UI.CustomPanel.DashBoardPanel;
-import com.indong.capitalism.UI.CustomTableDashboard.CMainCompCellPanel;
-import com.indong.capitalism.UI.CustomTableDashboard.CMainPanelCellEditorRenderer;
-import com.indong.capitalism.UI.CustomTableDashboard.CMainPanelTableModel;
-import com.indong.capitalism.Property.PAAccount;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
 import com.indong.capitalism.Processor.ProcessorDay;
 import com.indong.capitalism.Processor.ProcessorMain;
+import com.indong.capitalism.Property.PAAccount;
+import com.indong.capitalism.UI.CustomPanel.DashBoardPanel;
+import com.indong.capitalism.UI.CustomTableDashboard.CMainCompCellPanel;
+import com.indong.capitalism.UI.CustomTableDashboard.CMainPanelCellEditorRenderer;
+import com.indong.capitalism.UI.CustomTableDashboard.CMainPanelTableModel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -37,7 +35,8 @@ public class FrameMain extends JFrame implements ITime{
 	private static FrameMain instance;
 	private DashBoardPanel dashboard;
 
-	JTable table;
+	private JTable table;
+	private JTable table2;
 	/**
 	 * Create the frame.
 	 */
@@ -102,7 +101,7 @@ public class FrameMain extends JFrame implements ITime{
 		scrollPaneRect2.height = rect.height / 2;
 		
 		compModel2 = new CMainPanelTableModel();
-		JTable table2 = new JTable(compModel2);
+		table2 = new JTable(compModel2);
 		table2.setRowHeight(new CMainCompCellPanel(null ,"",0,0,0,0).getPreferredSize().height);
 		table2.setTableHeader(null);
 		table2.setRowHeight(40);
@@ -161,6 +160,9 @@ public class FrameMain extends JFrame implements ITime{
 	
 	public void addPeopleList(LinkedList<CPeople> peopleList)
 	{
+		if(table.isEditing())
+			table.getCellEditor().stopCellEditing();
+
 		compModel.setNumRows(0);
 		for(int i = 0 ; i < peopleList.size() ; i++)
 		{
@@ -192,6 +194,9 @@ public class FrameMain extends JFrame implements ITime{
 	
 	public void addCompanyList(LinkedList<CCompany> companyList)
 	{
+		if(table2.isEditing())
+			table2.getCellEditor().stopCellEditing();
+
 		compModel2.setNumRows(0);
 		for(int i = 0 ; i < companyList.size() ; i++)
 		{

@@ -14,10 +14,10 @@ import com.indong.capitalism.DataStructure.DHCentralBank;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.ECurrency;
 import com.indong.capitalism.Enum.EGovernmentType;
-import com.indong.capitalism.UI.FrameMain;
 import com.indong.capitalism.Interface.ITime;
 import com.indong.capitalism.Interface.ITimeKeeper;
 import com.indong.capitalism.Processor.ProcessorDay;
+import com.indong.capitalism.UI.FrameMain;
 import com.indong.capitalism.Util.UCurrency;
 
 import javax.swing.*;
@@ -147,6 +147,9 @@ public class DashBoardPanel extends JPanel implements ITime{
 			initComponent();
 			bInit = true;
 		}
+
+		if(table.isEditing())
+			table.getCellEditor().stopCellEditing();
 		
 		model.setRowCount(0);
 		

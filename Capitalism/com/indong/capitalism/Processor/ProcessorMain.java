@@ -66,7 +66,7 @@ public class ProcessorMain {
 		samsung.setSector(ESectorType.Consumption.getValue());
 		gmotiae.registerCompany(samsung);
 		samsung.setSalaryDay(25);
-		//((ISector)samsung).setServiceList2(UJson.getInstance().makeServiceTree(samsung.getBasicData().getName()));
+		((ISector)samsung).setServiceList2(UJson.getInstance().makeServiceTree(samsung.getBasicData().getName()));
 		{
 			DService s1first = new DService("휴대폰",0 , null);
 				DService s1fs2first = new DService("갤럭시S21",1000000L , samsung);

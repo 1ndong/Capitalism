@@ -1,74 +1,30 @@
 package com.indong.capitalism.Util;
 
-import com.indong.capitalism.DataStructure.DService2;
+import com.indong.capitalism.DataStructure.DService;
+import com.indong.capitalism.DataStructure.DService3;
 import com.indong.capitalism.DataStructure.DServiceTree;
+import com.indong.capitalism.Enum.ECurrency;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.w3c.dom.Node;
 
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 public class UJson {
     private static final UJson instance = new UJson();
-    public static UJson getInstance()
-    {
+
+    public static UJson getInstance() {
         return instance;
     }
 
-    public Map<String,Object> parsingJson(JSONObject orgData)
-    {
-        Map<String, Object> map = new HashMap<String, Object>();
-        JSONParser parser = new JSONParser();
-        JSONObject jsonObj = (JSONObject)orgData.get("properties");
-        Iterator<String> keysItr = jsonObj.keySet().iterator();
-        while (keysItr.hasNext())
-        {
-            String key = keysItr.next();
-            Object value = jsonObj.get(key);
-            //System.out.println(key + " : " + value);
-            if(value instanceof JSONArray)
-            {
-                //System.out.println("json array");
-            }
-            else if(value instanceof JSONObject)
-            {
-                //System.out.println("json object");
-            }
-            map.put(key, value);
-        }
-
-        return map;
-    }
-
-    public void makeobjTest()
-    {
-        JSONParser parser = new JSONParser();
-        String jsonString = "{\"stat\":{\"sdr\": \"aaaaaaaaaaaaaaaaaaaaa\",\"rcv\": \"bbbbbbbbbbbbbbbbbbbb\",\"time\": \"UTC in millis\"" + ",\"type\": 1,\"subt\": 1,\"argv\": [{\"1\":2},{\"2\":3}]}}";
-        try {
-            Map json = (Map)parser.parse(jsonString);
-            Iterator iter = json.entrySet().iterator();
-            Object entry = json.get("stat");
-            System.out.println(entry);
-            System.out.println( entry.getClass() );
-        }
-        catch (ParseException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    public DServiceTree makeServiceTree(String name)
-    {
-        switch(name)
-        {
+    public DServiceTree makeServiceTree(String name) {
+        switch (name) {
             case "삼성":
                 name = "samsung";
                 break;
@@ -86,25 +42,64 @@ public class UJson {
 //      ]
 //        }
 
-        DServiceTree result = new DServiceTree(null);
-
+        //DServiceTree result = new DServiceTree(null);
+        ArrayList<DService3> result = new ArrayList<DService3>();
+        result.add(new DService3());
         JSONParser parser = new JSONParser();
+
         try {
             Reader reader = new FileReader("Capitalism/com/indong/capitalism/res/" + name + ".json");
 
-            JSONObject json = (JSONObject)parser.parse(reader);
+            JSONObject objModel = (JSONObject) parser.parse(reader);
 
-            Set set = json.keySet();
-            Iterator iter = set.iterator();
-            while(iter.hasNext())
-            {
-                Object key = iter.next();
-                result.addChildNode(new DService2(key.toString() , 0L));
-            }
-        } catch (IOException | ParseException e) {
+            parseJSON(objModel , result);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return result;
+        return null;
+    }
+
+    public void parseJSON(Object input , ArrayList<DService3> tree)
+    {
+        if (input instanceof JSONObject)
+        {
+            Iterator keys = ((JSONObject) input).keySet().iterator();
+
+            while (keys.hasNext())
+            {
+                String key = (String) keys.next();
+                if ((((JSONObject) input).get(key) instanceof JSONArray) == false)
+                {
+                    if (((JSONObject) input).get(key) instanceof JSONObject)
+                    {
+                        //maybe not reach..?
+                        //System.out.println("111 = " + key);
+                        //parseJSON(((JSONObject)input).get(key),tree);
+                    }
+                    else
+                        //System.out.println(key + "=" + ((JSONObject) input).get(key));
+                    {
+                        tree.get(tree.size()-1).addPropertyList(key);
+                        tree.get(tree.size()-1).setPrice(UCurrency.getInstance().toOriginValue(((JSONObject) input).get(key).toString(), ECurrency.Won));
+                        tree.add(new DService3());
+                    }
+                }
+                else
+                {
+                    //key parent
+                    tree.get(tree.size()-1).addPropertyList(key);
+                    parseJSON(((JSONObject)input).get(key),tree);
+                }
+            }
+        }
+        else if (input instanceof JSONArray)
+        {
+            for (int i = 0; i < ((JSONArray) input).size(); i++)
+            {
+                JSONObject item = (JSONObject) ((JSONArray) input).get(i);
+                parseJSON(item,tree);
+            }
+        }
     }
 }

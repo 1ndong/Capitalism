@@ -2,11 +2,15 @@ package com.indong.capitalism.UI.CustomPanel.ControlPanel;
 
 import com.indong.capitalism.Classes.CBeing;
 import com.indong.capitalism.Classes.Stuff.CStuff;
+import com.indong.capitalism.DataCenter.DataCenter;
+import com.indong.capitalism.DataStructure.DServiceItem;
+import com.indong.capitalism.Enum.EServicePropertyType;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class ControlPanel extends JPanel {
     private DefaultTableModel model;
@@ -113,6 +117,7 @@ public class ControlPanel extends JPanel {
     }
 
     private CBeing targetBeing = null;
+    private String lastSelectedItem = "";
 
     public CBeing getTargetBeing() {
         return targetBeing;
@@ -148,13 +153,43 @@ public class ControlPanel extends JPanel {
         setStage(submitClickListener.getStage());
     }
 
-    private void setStage(int stage)
+    //0 sector , 1 major , 2 model + brand : price
+
+    public void setStage(int stage)
     {
+        serviceModel.setRowCount(0);
+        Vector<DServiceItem> catalog = DataCenter.getInstance().getCatalog();
+        ArrayList<String> tableResult = new ArrayList<String>();
         switch(stage)
         {
             case 0:
             {
-                
+                for(int i = 0 ; i < catalog.size() ; i++)
+                {
+                    DServiceItem item = catalog.get(i);
+                    String sector = item.getProperty(EServicePropertyType.Sector);
+                    if(tableResult.contains(sector) == false)
+                    {
+                        tableResult.add(sector);
+                        String[] temp = new String[]{sector};
+                        serviceModel.addRow(temp);
+                    }
+                }
+            }
+            break;
+            case 1:
+            {
+                for(int i = 0 ; i < catalog.size() ; i++)
+                {
+                    DServiceItem item = catalog.get(i);
+                    String sector = item.getProperty(EServicePropertyType.Major);
+                    if(tableResult.contains(sector) == false)
+                    {
+                        tableResult.add(sector);
+                        String[] temp = new String[]{sector};
+                        serviceModel.addRow(temp);
+                    }
+                }
             }
             break;
         }

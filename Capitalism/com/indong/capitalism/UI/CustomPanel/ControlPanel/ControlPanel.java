@@ -2,8 +2,6 @@ package com.indong.capitalism.UI.CustomPanel.ControlPanel;
 
 import com.indong.capitalism.Classes.CBeing;
 import com.indong.capitalism.Classes.Stuff.CStuff;
-import com.indong.capitalism.Enum.ESectorType;
-import com.indong.capitalism.Interface.ISearchable;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,6 +10,7 @@ import java.util.ArrayList;
 
 public class ControlPanel extends JPanel {
     private DefaultTableModel model;
+    private JTable stuffTable;
     private JComboBox<String> cb;
     private JTextField tf;
     private SubmitClickListener submitClickListener = new SubmitClickListener(this);
@@ -75,17 +74,17 @@ public class ControlPanel extends JPanel {
         String[] colName = new String[] {"[stuff list]"};
         model = new DefaultTableModel(colName,0);
 
-        JTable table = new JTable(model);
+        stuffTable = new JTable(model);
 
-        JScrollPane scrollPane = new JScrollPane(table);
-        table.setFillsViewportHeight(true);
+        JScrollPane scrollPane = new JScrollPane(stuffTable);
+        stuffTable.setFillsViewportHeight(true);
 
         int tx = 0;
         int ty = 100;
         int tw = dashboardRect.width;
         int th = dashboardRect.height - ty;
         scrollPane.setBounds(tx, ty, tw, th);
-        table.setBounds(scrollPane.getBounds());
+        stuffTable.setBounds(scrollPane.getBounds());
 
         add(scrollPane);
         //
@@ -119,6 +118,9 @@ public class ControlPanel extends JPanel {
         tf.setText("");
         targetBeing = being;
         {
+            if(stuffTable.isEditing())
+                stuffTable.getCellEditor().stopCellEditing();
+
             getTextField().setText(targetBeing.getBasicData().getName());
             model.setRowCount(0);
             ArrayList<CStuff> stuffList = targetBeing.getStuffList();
@@ -136,10 +138,6 @@ public class ControlPanel extends JPanel {
 
         cb.setEnabled(true);
         submitClickListener.setStage(0);
-
-        ESectorType[] types = ESectorType.values();
-        for (int i = 0; i < types.length; i++)
-            cb.addItem(types[i].getLocaleValue(types[i]));
 
         cb.setSelectedIndex(-1);
     }

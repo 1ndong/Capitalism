@@ -12,14 +12,11 @@ import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Enum.ECompanyPosition;
 import com.indong.capitalism.Enum.EGovernmentType;
-import com.indong.capitalism.Enum.ESectorType;
 import com.indong.capitalism.Property.PCompanyData;
 import com.indong.capitalism.UI.FrameLog;
 import com.indong.capitalism.Property.PAAccount;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ICompanyService;
-
-import java.util.ArrayList;
 
 public class ProcessorMain {
 	public ProcessorMain()

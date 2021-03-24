@@ -1,20 +1,15 @@
 package com.indong.capitalism.Util;
 
-import com.indong.capitalism.DataStructure.DService;
-import com.indong.capitalism.DataStructure.DService3;
-import com.indong.capitalism.DataStructure.DServiceTree;
-import com.indong.capitalism.Enum.ECurrency;
+import com.indong.capitalism.DataStructure.DServiceItem;
+import com.indong.capitalism.Enum.ECatalogSector;
+import com.indong.capitalism.Enum.EServicePropertyType;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.FileReader;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.Vector;
 
 public class UJson {
     private static final UJson instance = new UJson();
@@ -23,43 +18,60 @@ public class UJson {
         return instance;
     }
 
-    public DServiceTree makeServiceTree(String name) {
-        switch (name) {
-            case "삼성":
-                name = "samsung";
-                break;
-            case "lg":
-                name = "lg";
-                break;
+    public Vector<DServiceItem> makeServiceTree()
+    {
+/*
+        {
+            "전자제품":
+              [
+                        {"Major":"휴대폰","Model":"갤럭시S21","Price":"100만원","Brand":"삼성"}
+                        ,{"Major":"휴대폰","Model":"갤럭시S21","Price":"100만원","Brand":"삼성"}
+              ]
+              ,
+            "식품":
+              [
+                        {"Major":"휴대폰","Model":"갤럭시S21","Price":"100만원","Brand":"삼성"}
+                       ,{"Major":"휴대폰","Model":"갤럭시S21","Price":"100만원","Brand":"삼성"}
+              ]
+              ,
+            "통신":
+              [
+                        {"Major":"휴대폰","Model":"갤럭시S21","Price":"100만원","Brand":"삼성"}
+                       ,{"Major":"휴대폰","Model":"갤럭시S21","Price":"100만원","Brand":"삼성"}
+              ]
         }
+*/
 
-//        {
-//            "전자제품":
-//    [
-//            {"휴대폰":[{"갤럭시S21":"100만원"},{"갤럭시S21울트라":"132만원"}]},
-//            {"TV":[{"4k":[{"75인치":"160만원"},{"82인치":"380만원"}]} , {"8k":[{"82인치":"600만원"},{"101인치":"1300만원"}]}]},
-//            {"냉장고":[{"지펠":"200만원"},{"비스포크":"600만원"}]}
-//      ]
-//        }
-
-        //DServiceTree result = new DServiceTree(null);
-        ArrayList<DService3> result = new ArrayList<DService3>();
-        result.add(new DService3());
         JSONParser parser = new JSONParser();
 
+        Vector<DServiceItem> result = new Vector<DServiceItem>();
         try {
-            Reader reader = new FileReader("Capitalism/com/indong/capitalism/res/" + name + ".json");
+            Reader reader = new FileReader("Capitalism/com/indong/capitalism/res/catalog.json");
 
-            JSONObject objModel = (JSONObject) parser.parse(reader);
+            JSONObject obj = (JSONObject) parser.parse(reader);
 
-            parseJSON(objModel , result);
+            for(int i = 0 ; i < ECatalogSector.values().length ; i++)
+            {
+                JSONArray ary = (JSONArray)obj.get(ECatalogSector.values()[i].getValue());
+                for(int j = 0 ; j < ary.size() ; j++)
+                {
+                    JSONObject item = (JSONObject) ary.get(j);
+                    result.add(new DServiceItem(ECatalogSector.values()[i].getValue()
+                            ,item.get(EServicePropertyType.Major.toString()).toString()
+                            ,item.get(EServicePropertyType.Model.toString()).toString()
+                            ,item.get(EServicePropertyType.Price.toString()).toString()
+                            ,item.get(EServicePropertyType.Brand.toString()).toString()
+                    ));
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return null;
+        return result;
     }
 
+    /* // n depth all traverse
     public void parseJSON(Object input , ArrayList<DService3> tree)
     {
         if (input instanceof JSONObject)
@@ -80,6 +92,7 @@ public class UJson {
                     else
                         //System.out.println(key + "=" + ((JSONObject) input).get(key));
                     {
+                        System.out.println("1");
                         tree.get(tree.size()-1).addPropertyList(key);
                         tree.get(tree.size()-1).setPrice(UCurrency.getInstance().toOriginValue(((JSONObject) input).get(key).toString(), ECurrency.Won));
                         tree.add(new DService3());
@@ -88,6 +101,7 @@ public class UJson {
                 else
                 {
                     //key parent
+                    System.out.println("2");
                     tree.get(tree.size()-1).addPropertyList(key);
                     parseJSON(((JSONObject)input).get(key),tree);
                 }
@@ -97,9 +111,11 @@ public class UJson {
         {
             for (int i = 0; i < ((JSONArray) input).size(); i++)
             {
+                System.out.println("3");
                 JSONObject item = (JSONObject) ((JSONArray) input).get(i);
                 parseJSON(item,tree);
             }
         }
     }
+     */
 }

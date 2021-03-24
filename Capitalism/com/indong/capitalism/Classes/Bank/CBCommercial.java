@@ -10,22 +10,15 @@ import com.indong.capitalism.Property.PAAccount;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.IInterestChanger;
 import com.indong.capitalism.Interface.IInterestRate;
-import com.indong.capitalism.Interface.ISector;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class CBCommercial extends CBank implements IBankService , IInterestChanger , IInterestRate , ISector {
+public class CBCommercial extends CBank implements IBankService , IInterestChanger , IInterestRate {
 	private LinkedList<DBankMember> bankmemberList = new LinkedList<DBankMember>();
 	private int lastAccountNumber = 0;
 	private float spreadInterestRate = 0.0f;
 	private LinkedList<IInterestRate> accountList = new LinkedList<IInterestRate>();
-
-	protected int sector = 0;
-	protected ArrayList<DService> serviceList = null;
-
-	protected DServiceTree serviceTree;
 
 	public CBCommercial(CCountry country , String name)
 	{
@@ -251,35 +244,5 @@ public class CBCommercial extends CBank implements IBankService , IInterestChang
 				}
 			}
 		}
-	}
-
-	@Override
-	public int getSector() {
-		return sector;
-	}
-
-	@Override
-	public void setSector(int newsector) {
-		sector = newsector;
-	}
-
-	@Override
-	public ArrayList<DService> getServiceList() {
-		return serviceList;
-	}
-
-	@Override
-	public void setServiceList(ArrayList<DService> list) {
-		serviceList = list;
-	}
-
-	@Override
-	public void setServiceList2(DServiceTree serviceTree) {
-		this.serviceTree = serviceTree;
-	}
-
-	@Override
-	public DServiceTree getServiceList2() {
-		return serviceTree;
 	}
 }

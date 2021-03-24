@@ -2,34 +2,26 @@ package com.indong.capitalism.Classes;
 
 import com.indong.capitalism.DataCenter.DataCenter;
 import com.indong.capitalism.DataStructure.DCompanyMember;
-import com.indong.capitalism.DataStructure.DService;
-import com.indong.capitalism.DataStructure.DServiceTree;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Enum.EBeingType;
 import com.indong.capitalism.Enum.ECompanyPosition;
 import com.indong.capitalism.Enum.ESearchType;
-import com.indong.capitalism.UI.FrameLog;
-import com.indong.capitalism.Property.PAAccount;
-import com.indong.capitalism.Property.PCompanyData;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ICompanyService;
 import com.indong.capitalism.Interface.ISearchable;
-import com.indong.capitalism.Interface.ISector;
+import com.indong.capitalism.Property.PAAccount;
+import com.indong.capitalism.Property.PCompanyData;
+import com.indong.capitalism.UI.FrameLog;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class CCompany extends CBeing implements ICompanyService , ISearchable , ISector {
+public class CCompany extends CBeing implements ICompanyService , ISearchable  {
 	private int salaryDay = 0;
 	protected LinkedList<DCompanyMember> staffList = new LinkedList<DCompanyMember>();
 	protected DTime today = new DTime(0,0,0);
 
-	protected int sector = 0;
-	protected ArrayList<DService> serviceList = null;
 	protected ESearchType searchType = ESearchType.Company;
-
-	protected DServiceTree serviceTree;
 
 	public CCompany(CCountry country , DTime birth , String name)
 	{
@@ -151,35 +143,5 @@ public class CCompany extends CBeing implements ICompanyService , ISearchable , 
 	@Override
 	public String getSearchableOriginName() {
 		return getBasicData().getName();
-	}
-
-	@Override
-	public int getSector() {
-		return sector;
-	}
-
-	@Override
-	public void setSector(int newsector) {
-		sector = newsector;
-	}
-
-	@Override
-	public ArrayList<DService> getServiceList() {
-		return serviceList;
-	}
-
-	@Override
-	public void setServiceList(ArrayList<DService> list) {
-		serviceList = list;
-	}
-
-	@Override
-	public void setServiceList2(DServiceTree serviceTree) {
-		this.serviceTree = serviceTree;
-	}
-
-	@Override
-	public DServiceTree getServiceList2() {
-		return serviceTree;
 	}
 }

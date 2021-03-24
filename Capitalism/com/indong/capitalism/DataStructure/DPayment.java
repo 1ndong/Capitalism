@@ -4,9 +4,9 @@ import com.indong.capitalism.Classes.CBeing;
 
 public class DPayment {
     private CBeing targetBeing;
-    private DService targetService;
+    private DServiceItem targetService;
 
-    public DPayment(CBeing being , DService service)
+    public DPayment(CBeing being , DServiceItem service)
     {
         targetBeing = being;
         targetService = service;
@@ -17,7 +17,7 @@ public class DPayment {
         return targetBeing;
     }
 
-    public DService getTargetService()
+    public DServiceItem getTargetService()
     {
         return targetService;
     }

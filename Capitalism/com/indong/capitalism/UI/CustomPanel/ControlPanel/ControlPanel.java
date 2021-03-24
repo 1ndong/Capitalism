@@ -2,7 +2,6 @@ package com.indong.capitalism.UI.CustomPanel.ControlPanel;
 
 import com.indong.capitalism.Classes.CBeing;
 import com.indong.capitalism.Classes.Stuff.CStuff;
-import com.indong.capitalism.DataStructure.DService;
 import com.indong.capitalism.Enum.ESectorType;
 import com.indong.capitalism.Interface.ISearchable;
 
@@ -109,16 +108,6 @@ public class ControlPanel extends JPanel {
     }
 
     private CBeing targetBeing = null;
-    private ArrayList<ISearchable> zeroStageList = null;
-    private ArrayList<DService> currentStageList = null;
-
-    public ArrayList<ISearchable> getZeroStageList() {
-        return zeroStageList;
-    }
-
-    public ArrayList<DService> getCurrentStageList() {
-        return currentStageList;
-    }
 
     public CBeing getTargetBeing() {
         return targetBeing;
@@ -155,39 +144,6 @@ public class ControlPanel extends JPanel {
         cb.setSelectedIndex(-1);
     }
 
-    public void setZeroStage(ArrayList<ISearchable> zeroStageList)
-    {
-        ResetPanel();
-
-        cb.setEnabled(true);
-
-        this.zeroStageList = zeroStageList;
-
-        for (int i = 0; i < zeroStageList.size(); i++) {
-            ISearchable temp = zeroStageList.get(i);
-            cb.addItem(temp.getSearchableOriginName());
-        }
-
-        cb.setSelectedIndex(-1);
-    }
-
-    public void setNextStage(ArrayList<DService> curStageList)
-    {
-        ResetPanel();
-        cb.setEnabled(true);
-
-        this.currentStageList = curStageList;
-
-        JComboBox<String> cb = getCombobox();
-        for(int i = 0 ; i < curStageList.size() ; i++)
-        {
-            DService temp = curStageList.get(i);
-            cb.addItem(temp.getName());
-        }
-
-        cb.setSelectedIndex(-1);
-    }
-
     public void ResetPanel() {
         cb.removeAllItems();
         cb.setEnabled(false);
@@ -195,8 +151,6 @@ public class ControlPanel extends JPanel {
 
     public void initPanel()
     {
-        zeroStageList = null;
-        currentStageList = null;
         targetBeing = null;
     }
 }

@@ -1,17 +1,15 @@
 package com.indong.capitalism.UI.Dialog;
 
 import com.indong.capitalism.Classes.Bank.CBAccount;
-import com.indong.capitalism.Classes.Bank.CBank;
 import com.indong.capitalism.Classes.CBeing;
 import com.indong.capitalism.Classes.CCompany;
 import com.indong.capitalism.DataCenter.DataCenter;
 import com.indong.capitalism.DataStructure.DPayment;
-import com.indong.capitalism.DataStructure.DService;
+import com.indong.capitalism.DataStructure.DServiceItem;
 import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Enum.ECurrency;
-import com.indong.capitalism.Enum.ESearchType;
+import com.indong.capitalism.Enum.EServicePropertyType;
 import com.indong.capitalism.Interface.IBankService;
-import com.indong.capitalism.Interface.ISearchable;
 import com.indong.capitalism.Property.PAAccount;
 import com.indong.capitalism.Property.PCompanyData;
 import com.indong.capitalism.Util.UCurrency;
@@ -21,7 +19,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class DialogPayment extends JDialog {
@@ -77,12 +74,12 @@ public class DialogPayment extends JDialog {
         int cw = rect.width / 2;
         int ch = (int)(rect.height * 0.1f);
         //
-        labelStuffName = new JLabel(payment.getTargetService().getName());
+        labelStuffName = new JLabel(payment.getTargetService().getProperty(EServicePropertyType.Model));
         setComponentProperty(labelStuffName);
         labelStuffName.setBounds(cx,cy,cw,ch);
         panel.add(labelStuffName);
         //
-        labelStuffPrice = new JLabel(UCurrency.getInstance().toString(payment.getTargetService().getPrice(), ECurrency.Won));
+        labelStuffPrice = new JLabel(payment.getTargetService().getProperty(EServicePropertyType.Price));
         setComponentProperty(labelStuffPrice);
         labelStuffPrice.setBounds(cw,cy,cw,ch);
         panel.add(labelStuffPrice);
@@ -157,7 +154,8 @@ public class DialogPayment extends JDialog {
                 }
                 else if(cashBtn.isSelected())
                 {
-                    if(payment.getTargetBeing().getWallet().getCash() < payment.getTargetService().getPrice())
+                    if(payment.getTargetBeing().getWallet().getCash() <
+                            UCurrency.getInstance().toOriginValue(payment.getTargetService().getProperty(EServicePropertyType.Price),ECurrency.Won))
                     {
                         JOptionPane.showMessageDialog(null,"잔여 현금이 부족합니다","선택",JOptionPane.ERROR_MESSAGE);
                         return;
@@ -168,7 +166,8 @@ public class DialogPayment extends JDialog {
                     int row = table.getSelectedRow();
                     String balance = (String)table.getValueAt(row,2);
 
-                    if(UCurrency.getInstance().toOriginValue(balance,ECurrency.Won) < payment.getTargetService().getPrice())
+                    if(UCurrency.getInstance().toOriginValue(balance,ECurrency.Won) <
+                            UCurrency.getInstance().toOriginValue(payment.getTargetService().getProperty(EServicePropertyType.Price),ECurrency.Won))
                     {
                         JOptionPane.showMessageDialog(null,"계좌 잔액이 부족합니다","선택",JOptionPane.ERROR_MESSAGE);
                         return;
@@ -176,8 +175,8 @@ public class DialogPayment extends JDialog {
                 }
 
                 CBeing being = payment.getTargetBeing();
-                DService service = payment.getTargetService();
-                CCompany serviceCompany = service.getCompany();
+                DServiceItem service = payment.getTargetService();
+                CCompany serviceCompany = DataCenter.getInstance().findCompanyByName(service.getProperty(EServicePropertyType.Brand));
 
                 if(cashBtn.isSelected())
                 {
@@ -188,7 +187,8 @@ public class DialogPayment extends JDialog {
                     if(serviceCompany.getBasicData() instanceof PCompanyData)
                     {
                         PAAccount mainDepositAccountInfo = ((PCompanyData)serviceCompany.getBasicData()).getMainDepositAccount();
-                        boolean result = ((IBankService)mainDepositAccountInfo.getBank()).transferCash(mainDepositAccountInfo,being.getWallet(),service.getPrice());
+                        boolean result = ((IBankService)mainDepositAccountInfo.getBank()).transferCash(mainDepositAccountInfo,being.getWallet()
+                                ,UCurrency.getInstance().toOriginValue(payment.getTargetService().getProperty(EServicePropertyType.Price),ECurrency.Won));
                         if(result == false)
                             return;
                     }
@@ -202,7 +202,8 @@ public class DialogPayment extends JDialog {
                     if(serviceCompany.getBasicData() instanceof PCompanyData)
                     {
                         PAAccount mainDepositAccountInfo = ((PCompanyData)serviceCompany.getBasicData()).getMainDepositAccount();
-                        boolean result = ((IBankService)mainDepositAccountInfo.getBank()).sendMoney(beingAccountList.get(table.getSelectedRow()),mainDepositAccountInfo,service.getPrice());
+                        boolean result = ((IBankService)mainDepositAccountInfo.getBank()).sendMoney(beingAccountList.get(table.getSelectedRow()),mainDepositAccountInfo
+                                ,UCurrency.getInstance().toOriginValue(payment.getTargetService().getProperty(EServicePropertyType.Price),ECurrency.Won));
                         if(result == false)
                             return;
                     }

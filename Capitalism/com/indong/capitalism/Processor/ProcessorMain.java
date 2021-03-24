@@ -8,7 +8,6 @@ import com.indong.capitalism.Classes.CPeople;
 import com.indong.capitalism.Classes.CWorld;
 import com.indong.capitalism.Classes.Government.CGMinistryOfHealthAndWelfare;
 import com.indong.capitalism.Classes.Government.CGMinistryOfTradeIndustryAndEnergy;
-import com.indong.capitalism.DataStructure.DService;
 import com.indong.capitalism.DataStructure.DTime;
 import com.indong.capitalism.Enum.EAccountType;
 import com.indong.capitalism.Enum.ECompanyPosition;
@@ -19,8 +18,6 @@ import com.indong.capitalism.UI.FrameLog;
 import com.indong.capitalism.Property.PAAccount;
 import com.indong.capitalism.Interface.IBankService;
 import com.indong.capitalism.Interface.ICompanyService;
-import com.indong.capitalism.Interface.ISector;
-import com.indong.capitalism.Util.UJson;
 
 import java.util.ArrayList;
 
@@ -44,11 +41,8 @@ public class ProcessorMain {
 		rok.getGovernmentMap().put(EGovernmentType.TradeIndustryAndEnergy, gmotiae);
 		
 		CBCommercial shinhanbank = new CBCommercial(rok , "신한");
-		shinhanbank.setSector(ESectorType.Finance.getValue());
 		CBCommercial kookminbank = new CBCommercial(rok , "국민");
-		kookminbank.setSector(ESectorType.Finance.getValue());
 		CBCommercial wooribank = new CBCommercial(rok , "우리");
-		wooribank.setSector(ESectorType.Finance.getValue());
 		rok.getBankList().add(shinhanbank);
 		shinhanbank.setSpreadInterestRate(2.1f);
 		rok.getBankList().add(kookminbank);
@@ -63,90 +57,30 @@ public class ProcessorMain {
 
 		//samsung
 		CCompany samsung = new CCompany(rok,new DTime(1955,2,12),"삼성");
-		samsung.setSector(ESectorType.Consumption.getValue());
 		gmotiae.registerCompany(samsung);
 		samsung.setSalaryDay(25);
-		((ISector)samsung).setServiceList2(UJson.getInstance().makeServiceTree(samsung.getBasicData().getName()));
-		{
-			DService s1first = new DService("휴대폰",0 , null);
-				DService s1fs2first = new DService("갤럭시S21",1000000L , samsung);
-				DService s1fs2second = new DService("갤럭시S21울트라",1300000L , samsung);
-
-			DService s1second = new DService("냉장고",0 , null);
-				DService s1ss2first = new DService("비스포크",3500000L , samsung);
-				DService s1ss2second = new DService("디오스",2000000L , samsung);
-
-			DService s1third = new DService("TV",0, null);
-				DService s1ts2first = new DService("4kUHD" , 0, null);
-					DService s1ts2fs3first = new DService("75'" , 3000000L , samsung);
-					DService s1ts2fs3second = new DService("82'" , 4500000L , samsung);
-				DService s1ts2second = new DService("8kUHD",0, null);
-					DService s1ts2ss3first = new DService("82'",6000000L , samsung);
-					DService s1ts2ss3second = new DService("101'" , 20000000L , samsung);
-
-			ArrayList<DService> list = new ArrayList<DService>();
-			list.add(s1first);
-			{
-				ArrayList<DService> step2 = new ArrayList<DService>();
-				step2.add(s1fs2first);
-				step2.add(s1fs2second);
-				s1first.setNextList(step2);
-			}
-			list.add(s1second);
-			{
-				ArrayList<DService> step2 = new ArrayList<DService>();
-				step2.add(s1ss2first);
-				step2.add(s1ss2second);
-				s1second.setNextList(step2);
-			}
-			list.add(s1third);
-			{
-				ArrayList<DService> step2 = new ArrayList<DService>();
-				step2.add(s1ts2first);
-				{
-					ArrayList<DService> step3 = new ArrayList<DService>();
-					step3.add(s1ts2fs3first);
-					step3.add(s1ts2fs3second);
-					s1ts2first.setNextList(step3);
-				}
-				step2.add(s1ts2second);
-				{
-					ArrayList<DService> step3 = new ArrayList<DService>();
-					step3.add(s1ts2ss3first);
-					step3.add(s1ts2ss3second);
-					s1ts2second.setNextList(step3);
-				}
-				s1third.setNextList(step2);
-			}
-
-			((ISector)samsung).setServiceList(list);
-		}
 		//
 
 		//lg
 		CCompany lg = new CCompany(rok,new DTime(1958,3,21),"LG");
-		lg.setSector(ESectorType.Consumption.getValue());
 		gmotiae.registerCompany(lg);
 		lg.setSalaryDay(25);
 		//
 
 		//skt
 		CCompany skt = new CCompany(rok,new DTime(1970,5,4),"SK텔레콤");
-		skt.setSector(ESectorType.Consumption.getValue());
 		gmotiae.registerCompany(skt);
 		skt.setSalaryDay(25);
 		//
 
 		//cj
 		CCompany cj = new CCompany(rok,new DTime(1984,2,3),"CJ");
-		cj.setSector(ESectorType.Consumption.getValue());
 		gmotiae.registerCompany(cj);
 		cj.setSalaryDay(25);
 		//
 
 		//giordano
 		CCompany giordano = new CCompany(rok, new DTime(1988 , 6,7),"지오다노");
-		giordano.setSector(ESectorType.Consumption.getValue());
 		gmotiae.registerCompany(giordano);
 		giordano.setSalaryDay(25);
 		//

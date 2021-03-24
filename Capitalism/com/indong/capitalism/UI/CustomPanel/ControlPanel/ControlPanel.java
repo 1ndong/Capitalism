@@ -11,7 +11,10 @@ import java.util.ArrayList;
 public class ControlPanel extends JPanel {
     private DefaultTableModel model;
     private JTable stuffTable;
-    private JComboBox<String> cb;
+
+    private DefaultTableModel serviceModel;
+    private JTable serviceTable;
+
     private JTextField tf;
     private SubmitClickListener submitClickListener = new SubmitClickListener(this);
 
@@ -29,35 +32,24 @@ public class ControlPanel extends JPanel {
         int sph = dashboardRect.height;
         panel.setBounds(spx, spy, spw, sph);
         panel.setBackground(new Color(0, 43, 54));
-        {
-            cb = new JComboBox<String>();
-            int cx = 0;
-            int cy = 0;
-            int cw = dashboardRect.width / 2;
-            int ch = 50;
-            cb.setBounds(cx, cy, cw, ch);
-            cb.setEnabled(false);
-            panel.add(cb);
 
-            tf = new JTextField();
-            int tx = cw;
-            int ty = cy;
-            int tw = cw;
-            int th = ch;
-            tf.setBounds(tx, ty, tw, th);
+        tf = new JTextField();
+        int tx = 0;
+        int ty = 0;
+        int tw = dashboardRect.width;
+        int th = (int)(dashboardRect.height * 0.1f);
+        tf.setBounds(tx, ty, tw, th);
 
-            panel.add(tf);
-        }
+        panel.add(tf);
 
         JButton btnSubmit = new JButton("Submit");
         btnSubmit.setForeground(Color.white);
         btnSubmit.setBackground(new Color(31, 138, 209));
         btnSubmit.addActionListener(submitClickListener);
         int bsx = 0;
-        int bsy = 50;
+        int bsy = tf.getHeight();
         int bsw = spw / 2;
-        //int bsh = (int)(dashboardRect.height * 0.2f);
-        int bsh = 50;
+        int bsh = tf.getHeight();
         btnSubmit.setBounds(bsx, bsy, bsw, bsh);
 
         JButton btnUnselect = new JButton("Cancel");
@@ -65,11 +57,29 @@ public class ControlPanel extends JPanel {
         btnUnselect.setBackground(new Color(210, 51, 85));
         btnUnselect.addActionListener(new CancelClickListener(this));
         int bux = bsw;
-        int buy = 50;
+        int buy = tf.getHeight();
         int buw = bsw;
-        int buh = 50;
+        int buh = tf.getHeight();
         btnUnselect.setBounds(bux, buy, buw, buh);
 
+        //service list
+        String[] servicecolName = new String[] {"[service list]"};
+        serviceModel = new DefaultTableModel(servicecolName,0);
+
+        serviceTable = new JTable(serviceModel);
+
+        JScrollPane servicescrollPane = new JScrollPane(serviceTable);
+        serviceTable.setFillsViewportHeight(true);
+
+        int servicetablex = 0;
+        int servicetabley = buy + buh;
+        int servicetablew = dashboardRect.width / 2;
+        int servicetableh = dashboardRect.height - ty;
+        servicescrollPane.setBounds(servicetablex, servicetabley, servicetablew, servicetableh);
+        serviceTable.setBounds(servicescrollPane.getBounds());
+
+        add(servicescrollPane);
+        //
         //stuff list
         String[] colName = new String[] {"[stuff list]"};
         model = new DefaultTableModel(colName,0);
@@ -79,11 +89,11 @@ public class ControlPanel extends JPanel {
         JScrollPane scrollPane = new JScrollPane(stuffTable);
         stuffTable.setFillsViewportHeight(true);
 
-        int tx = 0;
-        int ty = 100;
-        int tw = dashboardRect.width;
-        int th = dashboardRect.height - ty;
-        scrollPane.setBounds(tx, ty, tw, th);
+        int tablex = dashboardRect.width / 2;
+        int tabley = buy + buh;
+        int tablew = dashboardRect.width / 2;
+        int tableh = dashboardRect.height - ty;
+        scrollPane.setBounds(tablex, tabley, tablew, tableh);
         stuffTable.setBounds(scrollPane.getBounds());
 
         add(scrollPane);
@@ -96,10 +106,6 @@ public class ControlPanel extends JPanel {
     public DefaultTableModel getModel()
     {
         return model;
-    }
-
-    public JComboBox<String> getCombobox() {
-        return cb;
     }
 
     public JTextField getTextField() {
@@ -118,6 +124,8 @@ public class ControlPanel extends JPanel {
         tf.setText("");
         targetBeing = being;
         {
+            if(serviceTable.isEditing())
+                serviceTable.getCellEditor().stopCellEditing();
             if(stuffTable.isEditing())
                 stuffTable.getCellEditor().stopCellEditing();
 
@@ -136,15 +144,24 @@ public class ControlPanel extends JPanel {
             }
         }
 
-        cb.setEnabled(true);
         submitClickListener.setStage(0);
+        setStage(submitClickListener.getStage());
+    }
 
-        cb.setSelectedIndex(-1);
+    private void setStage(int stage)
+    {
+        switch(stage)
+        {
+            case 0:
+            {
+                
+            }
+            break;
+        }
     }
 
     public void ResetPanel() {
-        cb.removeAllItems();
-        cb.setEnabled(false);
+
     }
 
     public void initPanel()

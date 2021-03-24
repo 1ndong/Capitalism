@@ -26,16 +26,15 @@ public class SubmitClickListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        if(cp.getCombobox().getSelectedIndex() == -1)
-            return;
 
-        String selStr = (String)cp.getCombobox().getSelectedItem();
+
+        //String selStr = (String)cp.getCombobox().getSelectedItem();
 
         String asis = cp.getTextField().getText();
         StringBuilder sb= new StringBuilder(asis);
 
         sb.append(' ');
-        sb.append(selStr);
+        //sb.append(selStr);
         cp.getTextField().setText(sb.toString());
 
         setStage(getStage()+1);

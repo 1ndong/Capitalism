@@ -3,7 +3,7 @@ package com.indong.capitalism.Enum;
 public enum ECatalogSector {
     Eletronic("전자제품"),
     Food("식품"),
-    Communication("통신");
+    Clothes("의류");
 
     private String str;
 

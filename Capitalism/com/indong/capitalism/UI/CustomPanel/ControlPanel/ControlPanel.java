@@ -3,14 +3,17 @@ package com.indong.capitalism.UI.CustomPanel.ControlPanel;
 import com.indong.capitalism.Classes.CBeing;
 import com.indong.capitalism.Classes.Stuff.CStuff;
 import com.indong.capitalism.DataCenter.DataCenter;
+import com.indong.capitalism.DataStructure.DPayment;
 import com.indong.capitalism.DataStructure.DServiceItem;
 import com.indong.capitalism.Enum.EServicePropertyType;
+import com.indong.capitalism.UI.Dialog.DialogPayment;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Vector;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.*;
 
 public class ControlPanel extends JPanel {
     private DefaultTableModel model;
@@ -81,11 +84,43 @@ public class ControlPanel extends JPanel {
         int servicetableh = dashboardRect.height - ty;
         servicescrollPane.setBounds(servicetablex, servicetabley, servicetablew, servicetableh);
         serviceTable.setBounds(servicescrollPane.getBounds());
+        serviceTable.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int row = serviceTable.getSelectedRow();
+                int col = serviceTable.getSelectedColumn();
+                String selectedItem = (String)serviceTable.getModel().getValueAt(row,col);
+
+                int nextStage = getStage() + 1;
+                setStage(nextStage);
+                makeStage(getStage() , selectedItem , row);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
 
         add(servicescrollPane);
         //
         //stuff list
-        String[] colName = new String[] {"[stuff list]"};
+        String[] colName = new String[] {"[stuff list]","[value]"};
         model = new DefaultTableModel(colName,0);
 
         stuffTable = new JTable(model);
@@ -105,6 +140,9 @@ public class ControlPanel extends JPanel {
         add(btnSubmit);
         add(btnUnselect);
         add(panel);
+
+        btnSubmit.setEnabled(false);
+        btnUnselect.setEnabled(false);
     }
 
     public DefaultTableModel getModel()
@@ -117,10 +155,26 @@ public class ControlPanel extends JPanel {
     }
 
     private CBeing targetBeing = null;
-    private String lastSelectedItem = "";
+    private int stage = 0;
+    private Vector<DServiceItem> lastItemList = new Vector<>();
+
+    public Vector<DServiceItem> getLastItemList()
+    {
+        return lastItemList;
+    }
 
     public CBeing getTargetBeing() {
         return targetBeing;
+    }
+
+    public void setStage(int stage)
+    {
+        this.stage = stage;
+    }
+
+    public int getStage()
+    {
+        return stage;
     }
 
     public void startCommandProcess(CBeing being) {
@@ -140,26 +194,27 @@ public class ControlPanel extends JPanel {
 
             if(stuffList.size() > 0)
             {
-                String[] str = new String[stuffList.size()];
                 for(int i = 0 ; i < stuffList.size() ; i++)
                 {
-                    str[i] = stuffList.get(i).getName();
+                    String[] str = new String[2];
+                    str[0] = stuffList.get(i).getName();
+                    str[1] = stuffList.get(i).getPrice();
+                    model.addRow(str);
                 }
-                model.addRow(str);
             }
         }
 
-        submitClickListener.setStage(0);
-        setStage(submitClickListener.getStage());
+        setStage(0);
+        makeStage(getStage() , "" , -1);
     }
 
     //0 sector , 1 major , 2 model + brand : price
 
-    public void setStage(int stage)
+    public void makeStage(int stage , String selectedItem , int selectedRow)
     {
         serviceModel.setRowCount(0);
         Vector<DServiceItem> catalog = DataCenter.getInstance().getCatalog();
-        ArrayList<String> tableResult = new ArrayList<String>();
+        Set<String> tableResult = new HashSet<String>();
         switch(stage)
         {
             case 0:
@@ -182,14 +237,58 @@ public class ControlPanel extends JPanel {
                 for(int i = 0 ; i < catalog.size() ; i++)
                 {
                     DServiceItem item = catalog.get(i);
-                    String sector = item.getProperty(EServicePropertyType.Major);
-                    if(tableResult.contains(sector) == false)
+                    if(item.getProperty(EServicePropertyType.Sector).equals(selectedItem) == false)
+                        continue;
+                    String major = item.getProperty(EServicePropertyType.Major);
+                    if(tableResult.contains(major) == false)
                     {
-                        tableResult.add(sector);
-                        String[] temp = new String[]{sector};
+                        tableResult.add(major);
+                        String[] temp = new String[]{major};
                         serviceModel.addRow(temp);
                     }
                 }
+            }
+            break;
+            case 2:
+            {
+                for(int i = 0 ; i < catalog.size() ; i++)
+                {
+                    DServiceItem item = catalog.get(i);
+                    if(item.getProperty(EServicePropertyType.Major).equals(selectedItem) == false)
+                        continue;
+                    String model_price = item.getProperty(EServicePropertyType.Model) + " / " + item.getProperty(EServicePropertyType.Price);
+                    String[] temp = new String[]{model_price};
+                    serviceModel.addRow(temp);
+                    lastItemList.add(item);
+                }
+            }
+            break;
+            case 3://go to dialogpayment
+            {
+                StringTokenizer st = new StringTokenizer(selectedItem,"/");
+                String[] temp = new String[2];
+                int i = 0;
+                while(st.hasMoreTokens())
+                {
+                    temp[i] = st.nextToken();
+                    temp[i] = temp[i].trim();
+                    i++;
+                }
+
+                DServiceItem item = lastItemList.get(selectedRow);
+
+                DialogPayment dp = new DialogPayment(new DPayment(getTargetBeing(),item));
+                if(dp.getResult() == true)
+                {
+                    String[] resultItem = new String[2];
+                    resultItem[0] = item.getProperty(EServicePropertyType.Model);
+                    resultItem[1] = item.getProperty(EServicePropertyType.Price);
+                    getModel().addRow(resultItem);
+
+                    getTargetBeing().getStuffList().add(new CStuff(item.getProperty(EServicePropertyType.Model)
+                            , item.getProperty(EServicePropertyType.Price)));
+                }
+                lastItemList.removeAllElements();
             }
             break;
         }

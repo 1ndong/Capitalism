@@ -3,12 +3,17 @@ package com.indong.capitalism.Util;
 import com.indong.capitalism.DataStructure.DServiceItem;
 import com.indong.capitalism.Enum.ECatalogSector;
 import com.indong.capitalism.Enum.EServicePropertyType;
+import com.indong.capitalism.res.ResCatalog;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import javax.swing.*;
+import java.io.File;
 import java.io.FileReader;
+import java.io.InputStream;
 import java.io.Reader;
+import java.net.URL;
 import java.util.Vector;
 
 public class UJson {
@@ -20,35 +25,11 @@ public class UJson {
 
     public Vector<DServiceItem> makeServiceTree()
     {
-/*
-        {
-            "전자제품":
-              [
-                        {"Major":"휴대폰","Model":"갤럭시S21","Price":"100만원","Brand":"삼성"}
-                        ,{"Major":"휴대폰","Model":"갤럭시S21","Price":"100만원","Brand":"삼성"}
-              ]
-              ,
-            "식품":
-              [
-                        {"Major":"휴대폰","Model":"갤럭시S21","Price":"100만원","Brand":"삼성"}
-                       ,{"Major":"휴대폰","Model":"갤럭시S21","Price":"100만원","Brand":"삼성"}
-              ]
-              ,
-            "통신":
-              [
-                        {"Major":"휴대폰","Model":"갤럭시S21","Price":"100만원","Brand":"삼성"}
-                       ,{"Major":"휴대폰","Model":"갤럭시S21","Price":"100만원","Brand":"삼성"}
-              ]
-        }
-*/
-
         JSONParser parser = new JSONParser();
 
         Vector<DServiceItem> result = new Vector<DServiceItem>();
         try {
-            Reader reader = new FileReader("Capitalism/com/indong/capitalism/res/catalog.json");
-
-            JSONObject obj = (JSONObject) parser.parse(reader);
+            JSONObject obj = (JSONObject) parser.parse(new ResCatalog().getCatalogJson());
 
             for(int i = 0 ; i < ECatalogSector.values().length ; i++)
             {
@@ -65,6 +46,7 @@ public class UJson {
                 }
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"f","gg",JOptionPane.WARNING_MESSAGE);
             e.printStackTrace();
         }
 

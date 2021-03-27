@@ -91,6 +91,15 @@ public class ControlPanel extends JPanel {
                 int col = serviceTable.getSelectedColumn();
                 String selectedItem = (String)serviceTable.getModel().getValueAt(row,col);
 
+                //
+                String asis = getTextField().getText();
+                StringBuilder sb= new StringBuilder(asis);
+
+                sb.append(' ');
+                sb.append(selectedItem);
+                getTextField().setText(sb.toString());
+                //
+
                 int nextStage = getStage() + 1;
                 setStage(nextStage);
                 makeStage(getStage() , selectedItem , row);
@@ -289,6 +298,7 @@ public class ControlPanel extends JPanel {
                             , item.getProperty(EServicePropertyType.Price)));
                 }
                 lastItemList.removeAllElements();
+                getTextField().setText("");
             }
             break;
         }

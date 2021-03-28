@@ -20,10 +20,6 @@ public class DataCenter {
         return instance;
     }
 
-    public ArrayList<ISearchable> getAllObjects() {
-        return allObjects;
-    }
-
     public Vector<DServiceItem> getCatalog()
     {
         return catalog;

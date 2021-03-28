@@ -151,7 +151,6 @@ public class ControlPanel extends JPanel {
         add(panel);
 
         btnSubmit.setEnabled(false);
-        btnUnselect.setEnabled(false);
     }
 
     public DefaultTableModel getModel()
@@ -166,11 +165,6 @@ public class ControlPanel extends JPanel {
     private CBeing targetBeing = null;
     private int stage = 0;
     private Vector<DServiceItem> lastItemList = new Vector<>();
-
-    public Vector<DServiceItem> getLastItemList()
-    {
-        return lastItemList;
-    }
 
     public CBeing getTargetBeing() {
         return targetBeing;
@@ -187,8 +181,6 @@ public class ControlPanel extends JPanel {
     }
 
     public void startCommandProcess(CBeing being) {
-        ResetPanel();
-
         tf.setText("");
         targetBeing = being;
         {
@@ -302,10 +294,6 @@ public class ControlPanel extends JPanel {
             }
             break;
         }
-    }
-
-    public void ResetPanel() {
-
     }
 
     public void initPanel()

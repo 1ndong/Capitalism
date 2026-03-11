@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+}
+
+group = 'capitalism'
+version = '1.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://projectlombok.org/edge-releases' }
+}
+
+javafx {
+    version = "25-ea+5"
+    modules = ['javafx.controls']
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:edge-SNAPSHOT'
+    annotationProcessor 'org.projectlombok:lombok:edge-SNAPSHOT'
+
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    implementation 'org.jetbrains:annotations:13.0'
+
+    testImplementation 'junit:junit:4.12'
+}
+
+application {
+    mainClass = 'capitalism.CapitalismApplication'
+}

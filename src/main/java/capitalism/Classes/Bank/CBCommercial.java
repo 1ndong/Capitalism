@@ -1,0 +1,191 @@
+package capitalism.Classes.Bank;
+
+import capitalism.Classes.Asset.CACCash;
+import capitalism.Classes.CBeing;
+import capitalism.Classes.CCountry;
+import capitalism.DataStructure.*;
+import capitalism.Enum.EAccountType;
+import capitalism.UI.FrameLog;
+import capitalism.Property.PAAccount;
+import capitalism.Interface.IBankService;
+import capitalism.Interface.IInterestChanger;
+import capitalism.Interface.IInterestRate;
+import lombok.Getter;
+
+import java.util.LinkedList;
+
+@Getter
+public class CBCommercial extends CBank implements IBankService, IInterestChanger, IInterestRate {
+	private LinkedList<DBankMember> bankMemberList = new LinkedList<>();
+	private int lastAccountNumber = 0;
+	private float spreadInterestRate = 0.0f;
+	private LinkedList<IInterestRate> accountList = new LinkedList<>();
+
+	public CBCommercial(CCountry country, String name) {
+		super(country, name);
+		((IInterestChanger) getMyCountry().getCentralBank()).addAccount(this);
+	}
+
+	@Override
+	public CBAccount makeNewAccount(CBeing newclient, EAccountType type, DTime interestDay) {
+		float confirmInterestRate = getMyCountry().getCentralBank().getBaseInterestRate() + getSpreadInterestRate();
+		CBAccount na = new CBAccount(newclient.getBasicData().getName(), this, makeUniqueAccountNumber(), type, confirmInterestRate, interestDay);
+
+		PAAccount ia = new PAAccount(newclient.getBasicData().getName(), this, na.getAccountNumber(), type);
+		newclient.getBasicData().getPropertyAsset().addNewAccountInfo(ia);
+
+		for (int i = 0; i < bankMemberList.size(); i++) {
+			DBankMember bm = bankMemberList.get(i);
+			if (bm.getClient() == newclient) {
+				bm.getAccountList().add(na);
+				return na;
+			}
+		}
+
+		DBankMember newmember = new DBankMember(newclient);
+		newmember.getAccountList().add(na);
+		bankMemberList.add(newmember);
+		return na;
+	}
+
+	private int makeUniqueAccountNumber() {
+		return ++lastAccountNumber;
+	}
+
+	@Override
+	public boolean sendMoney(PAAccount sender, PAAccount receiver, long amount) {
+		CBAccount senderAccount = ((IBankService) sender.getBank()).findAccount(sender.getOwnerName(), sender.getAccountNumber());
+		CBAccount receiverAccount = ((IBankService) receiver.getBank()).findAccount(receiver.getOwnerName(), receiver.getAccountNumber());
+		if (senderAccount.getRightsOfCash() < amount) {
+			FrameLog.getInstance().addLog("sendmoney", "잔액부족");
+			return false;
+		} else {
+			senderAccount.addRightsOfCash(-amount);
+			receiverAccount.addRightsOfCash(amount);
+			if (sender.getBank() != receiver.getBank()) {
+				senderAccount.getBank().getBalance().addCash(-amount);
+				receiverAccount.getBank().getBalance().addCash(amount);
+			}
+		}
+		return true;
+	}
+
+	public void setSpreadInterestRate(float spreadInterestRate) {
+		this.spreadInterestRate = spreadInterestRate;
+		FrameLog.getInstance().addLog("interestchange", getName() + "은행 가산금리 변동" + spreadInterestRate + "%");
+		interestChange();
+	}
+
+	@Override
+	public long withdrawCash(PAAccount account, long amount) {
+		CBAccount realaccount = ((IBankService) account.getBank()).findAccount(account.getOwnerName(), account.getAccountNumber());
+		if (realaccount.getRightsOfCash() < amount) {
+			FrameLog.getInstance().addLog("withdrawcash", "잔액부족");
+			return 0;
+		} else {
+			realaccount.addRightsOfCash(-amount);
+			if (realaccount.getBank().getBalance().getCash() < amount) {
+				FrameLog.getInstance().addLog("withdrawcash", "은행 잔고 부족 bank run");
+				return 0;
+			} else {
+				realaccount.getBank().getBalance().addCash(-amount);
+				return amount;
+			}
+		}
+	}
+
+	@Override
+	public boolean transferCash(PAAccount account, CACCash cash, long amount) {
+		CBAccount realAccount = ((IBankService) account.getBank()).findAccount(account.getOwnerName(), account.getAccountNumber());
+		if (cash.getCash() < amount) {
+			FrameLog.getInstance().addLog("depositcash", "맡길 금액 부족");
+			return false;
+		}
+		realAccount.addRightsOfCash(amount);
+		realAccount.getBank().getBalance().addCash(amount);
+		cash.addCash(-amount);
+		return true;
+	}
+
+	@Override
+	public CBAccount findAccount(String name, int accountNumber) {
+		CBAccount result = null;
+		for (int i = 0; i < bankMemberList.size(); i++) {
+			DBankMember temp = bankMemberList.get(i);
+			CBeing being = temp.getClient();
+			String tempname = being.getBasicData().getName();
+			if (tempname.equalsIgnoreCase(name)) {
+				for (int j = 0; j < temp.getAccountList().size(); j++) {
+					CBAccount account = temp.getAccountList().get(j);
+					if (account.getAccountNumber() == accountNumber) {
+						result = account;
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public void raiseLoan(CBAccount account, long amount, int loanMonth, int repaymentDay) {
+		if (account.getBank() != this) {
+			FrameLog.getInstance().addLog("raiseLoan", "해당은행 계좌가 아니므로 대출 불가");
+			return;
+		}
+		if (getBalance().getCash() < amount) {
+			FrameLog.getInstance().addLog("raiseLoan", "은행 잔고 부족");
+			return;
+		}
+		if (account.getAccountType() != EAccountType.Loan) {
+			FrameLog.getInstance().addLog("raiseLoan", "대출통장 아님");
+			return;
+		}
+		account.addRightsOfCash(amount);
+		account.setLoanData(new DLoan(loanMonth, amount));
+		account.setInterestDay(new DTime(0, 0, repaymentDay));
+		FrameLog.getInstance().addLog("raiseLoan", "대출 성공");
+	}
+
+	@Override
+	public LinkedList<CBAccount> findAccountList(String name) {
+		for (int i = 0; i < bankMemberList.size(); i++) {
+			if (bankMemberList.get(i).getClient().getBasicData().getName().equalsIgnoreCase(name)) {
+				return bankMemberList.get(i).getAccountList();
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void addAccount(IInterestRate account) {
+		accountList.add(account);
+	}
+
+	@Override
+	public void interestChange() {
+		float newinterestRate = getMyCountry().getCentralBank().getBaseInterestRate() + getSpreadInterestRate();
+		for (int i = 0; i < accountList.size(); i++) {
+			accountList.get(i).interestChange(newinterestRate);
+		}
+	}
+
+	@Override
+	public void interestChange(float newinterestrate) {
+		interestChange();
+	}
+
+	@Override
+	public void dayChange(DTime newTime) {
+		for (int i = 0; i < getBankMemberList().size(); i++) {
+			DBankMember member = getBankMemberList().get(i);
+			for (int j = 0; j < member.getAccountList().size(); j++) {
+				CBAccount account = member.getAccountList().get(j);
+				if (account.getInterestDay().getDay() == newTime.getDay()) {
+					if (account.getAccountType() == EAccountType.Saving) {
+						//+[todo] 이자계산
+					}
+				}
+			}
+		}
+	}
+}

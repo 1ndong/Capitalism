@@ -62,6 +62,7 @@ public class CCompany extends CBeing implements ICompanyService, ISearchable {
 					boolean paid = bankservice.sendMoney(accountForPaySalary, temp.getSalaryAccount(), amount);
 					if (paid) {
 						temp.getMember().onSalaryReceived(amount);
+						FrameLog.getInstance().addLog("salary", getBasicData().getName() + " -> " + temp.getMember().getBasicData().getName() + " 급여 " + amount + "원 지급");
 					}
 				}
 			} else {

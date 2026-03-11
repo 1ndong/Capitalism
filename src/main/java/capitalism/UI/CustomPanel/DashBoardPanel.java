@@ -20,6 +20,8 @@ import capitalism.Interface.ITimeKeeper;
 import capitalism.Processor.ProcessorDay;
 import capitalism.UI.FrameMain;
 import capitalism.Util.UCurrency;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -34,6 +36,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -72,8 +75,35 @@ public class DashBoardPanel extends VBox implements ITime {
         HBox.setHgrow(titleLabel, Priority.ALWAYS);
 
         HBox upperPanel = new HBox(combobox, dayLabel, titleLabel);
-        upperPanel.setStyle("-fx-background-color: blue;");
-        upperPanel.setPrefHeight(height * 0.1);
+        upperPanel.setPrefHeight(40);
+
+        // 1day / Hold buttons
+        Button dayBtn = new Button("1day");
+        dayBtn.setStyle("-fx-background-color: #7dc2bd; -fx-text-fill: white; -fx-font-size: 14;");
+        dayBtn.setMaxWidth(Double.MAX_VALUE);
+        dayBtn.setPrefHeight(35);
+        dayBtn.setOnAction(e -> ProcessorDay.GetInstance().Process());
+
+        Button autoBtn = new Button("▶ Hold");
+        autoBtn.setStyle("-fx-background-color: #e8833a; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;");
+        autoBtn.setMaxWidth(Double.MAX_VALUE);
+        autoBtn.setPrefHeight(35);
+
+        Timeline autoTimeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
+            ProcessorDay.GetInstance().Process();
+        }));
+        autoTimeline.setCycleCount(Timeline.INDEFINITE);
+
+        autoBtn.setOnMousePressed(e -> {
+            ProcessorDay.GetInstance().Process();
+            autoTimeline.play();
+        });
+        autoBtn.setOnMouseReleased(e -> autoTimeline.stop());
+
+        HBox btnBar = new HBox(5, dayBtn, autoBtn);
+        HBox.setHgrow(dayBtn, Priority.ALWAYS);
+        HBox.setHgrow(autoBtn, Priority.ALWAYS);
+        btnBar.setPadding(new Insets(3, 0, 3, 0));
 
         // TabPane
         TabPane tabPane = new TabPane();
@@ -104,7 +134,7 @@ public class DashBoardPanel extends VBox implements ITime {
 
         tabPane.getTabs().add(bankTab);
 
-        getChildren().addAll(upperPanel, tabPane);
+        getChildren().addAll(upperPanel, btnBar, tabPane);
 
         ITimeKeeper timekeeper = (ITimeKeeper) ProcessorDay.GetInstance();
         timekeeper.addTimeSlave(this);
@@ -163,7 +193,6 @@ public class DashBoardPanel extends VBox implements ITime {
                     }
             );
             final long finalAllMadeMoney = allMadeMoney;
-            final CCountry finalCountry = country;
             centralCard.setOnMouseClicked(e -> showCentralBankDetail(centralBank, finalAllMadeMoney));
             bankCardPane.getChildren().add(centralCard);
 

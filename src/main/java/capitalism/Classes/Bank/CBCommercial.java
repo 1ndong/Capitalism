@@ -5,7 +5,9 @@ import capitalism.Classes.CBeing;
 import capitalism.Classes.CCountry;
 import capitalism.DataStructure.*;
 import capitalism.Enum.EAccountType;
+import capitalism.Enum.ECurrency;
 import capitalism.UI.FrameLog;
+import capitalism.Util.UCurrency;
 import capitalism.Property.PAAccount;
 import capitalism.Interface.IBankService;
 import capitalism.Interface.IInterestChanger;
@@ -181,8 +183,18 @@ public class CBCommercial extends CBank implements IBankService, IInterestChange
 			for (int j = 0; j < member.getAccountList().size(); j++) {
 				CBAccount account = member.getAccountList().get(j);
 				if (account.getInterestDay().getDay() == newTime.getDay()) {
-					if (account.getAccountType() == EAccountType.Saving) {
-						//+[todo] 이자계산
+					if (account.getAccountType() == EAccountType.Deposit || account.getAccountType() == EAccountType.Saving) {
+						long balance = account.getRightsOfCash();
+						if (balance > 0) {
+							long interest = (long) (balance * (account.getInterestRate() / 100.0f) / 12.0f);
+							if (interest > 0) {
+								account.addRightsOfCash(interest);
+								FrameLog.getInstance().addLog("interest",
+										account.getOwnerName() + " 예금이자 " + UCurrency.getInstance().toString(interest, ECurrency.Won)
+												+ " 지급 (잔액 " + UCurrency.getInstance().toString(balance, ECurrency.Won)
+												+ ", 금리 " + account.getInterestRate() + "%)");
+							}
+						}
 					}
 				}
 			}

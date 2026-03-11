@@ -1,30 +1,30 @@
 plugins {
     id 'java'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
 group = 'capitalism'
 version = '1.0-SNAPSHOT'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_25
-    targetCompatibility = JavaVersion.VERSION_25
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 repositories {
     mavenCentral()
-    maven { url 'https://projectlombok.org/edge-releases' }
 }
 
-javafx {
-    version = "25-ea+5"
-    modules = ['javafx.controls']
-}
+def javafxVersion = "21.0.6"
+def javafxPlatform = "mac-aarch64"
 
 dependencies {
-    compileOnly 'org.projectlombok:lombok:edge-SNAPSHOT'
-    annotationProcessor 'org.projectlombok:lombok:edge-SNAPSHOT'
+    compileOnly 'org.projectlombok:lombok:1.18.36'
+    annotationProcessor 'org.projectlombok:lombok:1.18.36'
+
+    implementation "org.openjfx:javafx-base:${javafxVersion}:${javafxPlatform}"
+    implementation "org.openjfx:javafx-controls:${javafxVersion}:${javafxPlatform}"
+    implementation "org.openjfx:javafx-graphics:${javafxVersion}:${javafxPlatform}"
 
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
     implementation 'org.jetbrains:annotations:13.0'
@@ -33,5 +33,14 @@ dependencies {
 }
 
 application {
-    mainClass = 'capitalism.CapitalismApplication'
+    mainClass = 'capitalism.Launcher'
+}
+
+run {
+    doFirst {
+        jvmArgs = [
+            '--module-path', classpath.asPath,
+            '--add-modules', 'javafx.controls'
+        ]
+    }
 }

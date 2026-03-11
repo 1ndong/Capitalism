@@ -17,197 +17,136 @@ import capitalism.Interface.ICompanyService;
 import capitalism.Property.PAAccount;
 import capitalism.Property.PCompanyData;
 import capitalism.UI.FrameLog;
+import capitalism.Util.URandom;
+
+import java.util.LinkedList;
 
 public class ProcessorMain {
-	public ProcessorMain()
-	{
-		FrameLog.getInstance().addLog("tag", "시작");
-		
-		start();
-	}
-	
-	private void start()
-	{
-		//sample initialize code
-		CCountry rok = new CCountry("대한민국");
-		CWorld.getInstance().getCountryList().add(rok);
-		
-		CGMinistryOfHealthAndWelfare gmohaw = new CGMinistryOfHealthAndWelfare(rok);
-		CGMinistryOfTradeIndustryAndEnergy gmotiae = new CGMinistryOfTradeIndustryAndEnergy(rok);
-		rok.getGovernmentMap().put(EGovernmentType.HealthAndWelfare, gmohaw);
-		rok.getGovernmentMap().put(EGovernmentType.TradeIndustryAndEnergy, gmotiae);
-		
-		CBCommercial shinhanbank = new CBCommercial(rok , "신한");
-		CBCommercial kookminbank = new CBCommercial(rok , "국민");
-		CBCommercial wooribank = new CBCommercial(rok , "우리");
-		rok.getBankList().add(shinhanbank);
-		shinhanbank.setSpreadInterestRate(2.1f);
-		rok.getBankList().add(kookminbank);
-		kookminbank.setSpreadInterestRate(2.4f);
-		rok.getBankList().add(wooribank);
-		wooribank.setSpreadInterestRate(2.2f);
-		
-		rok.getCentralBank().makeMoney(1000000000000L);//1조
-		rok.getCentralBank().releaseMoney(shinhanbank, 100000000000L);//1000억
-		rok.getCentralBank().releaseMoney(kookminbank, 100000000000L);
-		rok.getCentralBank().releaseMoney(wooribank, 100000000000L);
+    public ProcessorMain() {
+        FrameLog.getInstance().addLog("tag", "시작");
+        start();
+    }
 
-		//samsung
-		CCompany samsung = new CCompany(rok,new DTime(1955,2,12),"삼성");
-		gmotiae.registerCompany(samsung);
-		samsung.setSalaryDay(25);
-		//
+    private void start() {
+        // 국가 생성
+        CCountry rok = new CCountry("대한민국");
+        CWorld.getInstance().getCountryList().add(rok);
 
-		//lg
-		CCompany lg = new CCompany(rok,new DTime(1958,3,21),"LG");
-		gmotiae.registerCompany(lg);
-		lg.setSalaryDay(25);
-		//
+        CGMinistryOfHealthAndWelfare gmohaw = new CGMinistryOfHealthAndWelfare(rok);
+        CGMinistryOfTradeIndustryAndEnergy gmotiae = new CGMinistryOfTradeIndustryAndEnergy(rok);
+        rok.getGovernmentMap().put(EGovernmentType.HealthAndWelfare, gmohaw);
+        rok.getGovernmentMap().put(EGovernmentType.TradeIndustryAndEnergy, gmotiae);
 
-		//skt
-		CCompany skt = new CCompany(rok,new DTime(1970,5,4),"SK텔레콤");
-		gmotiae.registerCompany(skt);
-		skt.setSalaryDay(25);
-		//
+        // 은행 3개
+        CBCommercial shinhanbank = new CBCommercial(rok, "신한");
+        CBCommercial kookminbank = new CBCommercial(rok, "국민");
+        CBCommercial wooribank = new CBCommercial(rok, "우리");
+        rok.getBankList().add(shinhanbank);
+        rok.getBankList().add(kookminbank);
+        rok.getBankList().add(wooribank);
+        shinhanbank.setSpreadInterestRate(2.1f);
+        kookminbank.setSpreadInterestRate(2.4f);
+        wooribank.setSpreadInterestRate(2.2f);
 
-		//cj
-		CCompany cj = new CCompany(rok,new DTime(1984,2,3),"CJ");
-		gmotiae.registerCompany(cj);
-		cj.setSalaryDay(25);
-		//
+        // 통화 발행 + 은행 배분
+        rok.getCentralBank().makeMoney(10_000_000_000_000L); // 10조
+        rok.getCentralBank().releaseMoney(shinhanbank, 1_000_000_000_000L); // 1조
+        rok.getCentralBank().releaseMoney(kookminbank, 1_000_000_000_000L);
+        rok.getCentralBank().releaseMoney(wooribank, 1_000_000_000_000L);
 
-		//giordano
-		CCompany giordano = new CCompany(rok, new DTime(1988 , 6,7),"지오다노");
-		gmotiae.registerCompany(giordano);
-		giordano.setSalaryDay(25);
-		//
+        CBCommercial[] banks = {shinhanbank, kookminbank, wooribank};
+        DTime interestDay = new DTime(0, 0, 7);
 
-		//indong
-		CPeople indong = new CPeople(rok, new DTime(1987,2,12), "김인동");
-		gmohaw.registerPeople(indong);
-		//
+        // 기업 설정: {이름, 설립년, 월, 일, 대출금(억), 직원수, 담당은행인덱스}
+        Object[][] companyConfigs = {
+                {"삼성", 1955, 2, 12, 5000L, 200, 0},
+                {"LG", 1958, 3, 21, 3000L, 150, 1},
+                {"SK텔레콤", 1970, 5, 4, 2000L, 100, 2},
+                {"CJ", 1984, 2, 3, 1500L, 80, 2},
+                {"지오다노", 1988, 6, 7, 1000L, 60, 1},
+                {"현대", 1947, 5, 25, 4000L, 180, 0},
+                {"롯데", 1967, 4, 3, 2500L, 120, 1},
+                {"포스코", 1968, 4, 1, 3000L, 130, 2},
+                {"한화", 1952, 10, 8, 2000L, 90, 0},
+                {"KT", 1981, 12, 10, 1500L, 70, 1},
+        };
 
-		//ronaldo
-		CPeople ronaldo = new CPeople(rok , new DTime(1985,6,20) , "효날도");
-		gmohaw.registerPeople(ronaldo);
-		//
+        // 직급 분포 비율
+        ECompanyPosition[] positions = ECompanyPosition.values();
+        // Clerk 60%, SeniorClerk 20%, AssistantManager 10%, Manager 5%, Deputy 3%, General 2%
+        int[] positionWeights = {60, 20, 10, 5, 3, 2};
 
-		//jasonkim
-		CPeople jasonkim = new CPeople(rok, new DTime(1985,10,20),"자손킴");
-		gmohaw.registerPeople(jasonkim);
-		//
+        int peopleCounter = 0;
 
-		//beknim
-		CPeople beknim = new CPeople(rok , new DTime(1986,2,28),"박상뱀");
-		gmohaw.registerPeople(beknim);
-		//
+        for (Object[] config : companyConfigs) {
+            String companyName = (String) config[0];
+            int year = (int) config[1];
+            int month = (int) config[2];
+            int day = (int) config[3];
+            long loanBillion = (long) config[4]; // 억 단위
+            int staffCount = (int) config[5];
+            int bankIdx = (int) config[6];
 
-		//scwind
-		CPeople scwind = new CPeople(rok , new DTime(1986,10,28),"최형택");
-		gmohaw.registerPeople(scwind);
-		//
+            long loanAmount = loanBillion * 100_000_000L; // 억 → 원
+            CBCommercial bank = banks[bankIdx];
+            IBankService bankService = bank;
 
-		//yds0903
-		CPeople yds0903 = new CPeople(rok, new DTime(1986,9,3),"윤동식디스크");
-		gmohaw.registerPeople(yds0903);
-		//
-		//////////////////////////////
-		
-		DTime interestDay = new DTime(0,0,7);
-		
-		IBankService shbankservice = (IBankService)shinhanbank;
-		CBAccount samsungdepositaccount = shbankservice.makeNewAccount(samsung, EAccountType.Deposit,interestDay);
-		CBAccount samsungloanaccount = shbankservice.makeNewAccount(samsung, EAccountType.Loan,interestDay);
-		shbankservice.raiseLoan(samsungloanaccount, 50000000000L , 120 , 7);//500억
-		shbankservice.sendMoney(samsung.getBasicData().getPropertyAsset().findAccountInfo(samsungloanaccount)
-				, samsung.getBasicData().getPropertyAsset().findAccountInfo(samsungdepositaccount), 3000000000L);
-		if(samsung.getBasicData() instanceof PCompanyData)
-		{
-			PCompanyData cd = (PCompanyData) samsung.getBasicData();
-			cd.setMainDepositAccount(samsung.getBasicData().getPropertyAsset().findAccountInfo(samsungdepositaccount));
-		}
+            // 기업 생성
+            CCompany company = new CCompany(rok, new DTime(year, month, day), companyName);
+            gmotiae.registerCompany(company);
+            company.setSalaryDay(25);
 
-/////////////////////
-		IBankService kmbankservice = (IBankService)kookminbank;
-		CBAccount lgdepositaccount = kmbankservice.makeNewAccount(lg, EAccountType.Deposit,interestDay);
-		CBAccount lgloanaccount = kmbankservice.makeNewAccount(lg, EAccountType.Loan,interestDay);
-		kmbankservice.raiseLoan(lgloanaccount, 50000000000L, 120, 7);
-		kmbankservice.sendMoney(lg.getBasicData().getPropertyAsset().findAccountInfo(lgloanaccount)
-				, lg.getBasicData().getPropertyAsset().findAccountInfo(lgdepositaccount), 2000000000L);
-		if(lg.getBasicData() instanceof PCompanyData)
-		{
-			PCompanyData cd = (PCompanyData) lg.getBasicData();
-			cd.setMainDepositAccount(lg.getBasicData().getPropertyAsset().findAccountInfo(lgdepositaccount));
-		}
+            // 기업 예금/대출 계좌
+            CBAccount depositAccount = bankService.makeNewAccount(company, EAccountType.Deposit, interestDay);
+            CBAccount loanAccount = bankService.makeNewAccount(company, EAccountType.Loan, interestDay);
+            bankService.raiseLoan(loanAccount, loanAmount, 120, 7);
 
-		CBAccount giordanodepositaccount = kmbankservice.makeNewAccount(giordano, EAccountType.Deposit,interestDay);
-		CBAccount giordanoloanaccount = kmbankservice.makeNewAccount(giordano, EAccountType.Loan,interestDay);
-		kmbankservice.raiseLoan(giordanoloanaccount, 30000000000L, 120, 7);
-		kmbankservice.sendMoney(giordano.getBasicData().getPropertyAsset().findAccountInfo(giordanoloanaccount)
-				, giordano.getBasicData().getPropertyAsset().findAccountInfo(giordanodepositaccount), 2000000000L);
-		if(giordano.getBasicData() instanceof PCompanyData)
-		{
-			PCompanyData cd = (PCompanyData) giordano.getBasicData();
-			cd.setMainDepositAccount(giordano.getBasicData().getPropertyAsset().findAccountInfo(giordanodepositaccount));
-		}
-/////////////////////
-		IBankService wrbankservice = (IBankService)wooribank;
-		CBAccount samsungwrloanaccount = wrbankservice.makeNewAccount(samsung, EAccountType.Loan,interestDay);
-		wrbankservice.raiseLoan(samsungwrloanaccount, 10000000000L, 120, 7);//100억
-		CBAccount lgwrloanaccount = wrbankservice.makeNewAccount(lg, EAccountType.Loan,interestDay);
-		wrbankservice.raiseLoan(lgwrloanaccount, 30000000000L, 120, 7);//400억
+            // 대출금의 일부를 예금으로 이동 (운영자금)
+            long operatingCash = loanAmount / 5;
+            bankService.sendMoney(
+                    company.getBasicData().getPropertyAsset().findAccountInfo(loanAccount),
+                    company.getBasicData().getPropertyAsset().findAccountInfo(depositAccount),
+                    operatingCash
+            );
 
-		CBAccount sktdepositaccount = wrbankservice.makeNewAccount(skt, EAccountType.Deposit,interestDay);
-		CBAccount sktloanaccount = wrbankservice.makeNewAccount(skt, EAccountType.Loan,interestDay);
-		wrbankservice.raiseLoan(sktloanaccount, 30000000000L, 120, 7);
-		wrbankservice.sendMoney(skt.getBasicData().getPropertyAsset().findAccountInfo(sktloanaccount)
-				, skt.getBasicData().getPropertyAsset().findAccountInfo(sktdepositaccount), 2000000000L);
-		if(skt.getBasicData() instanceof PCompanyData)
-		{
-			PCompanyData cd = (PCompanyData) skt.getBasicData();
-			cd.setMainDepositAccount(skt.getBasicData().getPropertyAsset().findAccountInfo(sktdepositaccount));
-		}
+            if (company.getBasicData() instanceof PCompanyData cd) {
+                cd.setMainDepositAccount(company.getBasicData().getPropertyAsset().findAccountInfo(depositAccount));
+            }
 
-		CBAccount cjdepositaccount = wrbankservice.makeNewAccount(cj, EAccountType.Deposit,interestDay);
-		CBAccount cjloanaccount = wrbankservice.makeNewAccount(cj, EAccountType.Loan,interestDay);
-		wrbankservice.raiseLoan(cjloanaccount, 20000000000L, 120, 7);
-		wrbankservice.sendMoney(cj.getBasicData().getPropertyAsset().findAccountInfo(cjloanaccount)
-				, cj.getBasicData().getPropertyAsset().findAccountInfo(cjdepositaccount), 2000000000L);
-		if(cj.getBasicData() instanceof PCompanyData)
-		{
-			PCompanyData cd = (PCompanyData) cj.getBasicData();
-			cd.setMainDepositAccount(cj.getBasicData().getPropertyAsset().findAccountInfo(cjdepositaccount));
-		}
+            // 직원 자동 생성
+            for (int i = 0; i < staffCount; i++) {
+                peopleCounter++;
+                int birthYear = 1970 + URandom.getInstance().nextInt(25); // 1970~1994
+                int birthMonth = 1 + URandom.getInstance().nextInt(12);
+                int birthDay = 1 + URandom.getInstance().nextInt(28);
+                String peopleName = "시민" + peopleCounter;
 
-	///////////////////
-		ICompanyService samsungservice = (ICompanyService)samsung;
-		ICompanyService lgservice = (ICompanyService)lg;
-		ICompanyService sktservice = (ICompanyService)skt;
-		ICompanyService cjservice = (ICompanyService)cj;
-		ICompanyService giordanoservice = (ICompanyService)giordano;
+                CPeople person = new CPeople(rok, new DTime(birthYear, birthMonth, birthDay), peopleName);
+                gmohaw.registerPeople(person);
 
-		CBAccount indongsalaryaccount = shbankservice.makeNewAccount(indong, EAccountType.Deposit,interestDay);
-		PAAccount indongaccountinfo = indong.getBasicData().getPropertyAsset().findAccountInfo(indongsalaryaccount);
-		samsungservice.joinCompany(indong, indongaccountinfo, ECompanyPosition.Clerk);
+                // 급여 계좌 (랜덤 은행)
+                CBCommercial salaryBank = banks[URandom.getInstance().nextInt(banks.length)];
+                CBAccount salaryAccount = ((IBankService) salaryBank).makeNewAccount(person, EAccountType.Deposit, interestDay);
+                PAAccount salaryAccountInfo = person.getBasicData().getPropertyAsset().findAccountInfo(salaryAccount);
 
-		CBAccount jasonkimsalaryaccount = kmbankservice.makeNewAccount(jasonkim, EAccountType.Deposit,interestDay);
-		PAAccount jasonkimaccountinfo = jasonkim.getBasicData().getPropertyAsset().findAccountInfo(jasonkimsalaryaccount);
-		lgservice.joinCompany(jasonkim, jasonkimaccountinfo, ECompanyPosition.Clerk);
+                // 직급 배분
+                ECompanyPosition position = pickPosition(positions, positionWeights);
+                ((ICompanyService) company).joinCompany(person, salaryAccountInfo, position);
+            }
+        }
 
-		CBAccount ronaldosalaryaccount = wrbankservice.makeNewAccount(ronaldo , EAccountType.Deposit,interestDay);
-		PAAccount ronaldoaccountinfo = ronaldo.getBasicData().getPropertyAsset().findAccountInfo(ronaldosalaryaccount);
-		sktservice.joinCompany(ronaldo,ronaldoaccountinfo,ECompanyPosition.Clerk);
+        FrameLog.getInstance().addLog("init", "초기화 완료: 기업 " + companyConfigs.length + "개, 시민 " + peopleCounter + "명");
+    }
 
-		CBAccount beknimsalaryaccount = wrbankservice.makeNewAccount(beknim , EAccountType.Deposit,interestDay);
-		PAAccount beknimaccountinfo = beknim.getBasicData().getPropertyAsset().findAccountInfo(beknimsalaryaccount);
-		cjservice.joinCompany(beknim,beknimaccountinfo,ECompanyPosition.Clerk);
-
-		CBAccount scwindsalaryaccount = shbankservice.makeNewAccount(scwind , EAccountType.Deposit,interestDay);
-		PAAccount scwindaccountinfo = scwind.getBasicData().getPropertyAsset().findAccountInfo(scwindsalaryaccount);
-		samsungservice.joinCompany(scwind,scwindaccountinfo,ECompanyPosition.Clerk);
-
-		CBAccount yds0903salaryaccount = kmbankservice.makeNewAccount(yds0903 , EAccountType.Deposit,interestDay);
-		PAAccount yds0903accountinfo = yds0903.getBasicData().getPropertyAsset().findAccountInfo(yds0903salaryaccount);
-		giordanoservice.joinCompany(yds0903,yds0903accountinfo,ECompanyPosition.Clerk);
-	}
+    private ECompanyPosition pickPosition(ECompanyPosition[] positions, int[] weights) {
+        int total = 0;
+        for (int w : weights) total += w;
+        int rand = URandom.getInstance().nextInt(total);
+        int cumulative = 0;
+        for (int i = 0; i < positions.length; i++) {
+            cumulative += weights[i];
+            if (rand < cumulative) return positions[i];
+        }
+        return positions[0];
+    }
 }

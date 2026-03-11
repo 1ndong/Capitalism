@@ -22,9 +22,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.util.LinkedList;
@@ -38,8 +40,8 @@ public class FrameMain implements ITime {
     private TableView<String[]> peopleTable;
     private TableView<String[]> companyTable;
 
-    public static void MakeMainFrame(Stage primaryStage, double width, double height) {
-        instance = new FrameMain(primaryStage, width, height);
+    public static void MakeMainFrame(Stage primaryStage, double width, double height, SplitPane rightPane) {
+        instance = new FrameMain(primaryStage, width, height, rightPane);
         instance.updateComponent();
     }
 
@@ -47,7 +49,7 @@ public class FrameMain implements ITime {
         return instance;
     }
 
-    private FrameMain(Stage primaryStage, double width, double height) {
+    private FrameMain(Stage primaryStage, double width, double height, SplitPane rightPane) {
         primaryStage.setTitle("Capitalism");
         primaryStage.setX(0);
         primaryStage.setY(0);
@@ -70,16 +72,22 @@ public class FrameMain implements ITime {
         VBox.setVgrow(companyTable, Priority.ALWAYS);
         tableBox.setPrefWidth(tableWidth);
 
-        HBox root = new HBox(dashboard, tableBox);
+        HBox leftPane = new HBox(dashboard, tableBox);
         HBox.setHgrow(tableBox, Priority.ALWAYS);
 
-        Scene scene = new Scene(root, width, height);
+        // Combine left (main) + right (log + control) into one window
+        SplitPane mainSplit = new SplitPane(leftPane, rightPane);
+        mainSplit.setDividerPositions(0.7);
+
+        Scene scene = new Scene(mainSplit, Screen.getPrimary().getVisualBounds().getWidth(),
+                Screen.getPrimary().getVisualBounds().getHeight());
 
         scene.addEventFilter(KeyEvent.KEY_RELEASED, e -> {
             ProcessorDay.GetInstance().Process();
         });
 
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
         primaryStage.show();
 
         new ProcessorMain();

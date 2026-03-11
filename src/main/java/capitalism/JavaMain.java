@@ -3,7 +3,9 @@ package capitalism;
 import capitalism.UI.FrameControl;
 import capitalism.UI.FrameLog;
 import capitalism.UI.FrameMain;
+import javafx.geometry.Orientation;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.SplitPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -20,12 +22,22 @@ public class JavaMain {
         double logWidth = width - mainWidth;
 
         double logHeight = height * RATIO_LOG_HEIGHT;
-        FrameLog.MakeLogFrame(mainWidth, logWidth, logHeight);
-
         double controlHeight = height - logHeight;
-        FrameControl.MakeControlFrame(mainWidth, logHeight, logWidth, controlHeight);
 
-        FrameMain.MakeMainFrame(primaryStage, mainWidth, height);
+        // Create embedded panels (no separate windows)
+        FrameLog.MakeLogFrame();
+        FrameControl.MakeControlFrame(logWidth, controlHeight);
+
+        // Right side: Log (top) + Control (bottom)
+        SplitPane rightPane = new SplitPane(
+                FrameLog.getInstance().getRoot(),
+                FrameControl.getInstance().getRoot()
+        );
+        rightPane.setOrientation(Orientation.VERTICAL);
+        rightPane.setDividerPositions(RATIO_LOG_HEIGHT);
+
+        // Main split: Main (left) + Right pane
+        FrameMain.MakeMainFrame(primaryStage, mainWidth, height, rightPane);
     }
 }
 /*

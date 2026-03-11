@@ -1,6 +1,7 @@
 package capitalism.UI.CustomPanel;
 
 import capitalism.Classes.Bank.CBAccount;
+import capitalism.Classes.Bank.CBCentral;
 import capitalism.Classes.Bank.CBCommercial;
 import capitalism.Classes.CCompany;
 import capitalism.Classes.CCountry;
@@ -20,16 +21,18 @@ import capitalism.Processor.ProcessorDay;
 import capitalism.UI.FrameMain;
 import capitalism.Util.UCurrency;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.util.Iterator;
@@ -40,8 +43,12 @@ public class DashBoardPanel extends VBox implements ITime {
     private ComboBox<String> combobox;
     private Label dayLabel;
     private boolean bInit = false;
-    private ObservableList<String[]> infoData;
-    private TableView<String[]> infoTable;
+
+    // Bank tab
+    private FlowPane bankCardPane;
+    private StackPane bankContentPane;
+    private VBox bankCardListView;
+    private VBox bankDetailView;
 
     public DashBoardPanel(double width, double height) {
         setPrefWidth(width);
@@ -68,19 +75,36 @@ public class DashBoardPanel extends VBox implements ITime {
         upperPanel.setStyle("-fx-background-color: blue;");
         upperPanel.setPrefHeight(height * 0.1);
 
-        // Info table
-        infoData = FXCollections.observableArrayList();
-        infoTable = new TableView<>(infoData);
-        TableColumn<String[], String> infoCol = new TableColumn<>("[information]");
-        infoCol.setCellValueFactory(p -> new SimpleStringProperty(p.getValue()[0]));
-        infoCol.setPrefWidth(width);
-        infoTable.getColumns().add(infoCol);
-        infoTable.setFixedCellSize(40);
-        infoTable.setStyle("-fx-base: #2c2255; -fx-text-fill: white;");
+        // TabPane
+        TabPane tabPane = new TabPane();
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        tabPane.setStyle("-fx-font-size: 13;");
+        VBox.setVgrow(tabPane, Priority.ALWAYS);
 
-        VBox.setVgrow(infoTable, Priority.ALWAYS);
+        // Bank tab
+        Tab bankTab = new Tab("은행");
+        bankCardPane = new FlowPane(10, 10);
+        bankCardPane.setPadding(new Insets(10));
+        bankCardPane.setStyle("-fx-background-color: #1a1a2e;");
 
-        getChildren().addAll(upperPanel, infoTable);
+        ScrollPane bankScrollPane = new ScrollPane(bankCardPane);
+        bankScrollPane.setFitToWidth(true);
+        bankScrollPane.setStyle("-fx-background: #1a1a2e; -fx-background-color: #1a1a2e;");
+
+        bankCardListView = new VBox(bankScrollPane);
+        VBox.setVgrow(bankScrollPane, Priority.ALWAYS);
+
+        bankDetailView = new VBox();
+        bankDetailView.setPadding(new Insets(10));
+        bankDetailView.setStyle("-fx-background-color: #1a1a2e;");
+
+        bankContentPane = new StackPane(bankCardListView, bankDetailView);
+        bankDetailView.setVisible(false);
+        bankTab.setContent(bankContentPane);
+
+        tabPane.getTabs().add(bankTab);
+
+        getChildren().addAll(upperPanel, tabPane);
 
         ITimeKeeper timekeeper = (ITimeKeeper) ProcessorDay.GetInstance();
         timekeeper.addTimeSlave(this);
@@ -100,7 +124,7 @@ public class DashBoardPanel extends VBox implements ITime {
             bInit = true;
         }
 
-        infoData.clear();
+        bankCardPane.getChildren().clear();
 
         if (combobox.getSelectionModel().getSelectedIndex() == -1)
             return;
@@ -116,19 +140,36 @@ public class DashBoardPanel extends VBox implements ITime {
         }
 
         if (country != null) {
-            DCareTaker careTaker = country.getCentralBank().getCareTaker();
+            // Central bank card
+            CBCentral centralBank = country.getCentralBank();
+            DCareTaker careTaker = centralBank.getCareTaker();
             long allMadeMoney = 0;
             for (int i = 0; i < careTaker.getList().size(); i++) {
                 DHCentralBank history = (DHCentralBank) careTaker.getList().get(i);
                 allMadeMoney += history.getMakeMoneyAmount();
             }
-            addInfo("중앙은행 총 통화 발행량 : " + UCurrency.getInstance().toString(allMadeMoney, ECurrency.Won));
-            addInfo("기준금리 : " + country.getCentralBank().getBaseInterestRate() + "%");
-            addInfo("중앙은행 현금보유량 : " + UCurrency.getInstance().toString(country.getCentralBank().getBalance().getCash(), ECurrency.Won));
 
+            String cbCash = UCurrency.getInstance().toString(centralBank.getBalance().getCash(), ECurrency.Won);
+            String cbTotal = UCurrency.getInstance().toString(allMadeMoney, ECurrency.Won);
+            float baseRate = centralBank.getBaseInterestRate();
+
+            VBox centralCard = createBankCard(
+                    "한국은행 (중앙은행)",
+                    "#e74c3c",
+                    new String[]{
+                            "기준금리 : " + baseRate + "%",
+                            "총 통화 발행량 : " + cbTotal,
+                            "현금보유량 : " + cbCash
+                    }
+            );
+            final long finalAllMadeMoney = allMadeMoney;
+            final CCountry finalCountry = country;
+            centralCard.setOnMouseClicked(e -> showCentralBankDetail(centralBank, finalAllMadeMoney));
+            bankCardPane.getChildren().add(centralCard);
+
+            // Commercial bank cards
             for (int i = 0; i < country.getBankList().size(); i++) {
                 CBCommercial bank = (CBCommercial) country.getBankList().get(i);
-                addInfo(bank.getName() + " , 가산금리 : " + bank.getSpreadInterestRate() + "%");
 
                 long creditCurrency = 0;
                 for (int j = 0; j < bank.getBankMemberList().size(); j++) {
@@ -138,13 +179,29 @@ public class DashBoardPanel extends VBox implements ITime {
                         creditCurrency += account.getRightsOfCash();
                     }
                 }
-                addInfo(bank.getName() + " , 신용통화 : " + UCurrency.getInstance().toString(creditCurrency, ECurrency.Won));
-                addInfo(bank.getName() + " , 현금보유량 : " + UCurrency.getInstance().toString(bank.getBalance().getCash(), ECurrency.Won));
+
+                float totalRate = baseRate + bank.getSpreadInterestRate();
+                String bankCash = UCurrency.getInstance().toString(bank.getBalance().getCash(), ECurrency.Won);
+                String bankCredit = UCurrency.getInstance().toString(creditCurrency, ECurrency.Won);
+
+                VBox card = createBankCard(
+                        bank.getName() + "은행",
+                        "#2980b9",
+                        new String[]{
+                                "적용금리 : " + totalRate + "% (가산 " + bank.getSpreadInterestRate() + "%)",
+                                "신용통화 : " + bankCredit,
+                                "현금보유량 : " + bankCash
+                        }
+                );
+                final CBCommercial finalBank = bank;
+                final long finalCredit = creditCurrency;
+                card.setOnMouseClicked(e -> showCommercialBankDetail(finalBank, finalCredit, baseRate));
+                bankCardPane.getChildren().add(card);
             }
         }
 
+        // Update people/company tables
         CGMinistryOfHealthAndWelfare mohaw = (CGMinistryOfHealthAndWelfare) country.getGovernmentMap().get(EGovernmentType.HealthAndWelfare);
-
         Iterator<Integer> mapIter = mohaw.getPeopleMap().keySet().iterator();
         LinkedList<CPeople> peopleList = new LinkedList<>();
         while (mapIter.hasNext()) {
@@ -155,7 +212,6 @@ public class DashBoardPanel extends VBox implements ITime {
         FrameMain.getInstance().addPeopleList(peopleList);
 
         CGMinistryOfTradeIndustryAndEnergy motia = (CGMinistryOfTradeIndustryAndEnergy) country.getGovernmentMap().get(EGovernmentType.TradeIndustryAndEnergy);
-
         Iterator<Integer> mapIter2 = motia.getCompanyMap().keySet().iterator();
         LinkedList<CCompany> companyList = new LinkedList<>();
         while (mapIter2.hasNext()) {
@@ -166,8 +222,124 @@ public class DashBoardPanel extends VBox implements ITime {
         FrameMain.getInstance().addCompanyList(companyList);
     }
 
-    private void addInfo(String content) {
-        infoData.add(new String[]{content});
+    private VBox createBankCard(String title, String accentColor, String[] infoLines) {
+        VBox card = new VBox(6);
+        card.setPadding(new Insets(12));
+        card.setPrefWidth(220);
+        card.setStyle(
+                "-fx-background-color: #16213e;" +
+                "-fx-background-radius: 8;" +
+                "-fx-border-color: " + accentColor + ";" +
+                "-fx-border-radius: 8;" +
+                "-fx-border-width: 2;" +
+                "-fx-cursor: hand;"
+        );
+
+        Label titleLbl = new Label(title);
+        titleLbl.setStyle("-fx-text-fill: white; -fx-font-size: 15; -fx-font-weight: bold;");
+
+        card.getChildren().add(titleLbl);
+
+        for (String line : infoLines) {
+            Label lbl = new Label(line);
+            lbl.setStyle("-fx-text-fill: #b0b0b0; -fx-font-size: 12;");
+            lbl.setWrapText(true);
+            card.getChildren().add(lbl);
+        }
+
+        // Hover effect
+        card.setOnMouseEntered(e -> card.setStyle(
+                "-fx-background-color: #1a2744;" +
+                "-fx-background-radius: 8;" +
+                "-fx-border-color: " + accentColor + ";" +
+                "-fx-border-radius: 8;" +
+                "-fx-border-width: 2;" +
+                "-fx-cursor: hand;"
+        ));
+        card.setOnMouseExited(e -> card.setStyle(
+                "-fx-background-color: #16213e;" +
+                "-fx-background-radius: 8;" +
+                "-fx-border-color: " + accentColor + ";" +
+                "-fx-border-radius: 8;" +
+                "-fx-border-width: 2;" +
+                "-fx-cursor: hand;"
+        ));
+
+        return card;
+    }
+
+    private void showCentralBankDetail(CBCentral bank, long allMadeMoney) {
+        bankDetailView.getChildren().clear();
+
+        Button backBtn = new Button("< 돌아가기");
+        backBtn.setStyle("-fx-background-color: #34495e; -fx-text-fill: white; -fx-font-size: 13;");
+        backBtn.setOnAction(e -> {
+            bankDetailView.setVisible(false);
+            bankCardListView.setVisible(true);
+        });
+
+        Label title = new Label("한국은행 (중앙은행)");
+        title.setStyle("-fx-text-fill: white; -fx-font-size: 20; -fx-font-weight: bold;");
+        title.setPadding(new Insets(10, 0, 10, 0));
+
+        VBox infoBox = new VBox(8);
+        infoBox.setPadding(new Insets(10));
+        infoBox.setStyle("-fx-background-color: #16213e; -fx-background-radius: 8;");
+
+        addDetailRow(infoBox, "기준금리", bank.getBaseInterestRate() + "%");
+        addDetailRow(infoBox, "총 통화 발행량", UCurrency.getInstance().toString(allMadeMoney, ECurrency.Won));
+        addDetailRow(infoBox, "현금보유량", UCurrency.getInstance().toString(bank.getBalance().getCash(), ECurrency.Won));
+        addDetailRow(infoBox, "등록 시중은행 수", bank.getBankList().size() + "개");
+
+        bankDetailView.getChildren().addAll(backBtn, title, infoBox);
+        bankCardListView.setVisible(false);
+        bankDetailView.setVisible(true);
+    }
+
+    private void showCommercialBankDetail(CBCommercial bank, long creditCurrency, float baseRate) {
+        bankDetailView.getChildren().clear();
+
+        Button backBtn = new Button("< 돌아가기");
+        backBtn.setStyle("-fx-background-color: #34495e; -fx-text-fill: white; -fx-font-size: 13;");
+        backBtn.setOnAction(e -> {
+            bankDetailView.setVisible(false);
+            bankCardListView.setVisible(true);
+        });
+
+        Label title = new Label(bank.getName() + "은행");
+        title.setStyle("-fx-text-fill: white; -fx-font-size: 20; -fx-font-weight: bold;");
+        title.setPadding(new Insets(10, 0, 10, 0));
+
+        VBox infoBox = new VBox(8);
+        infoBox.setPadding(new Insets(10));
+        infoBox.setStyle("-fx-background-color: #16213e; -fx-background-radius: 8;");
+
+        float totalRate = baseRate + bank.getSpreadInterestRate();
+        addDetailRow(infoBox, "기준금리", baseRate + "%");
+        addDetailRow(infoBox, "가산금리", bank.getSpreadInterestRate() + "%");
+        addDetailRow(infoBox, "적용금리", totalRate + "%");
+        addDetailRow(infoBox, "신용통화", UCurrency.getInstance().toString(creditCurrency, ECurrency.Won));
+        addDetailRow(infoBox, "현금보유량", UCurrency.getInstance().toString(bank.getBalance().getCash(), ECurrency.Won));
+        addDetailRow(infoBox, "고객 수", bank.getBankMemberList().size() + "명");
+
+        bankDetailView.getChildren().addAll(backBtn, title, infoBox);
+        bankCardListView.setVisible(false);
+        bankDetailView.setVisible(true);
+    }
+
+    private void addDetailRow(VBox container, String label, String value) {
+        HBox row = new HBox(10);
+        row.setAlignment(Pos.CENTER_LEFT);
+
+        Label lblKey = new Label(label);
+        lblKey.setStyle("-fx-text-fill: #7f8c8d; -fx-font-size: 13;");
+        lblKey.setMinWidth(120);
+
+        Label lblValue = new Label(value);
+        lblValue.setStyle("-fx-text-fill: white; -fx-font-size: 13; -fx-font-weight: bold;");
+
+        row.getChildren().addAll(lblKey, lblValue);
+        container.getChildren().add(row);
     }
 
     @Override

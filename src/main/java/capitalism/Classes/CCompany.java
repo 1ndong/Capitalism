@@ -59,7 +59,10 @@ public class CCompany extends CBeing implements ICompanyService, ISearchable {
 						case GeneralManager -> 5500000;
 						default -> 0;
 					};
-					bankservice.sendMoney(accountForPaySalary, temp.getSalaryAccount(), amount);
+					boolean paid = bankservice.sendMoney(accountForPaySalary, temp.getSalaryAccount(), amount);
+					if (paid) {
+						temp.getMember().onSalaryReceived(amount);
+					}
 				}
 			} else {
 				FrameLog.getInstance().addLog("daychange", "급여지급용 계좌 없음");

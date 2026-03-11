@@ -9,6 +9,7 @@ import capitalism.UI.FrameLog;
 public class CGMinistryOfTradeIndustryAndEnergy extends CGovernment{
 
 	private HashMap<Integer,CCompany> companyMap = new HashMap<Integer,CCompany>();
+	private CCompany[] companyCache = null;
 	
 	public CGMinistryOfTradeIndustryAndEnergy(CCountry country) {
 		super(country);
@@ -21,7 +22,15 @@ public class CGMinistryOfTradeIndustryAndEnergy extends CGovernment{
 		int ID = makeUniqueID();
 		company.getBasicData().setID(ID);
 		companyMap.put(ID,company);
+		companyCache = null; // invalidate cache
 		FrameLog.getInstance().addLog("registerCompany", "신규등록 완료 이름 = "+company.getBasicData().getName());
+	}
+
+	public CCompany[] getCompanyArray() {
+		if (companyCache == null) {
+			companyCache = companyMap.values().toArray(new CCompany[0]);
+		}
+		return companyCache;
 	}
 	
 	private int makeUniqueID()

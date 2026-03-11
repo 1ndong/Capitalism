@@ -8,6 +8,7 @@ import capitalism.Classes.CPeople;
 import capitalism.Classes.CWorld;
 import capitalism.Classes.Government.CGMinistryOfHealthAndWelfare;
 import capitalism.Classes.Government.CGMinistryOfTradeIndustryAndEnergy;
+import capitalism.Classes.Government.CGNationalTaxService;
 import capitalism.DataStructure.DTime;
 import capitalism.Enum.EAccountType;
 import capitalism.Enum.ECompanyPosition;
@@ -34,8 +35,10 @@ public class ProcessorMain {
 
         CGMinistryOfHealthAndWelfare gmohaw = new CGMinistryOfHealthAndWelfare(rok);
         CGMinistryOfTradeIndustryAndEnergy gmotiae = new CGMinistryOfTradeIndustryAndEnergy(rok);
+        CGNationalTaxService taxService = new CGNationalTaxService(rok);
         rok.getGovernmentMap().put(EGovernmentType.HealthAndWelfare, gmohaw);
         rok.getGovernmentMap().put(EGovernmentType.TradeIndustryAndEnergy, gmotiae);
+        rok.getGovernmentMap().put(EGovernmentType.NationalTaxService, taxService);
 
         // 은행 3개
         CBCommercial shinhanbank = new CBCommercial(rok, "신한");

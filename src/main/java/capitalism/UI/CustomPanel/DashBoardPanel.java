@@ -3,12 +3,14 @@ package capitalism.UI.CustomPanel;
 import capitalism.Classes.Bank.CBAccount;
 import capitalism.Classes.Bank.CBCentral;
 import capitalism.Classes.Bank.CBCommercial;
+import capitalism.Classes.Bank.CBank;
 import capitalism.Classes.CCompany;
 import capitalism.Classes.CCountry;
 import capitalism.Classes.CPeople;
 import capitalism.Classes.CWorld;
 import capitalism.Classes.Government.CGMinistryOfHealthAndWelfare;
 import capitalism.Classes.Government.CGMinistryOfTradeIndustryAndEnergy;
+import capitalism.Classes.Government.CGNationalTaxService;
 import capitalism.DataStructure.DBankMember;
 import capitalism.DataStructure.DCareTaker;
 import capitalism.DataStructure.DHCentralBank;
@@ -25,17 +27,8 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.util.Duration;
 
 import java.util.Iterator;
@@ -52,6 +45,19 @@ public class DashBoardPanel extends VBox implements ITime {
     private StackPane bankContentPane;
     private VBox bankCardListView;
     private VBox bankDetailView;
+
+    // Government tab
+    private VBox govContent;
+    private Label govBalanceLabel;
+    private Label govEarnedTaxLabel;
+    private Label govCorpTaxLabel;
+    private Label govTotalTaxLabel;
+    private Label govMonthlyEarnedLabel;
+    private Label govMonthlyCorpLabel;
+    private Slider earnedTaxSlider;
+    private Slider corpTaxSlider;
+    private Label earnedTaxValueLabel;
+    private Label corpTaxValueLabel;
 
     public DashBoardPanel(double width, double height) {
         setPrefWidth(width);
@@ -132,13 +138,152 @@ public class DashBoardPanel extends VBox implements ITime {
         bankDetailView.setVisible(false);
         bankTab.setContent(bankContentPane);
 
-        tabPane.getTabs().add(bankTab);
+        // Government tab
+        Tab govTab = new Tab("정부");
+        govContent = buildGovernmentTab();
+        govTab.setContent(govContent);
+
+        tabPane.getTabs().addAll(bankTab, govTab);
 
         getChildren().addAll(upperPanel, btnBar, tabPane);
 
         ITimeKeeper timekeeper = (ITimeKeeper) ProcessorDay.GetInstance();
         timekeeper.addTimeSlave(this);
     }
+
+    // ==================== Government Tab ====================
+
+    private VBox buildGovernmentTab() {
+        VBox root = new VBox(10);
+        root.setPadding(new Insets(10));
+        root.setStyle("-fx-background-color: #1a1a2e;");
+
+        // 국고 현황
+        Label sectionTitle = new Label("국고 현황");
+        sectionTitle.setStyle("-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;");
+
+        VBox balanceBox = new VBox(6);
+        balanceBox.setPadding(new Insets(10));
+        balanceBox.setStyle("-fx-background-color: #16213e; -fx-background-radius: 8; -fx-border-color: #27ae60; -fx-border-radius: 8; -fx-border-width: 2;");
+
+        govBalanceLabel = createValueLabel("0");
+        govTotalTaxLabel = createValueLabel("0");
+        govMonthlyEarnedLabel = createValueLabel("0");
+        govMonthlyCorpLabel = createValueLabel("0");
+        govEarnedTaxLabel = createValueLabel("0");
+        govCorpTaxLabel = createValueLabel("0");
+
+        balanceBox.getChildren().addAll(
+                createInfoRow("국고 잔액", govBalanceLabel),
+                createInfoRow("누적 세수", govTotalTaxLabel),
+                new Separator(),
+                createInfoRow("이번달 소득세", govMonthlyEarnedLabel),
+                createInfoRow("이번달 법인세", govMonthlyCorpLabel),
+                new Separator(),
+                createInfoRow("누적 소득세", govEarnedTaxLabel),
+                createInfoRow("누적 법인세", govCorpTaxLabel)
+        );
+
+        // 세율 조절
+        Label taxTitle = new Label("세율 조절");
+        taxTitle.setStyle("-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;");
+        taxTitle.setPadding(new Insets(10, 0, 0, 0));
+
+        VBox taxBox = new VBox(8);
+        taxBox.setPadding(new Insets(10));
+        taxBox.setStyle("-fx-background-color: #16213e; -fx-background-radius: 8; -fx-border-color: #e67e22; -fx-border-radius: 8; -fx-border-width: 2;");
+
+        // 근로소득세
+        earnedTaxValueLabel = new Label("6.0%");
+        earnedTaxValueLabel.setStyle("-fx-text-fill: #e74c3c; -fx-font-size: 14; -fx-font-weight: bold;");
+
+        earnedTaxSlider = new Slider(0, 50, 6.0);
+        earnedTaxSlider.setShowTickLabels(true);
+        earnedTaxSlider.setShowTickMarks(true);
+        earnedTaxSlider.setMajorTickUnit(10);
+        earnedTaxSlider.setBlockIncrement(0.5);
+        earnedTaxSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            float rate = Math.round(newVal.floatValue() * 2) / 2.0f;
+            earnedTaxValueLabel.setText(rate + "%");
+            applyTaxRate("earned", rate);
+        });
+
+        Label earnedLabel = new Label("근로소득세");
+        earnedLabel.setStyle("-fx-text-fill: #b0b0b0; -fx-font-size: 13;");
+
+        // 법인세
+        corpTaxValueLabel = new Label("10.0%");
+        corpTaxValueLabel.setStyle("-fx-text-fill: #e74c3c; -fx-font-size: 14; -fx-font-weight: bold;");
+
+        corpTaxSlider = new Slider(0, 50, 10.0);
+        corpTaxSlider.setShowTickLabels(true);
+        corpTaxSlider.setShowTickMarks(true);
+        corpTaxSlider.setMajorTickUnit(10);
+        corpTaxSlider.setBlockIncrement(0.5);
+        corpTaxSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            float rate = Math.round(newVal.floatValue() * 2) / 2.0f;
+            corpTaxValueLabel.setText(rate + "%");
+            applyTaxRate("corp", rate);
+        });
+
+        Label corpLabel = new Label("법인세");
+        corpLabel.setStyle("-fx-text-fill: #b0b0b0; -fx-font-size: 13;");
+
+        taxBox.getChildren().addAll(
+                new HBox(10, earnedLabel, earnedTaxValueLabel),
+                earnedTaxSlider,
+                new HBox(10, corpLabel, corpTaxValueLabel),
+                corpTaxSlider
+        );
+
+        root.getChildren().addAll(sectionTitle, balanceBox, taxTitle, taxBox);
+        return root;
+    }
+
+    private HBox createInfoRow(String label, Label valueLabel) {
+        HBox row = new HBox(10);
+        row.setAlignment(Pos.CENTER_LEFT);
+        Label key = new Label(label);
+        key.setStyle("-fx-text-fill: #7f8c8d; -fx-font-size: 13;");
+        key.setMinWidth(120);
+        row.getChildren().addAll(key, valueLabel);
+        return row;
+    }
+
+    private Label createValueLabel(String text) {
+        Label lbl = new Label(text);
+        lbl.setStyle("-fx-text-fill: white; -fx-font-size: 13; -fx-font-weight: bold;");
+        return lbl;
+    }
+
+    private void applyTaxRate(String type, float rate) {
+        if (CWorld.getInstance() == null || CWorld.getInstance().getCountryList().isEmpty()) return;
+        CCountry country = CWorld.getInstance().getCountryList().get(0);
+        CGNationalTaxService tax = (CGNationalTaxService) country.getGovernmentMap().get(EGovernmentType.NationalTaxService);
+        if (tax == null) return;
+
+        if ("earned".equals(type)) {
+            tax.setEarnedIncomeTaxRate(rate);
+        } else {
+            tax.setCorporateTaxRate(rate);
+        }
+    }
+
+    private void updateGovernmentTab() {
+        if (CWorld.getInstance() == null || CWorld.getInstance().getCountryList().isEmpty()) return;
+        CCountry country = CWorld.getInstance().getCountryList().get(0);
+        CGNationalTaxService tax = (CGNationalTaxService) country.getGovernmentMap().get(EGovernmentType.NationalTaxService);
+        if (tax == null) return;
+
+        govBalanceLabel.setText(UCurrency.getInstance().toString(tax.getNationalBalance(), ECurrency.Won));
+        govTotalTaxLabel.setText(UCurrency.getInstance().toString(tax.getTotalTaxRevenue(), ECurrency.Won));
+        govEarnedTaxLabel.setText(UCurrency.getInstance().toString(tax.getTotalEarnedIncomeTax(), ECurrency.Won));
+        govCorpTaxLabel.setText(UCurrency.getInstance().toString(tax.getTotalCorporateTax(), ECurrency.Won));
+        govMonthlyEarnedLabel.setText(UCurrency.getInstance().toString(tax.getMonthlyEarnedIncomeTax(), ECurrency.Won));
+        govMonthlyCorpLabel.setText(UCurrency.getInstance().toString(tax.getMonthlyCorporateTax(), ECurrency.Won));
+    }
+
+    // ==================== Bank Tab ====================
 
     public void initComponent() {
         combobox.getItems().clear();
@@ -155,6 +300,7 @@ public class DashBoardPanel extends VBox implements ITime {
         }
 
         bankCardPane.getChildren().clear();
+        updateGovernmentTab();
 
         if (combobox.getSelectionModel().getSelectedIndex() == -1)
             return;
@@ -170,7 +316,6 @@ public class DashBoardPanel extends VBox implements ITime {
         }
 
         if (country != null) {
-            // Central bank card
             CBCentral centralBank = country.getCentralBank();
             DCareTaker careTaker = centralBank.getCareTaker();
             long allMadeMoney = 0;
@@ -184,22 +329,20 @@ public class DashBoardPanel extends VBox implements ITime {
             float baseRate = centralBank.getBaseInterestRate();
 
             VBox centralCard = createBankCard(
-                    "한국은행 (중앙은행)",
-                    "#e74c3c",
+                    "한국은행 (중앙은행)", "#e74c3c",
                     new String[]{
                             "기준금리 : " + baseRate + "%",
                             "총 통화 발행량 : " + cbTotal,
-                            "현금보유량 : " + cbCash
+                            "현금보유량 : " + cbCash,
+                            "국고 잔액 : " + UCurrency.getInstance().toString(centralBank.getNationalAccount().getRightsOfCash(), ECurrency.Won)
                     }
             );
             final long finalAllMadeMoney = allMadeMoney;
             centralCard.setOnMouseClicked(e -> showCentralBankDetail(centralBank, finalAllMadeMoney));
             bankCardPane.getChildren().add(centralCard);
 
-            // Commercial bank cards
             for (int i = 0; i < country.getBankList().size(); i++) {
                 CBCommercial bank = (CBCommercial) country.getBankList().get(i);
-
                 long creditCurrency = 0;
                 for (int j = 0; j < bank.getBankMemberList().size(); j++) {
                     DBankMember bankmember = bank.getBankMemberList().get(j);
@@ -214,8 +357,7 @@ public class DashBoardPanel extends VBox implements ITime {
                 String bankCredit = UCurrency.getInstance().toString(creditCurrency, ECurrency.Won);
 
                 VBox card = createBankCard(
-                        bank.getName() + "은행",
-                        "#2980b9",
+                        bank.getName() + "은행", "#2980b9",
                         new String[]{
                                 "적용금리 : " + totalRate + "% (가산 " + bank.getSpreadInterestRate() + "%)",
                                 "신용통화 : " + bankCredit,
@@ -234,9 +376,7 @@ public class DashBoardPanel extends VBox implements ITime {
         Iterator<Integer> mapIter = mohaw.getPeopleMap().keySet().iterator();
         LinkedList<CPeople> peopleList = new LinkedList<>();
         while (mapIter.hasNext()) {
-            int key = mapIter.next();
-            CPeople value = mohaw.getPeopleMap().get(key);
-            peopleList.add(value);
+            peopleList.add(mohaw.getPeopleMap().get(mapIter.next()));
         }
         FrameMain.getInstance().addPeopleList(peopleList);
 
@@ -244,29 +384,23 @@ public class DashBoardPanel extends VBox implements ITime {
         Iterator<Integer> mapIter2 = motia.getCompanyMap().keySet().iterator();
         LinkedList<CCompany> companyList = new LinkedList<>();
         while (mapIter2.hasNext()) {
-            int key = mapIter2.next();
-            CCompany value = motia.getCompanyMap().get(key);
-            companyList.add(value);
+            companyList.add(motia.getCompanyMap().get(mapIter2.next()));
         }
         FrameMain.getInstance().addCompanyList(companyList);
     }
+
+    // ==================== Bank Cards & Details ====================
 
     private VBox createBankCard(String title, String accentColor, String[] infoLines) {
         VBox card = new VBox(6);
         card.setPadding(new Insets(12));
         card.setPrefWidth(220);
-        card.setStyle(
-                "-fx-background-color: #16213e;" +
-                "-fx-background-radius: 8;" +
-                "-fx-border-color: " + accentColor + ";" +
-                "-fx-border-radius: 8;" +
-                "-fx-border-width: 2;" +
-                "-fx-cursor: hand;"
-        );
+        String baseStyle = "-fx-background-color: #16213e; -fx-background-radius: 8; -fx-border-color: " + accentColor + "; -fx-border-radius: 8; -fx-border-width: 2; -fx-cursor: hand;";
+        String hoverStyle = "-fx-background-color: #1a2744; -fx-background-radius: 8; -fx-border-color: " + accentColor + "; -fx-border-radius: 8; -fx-border-width: 2; -fx-cursor: hand;";
+        card.setStyle(baseStyle);
 
         Label titleLbl = new Label(title);
         titleLbl.setStyle("-fx-text-fill: white; -fx-font-size: 15; -fx-font-weight: bold;");
-
         card.getChildren().add(titleLbl);
 
         for (String line : infoLines) {
@@ -276,24 +410,8 @@ public class DashBoardPanel extends VBox implements ITime {
             card.getChildren().add(lbl);
         }
 
-        // Hover effect
-        card.setOnMouseEntered(e -> card.setStyle(
-                "-fx-background-color: #1a2744;" +
-                "-fx-background-radius: 8;" +
-                "-fx-border-color: " + accentColor + ";" +
-                "-fx-border-radius: 8;" +
-                "-fx-border-width: 2;" +
-                "-fx-cursor: hand;"
-        ));
-        card.setOnMouseExited(e -> card.setStyle(
-                "-fx-background-color: #16213e;" +
-                "-fx-background-radius: 8;" +
-                "-fx-border-color: " + accentColor + ";" +
-                "-fx-border-radius: 8;" +
-                "-fx-border-width: 2;" +
-                "-fx-cursor: hand;"
-        ));
-
+        card.setOnMouseEntered(e -> card.setStyle(hoverStyle));
+        card.setOnMouseExited(e -> card.setStyle(baseStyle));
         return card;
     }
 
@@ -302,10 +420,7 @@ public class DashBoardPanel extends VBox implements ITime {
 
         Button backBtn = new Button("< 돌아가기");
         backBtn.setStyle("-fx-background-color: #34495e; -fx-text-fill: white; -fx-font-size: 13;");
-        backBtn.setOnAction(e -> {
-            bankDetailView.setVisible(false);
-            bankCardListView.setVisible(true);
-        });
+        backBtn.setOnAction(e -> { bankDetailView.setVisible(false); bankCardListView.setVisible(true); });
 
         Label title = new Label("한국은행 (중앙은행)");
         title.setStyle("-fx-text-fill: white; -fx-font-size: 20; -fx-font-weight: bold;");
@@ -318,9 +433,96 @@ public class DashBoardPanel extends VBox implements ITime {
         addDetailRow(infoBox, "기준금리", bank.getBaseInterestRate() + "%");
         addDetailRow(infoBox, "총 통화 발행량", UCurrency.getInstance().toString(allMadeMoney, ECurrency.Won));
         addDetailRow(infoBox, "현금보유량", UCurrency.getInstance().toString(bank.getBalance().getCash(), ECurrency.Won));
+        addDetailRow(infoBox, "국고 잔액", UCurrency.getInstance().toString(bank.getNationalAccount().getRightsOfCash(), ECurrency.Won));
         addDetailRow(infoBox, "등록 시중은행 수", bank.getBankList().size() + "개");
 
-        bankDetailView.getChildren().addAll(backBtn, title, infoBox);
+        // Controls
+        Label ctrlTitle = new Label("조작");
+        ctrlTitle.setStyle("-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;");
+        ctrlTitle.setPadding(new Insets(15, 0, 5, 0));
+
+        VBox ctrlBox = new VBox(10);
+        ctrlBox.setPadding(new Insets(10));
+        ctrlBox.setStyle("-fx-background-color: #16213e; -fx-background-radius: 8; -fx-border-color: #f39c12; -fx-border-radius: 8; -fx-border-width: 2;");
+
+        // Base interest rate slider
+        Label rateLabel = new Label("기준금리: " + bank.getBaseInterestRate() + "%");
+        rateLabel.setStyle("-fx-text-fill: white; -fx-font-size: 13;");
+
+        Slider rateSlider = new Slider(0, 20, bank.getBaseInterestRate());
+        rateSlider.setShowTickLabels(true);
+        rateSlider.setShowTickMarks(true);
+        rateSlider.setMajorTickUnit(5);
+        rateSlider.setBlockIncrement(0.25);
+        rateSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            float rate = Math.round(newVal.floatValue() * 4) / 4.0f;
+            rateLabel.setText("기준금리: " + rate + "%");
+        });
+
+        Button rateApplyBtn = new Button("금리 적용");
+        rateApplyBtn.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 13; -fx-font-weight: bold;");
+        rateApplyBtn.setOnAction(e -> {
+            float rate = Math.round(rateSlider.getValue() * 4) / 4.0f;
+            bank.setBaseInterestRate(rate);
+        });
+
+        // Money printing
+        Label printLabel = new Label("통화 발행 (조 단위)");
+        printLabel.setStyle("-fx-text-fill: white; -fx-font-size: 13;");
+
+        TextField printField = new TextField("1");
+        printField.setPrefWidth(100);
+        printField.setStyle("-fx-font-size: 13;");
+
+        Button printBtn = new Button("발행");
+        printBtn.setStyle("-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-size: 13; -fx-font-weight: bold;");
+        printBtn.setOnAction(e -> {
+            try {
+                long trillion = Long.parseLong(printField.getText().trim());
+                bank.makeMoney(trillion * 1_000_000_000_000L);
+            } catch (NumberFormatException ex) { /* ignore */ }
+        });
+
+        // Release money to commercial bank
+        Label releaseLabel = new Label("시중은행 배분 (조 단위)");
+        releaseLabel.setStyle("-fx-text-fill: white; -fx-font-size: 13;");
+
+        ComboBox<String> bankCombo = new ComboBox<>();
+        for (CBank b : bank.getBankList()) {
+            bankCombo.getItems().add(b.getName() + "은행");
+        }
+        if (!bankCombo.getItems().isEmpty()) bankCombo.getSelectionModel().selectFirst();
+
+        TextField releaseField = new TextField("1");
+        releaseField.setPrefWidth(80);
+        releaseField.setStyle("-fx-font-size: 13;");
+
+        Button releaseBtn = new Button("배분");
+        releaseBtn.setStyle("-fx-background-color: #2980b9; -fx-text-fill: white; -fx-font-size: 13; -fx-font-weight: bold;");
+        releaseBtn.setOnAction(e -> {
+            int idx = bankCombo.getSelectionModel().getSelectedIndex();
+            if (idx >= 0 && idx < bank.getBankList().size()) {
+                try {
+                    long trillion = Long.parseLong(releaseField.getText().trim());
+                    bank.releaseMoney(bank.getBankList().get(idx), trillion * 1_000_000_000_000L);
+                } catch (NumberFormatException ex) { /* ignore */ }
+            }
+        });
+
+        ctrlBox.getChildren().addAll(
+                rateLabel, rateSlider, rateApplyBtn,
+                new Separator(),
+                printLabel, new HBox(5, printField, printBtn),
+                new Separator(),
+                releaseLabel, new HBox(5, bankCombo, releaseField, releaseBtn)
+        );
+
+        ScrollPane scrollPane = new ScrollPane(new VBox(10, backBtn, title, infoBox, ctrlTitle, ctrlBox));
+        scrollPane.setFitToWidth(true);
+        scrollPane.setStyle("-fx-background: #1a1a2e; -fx-background-color: #1a1a2e;");
+
+        bankDetailView.getChildren().add(scrollPane);
+        VBox.setVgrow(scrollPane, Priority.ALWAYS);
         bankCardListView.setVisible(false);
         bankDetailView.setVisible(true);
     }
@@ -330,10 +532,7 @@ public class DashBoardPanel extends VBox implements ITime {
 
         Button backBtn = new Button("< 돌아가기");
         backBtn.setStyle("-fx-background-color: #34495e; -fx-text-fill: white; -fx-font-size: 13;");
-        backBtn.setOnAction(e -> {
-            bankDetailView.setVisible(false);
-            bankCardListView.setVisible(true);
-        });
+        backBtn.setOnAction(e -> { bankDetailView.setVisible(false); bankCardListView.setVisible(true); });
 
         Label title = new Label(bank.getName() + "은행");
         title.setStyle("-fx-text-fill: white; -fx-font-size: 20; -fx-font-weight: bold;");
@@ -351,7 +550,43 @@ public class DashBoardPanel extends VBox implements ITime {
         addDetailRow(infoBox, "현금보유량", UCurrency.getInstance().toString(bank.getBalance().getCash(), ECurrency.Won));
         addDetailRow(infoBox, "고객 수", bank.getBankMemberList().size() + "명");
 
-        bankDetailView.getChildren().addAll(backBtn, title, infoBox);
+        // Spread rate control
+        Label ctrlTitle = new Label("조작");
+        ctrlTitle.setStyle("-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;");
+        ctrlTitle.setPadding(new Insets(15, 0, 5, 0));
+
+        VBox ctrlBox = new VBox(10);
+        ctrlBox.setPadding(new Insets(10));
+        ctrlBox.setStyle("-fx-background-color: #16213e; -fx-background-radius: 8; -fx-border-color: #f39c12; -fx-border-radius: 8; -fx-border-width: 2;");
+
+        Label spreadLabel = new Label("가산금리: " + bank.getSpreadInterestRate() + "%");
+        spreadLabel.setStyle("-fx-text-fill: white; -fx-font-size: 13;");
+
+        Slider spreadSlider = new Slider(0, 20, bank.getSpreadInterestRate());
+        spreadSlider.setShowTickLabels(true);
+        spreadSlider.setShowTickMarks(true);
+        spreadSlider.setMajorTickUnit(5);
+        spreadSlider.setBlockIncrement(0.1);
+        spreadSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            float rate = Math.round(newVal.floatValue() * 10) / 10.0f;
+            spreadLabel.setText("가산금리: " + rate + "%");
+        });
+
+        Button spreadApplyBtn = new Button("금리 적용");
+        spreadApplyBtn.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 13; -fx-font-weight: bold;");
+        spreadApplyBtn.setOnAction(e -> {
+            float rate = Math.round(spreadSlider.getValue() * 10) / 10.0f;
+            bank.setSpreadInterestRate(rate);
+        });
+
+        ctrlBox.getChildren().addAll(spreadLabel, spreadSlider, spreadApplyBtn);
+
+        ScrollPane scrollPane = new ScrollPane(new VBox(10, backBtn, title, infoBox, ctrlTitle, ctrlBox));
+        scrollPane.setFitToWidth(true);
+        scrollPane.setStyle("-fx-background: #1a1a2e; -fx-background-color: #1a1a2e;");
+
+        bankDetailView.getChildren().add(scrollPane);
+        VBox.setVgrow(scrollPane, Priority.ALWAYS);
         bankCardListView.setVisible(false);
         bankDetailView.setVisible(true);
     }
@@ -359,14 +594,11 @@ public class DashBoardPanel extends VBox implements ITime {
     private void addDetailRow(VBox container, String label, String value) {
         HBox row = new HBox(10);
         row.setAlignment(Pos.CENTER_LEFT);
-
         Label lblKey = new Label(label);
         lblKey.setStyle("-fx-text-fill: #7f8c8d; -fx-font-size: 13;");
         lblKey.setMinWidth(120);
-
         Label lblValue = new Label(value);
         lblValue.setStyle("-fx-text-fill: white; -fx-font-size: 13; -fx-font-weight: bold;");
-
         row.getChildren().addAll(lblKey, lblValue);
         container.getChildren().add(row);
     }

@@ -17,7 +17,6 @@ import capitalism.Util.URandom;
 import lombok.Getter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 public class CPeople extends CBeing implements ISearchable {
@@ -98,11 +97,10 @@ public class CPeople extends CBeing implements ISearchable {
 				getMyCountry().getGovernmentMap().get(EGovernmentType.TradeIndustryAndEnergy);
 		if (motia == null) return null;
 
-		List<CCompany> companies = new ArrayList<>(motia.getCompanyMap().values());
-		if (companies.isEmpty()) return null;
+		CCompany[] companies = motia.getCompanyArray();
+		if (companies.length == 0) return null;
 
-		int idx = URandom.getInstance().nextInt(companies.size());
-		return companies.get(idx);
+		return companies[URandom.getInstance().nextInt(companies.length)];
 	}
 
 	@Override

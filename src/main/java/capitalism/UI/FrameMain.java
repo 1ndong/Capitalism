@@ -57,6 +57,11 @@ public class FrameMain implements ITime {
     private PieChart moneyChart;
     private VBox chartStatsBox;
 
+    // UI throttle
+    private long lastUpdateTime = 0;
+    private boolean updatePending = false;
+    private static final long UPDATE_INTERVAL_MS = 200;
+
     public static void MakeMainFrame(Stage primaryStage, double width, double height) {
         instance = new FrameMain(primaryStage, width, height);
         instance.updateComponent();
@@ -166,10 +171,27 @@ public class FrameMain implements ITime {
 
     @Override
     public void dayChange(DTime newTime) {
-        Platform.runLater(this::updateComponent);
+        long now = System.currentTimeMillis();
+        if (now - lastUpdateTime < UPDATE_INTERVAL_MS) {
+            if (!updatePending) {
+                updatePending = true;
+                Platform.runLater(() -> {
+                    updatePending = false;
+                    lastUpdateTime = System.currentTimeMillis();
+                    doUpdateComponent();
+                });
+            }
+            return;
+        }
+        lastUpdateTime = now;
+        Platform.runLater(this::doUpdateComponent);
     }
 
     public void updateComponent() {
+        doUpdateComponent();
+    }
+
+    private void doUpdateComponent() {
         dashboard.updateComponent();
         updateChart();
     }

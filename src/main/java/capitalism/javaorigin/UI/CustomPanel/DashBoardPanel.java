@@ -85,7 +85,7 @@ public class DashBoardPanel extends JPanel implements ITime{
 		amicField.setHorizontalAlignment(JTextField.CENTER);
 		amicField.setFont(font);
 		amicField.setBackground(new Color(45,194,216));
-		amicField.setText("All money is credit");
+		amicField.setText("Capitalism simulator");
 		
 		upperPanel.add(combobox);
 		upperPanel.add(dayField);

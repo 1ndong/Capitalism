@@ -1,3 +1,5 @@
-# 언어 코틀린+자바
+# Capitalism
 
-move to https://github.com/1ndong/Capital2sm
+Java 프로젝트
+
+
